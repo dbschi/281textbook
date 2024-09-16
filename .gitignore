@@ -53,6 +53,7 @@ Thumbs.db
 *.aux
 *.bbl
 *.bcf
+*.blg
 *.ent
 *.log
 *.out

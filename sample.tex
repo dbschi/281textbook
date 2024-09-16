@@ -77,6 +77,8 @@
 
 \newcommand{\definition}[2]{\begin{tcolorbox}[title=Definition ({#1}),colframe=black]{#2}\end{tcolorbox}
 }
+\newcommand{\proposition}[1]{\begin{tcolorbox}[title=Proposition,colframe=gray]{#1}\end{tcolorbox}
+}
 %% THIS LINE IS MANDATORY
 \makepagenote
 
@@ -84,7 +86,10 @@
 	
 	\chapter{Sample - vector calculus}
 	
-	%in the actual thing, would ideally create a macro to have piecewise smooth reference the definition (in pdf)
+	%in the actual thing, would ideally create a macro to have piecewise smooth reference the definition (in pdf
+	
+	In this chapter, we start with line integrals, and gradually build towards the analogous theorem of the fundamental theorem of calculus.
+	
 	\definition{Line Integral - scalar}{
 		Let $U \subset \mathbb{R}^n$, $\gamma \subset U$ be a piecewise smooth curve, and $f: U \to \mathbb{R}$. The \textbf{line integral of $f$ along $\gamma$} is defined as
 		\[
@@ -95,43 +100,129 @@
 	\definition{Line Integral - vector}{
 		Let $U \subset \mathbb{R}^n$, $\gamma \subset U$ be a piecewise smooth curve, and $f: U \to \mathbb{R}^n$. The \textbf{line integral of $f$ along $\gamma$} is defined as
 		\[
-		\int_\gamma \ f \ ds \ = \ \int_a^b f(r(t)) \cdot r'(t)  \ dt
+		\int_\gamma \ f  \cdot ds \ = \ \int_a^b f(r(t)) \cdot r'(t)  \ dt
 		\]
 		where $r : [a,b] \to \gamma$ is any parameterization of $\gamma$.
 	}
+	
+	The line integral does not depend on the parameterization of $\gamma$. One exercise will guide you through the proof.
 	\section*{Geometric intuition}
 	%todo - plot in python
-	For a visualization, let's plot a 2D function (so visualizing the graph in 3D) in Python. We want to integrate the function $f(x,y)=\sin(x+y)$ along the semi-unit-circle in the top half plane, oriented counter-clockwise. This can be parametrized by $r(t) = (\cos(t), \sin(t))$ for $t\in [0,\pi / 2]$. 
+	For a visualization, let's plot a 2D function (so visualizing the graph in 3D) in Python. We want to integrate the function $f(x,y)=\sin(x+y)$ along the the curve $y=x^3$ for $-1<x<1$. That is, we can parametrize this curve as $(t,t^3)$ for $t\in[0,1]$.
 	\begin{lstlisting}[language=Python]
-		import matplotlib.pyplot as plt
-		import numpy as np
-		#create figure
-		ax = plt.figure().add_subplot(projection='3d')
-		
-		#plot sin(x+y)
-		X,Y=np.meshgrid(np.linspace(-1,1,40), np.linspace(-1,1,40))
-		Z=np.sin(X+Y)
-		surface=ax.plot_surface(X, Y, Z, alpha=0.5,
-		label='graph surface')
-		ax.set_xlabel('x')
-		ax.set_ylabel('y')
-		ax.set_zlabel('sin(x+y)')
-		
-		#plot the curve and the cross section to integrate
-		curve=np.linspace(0,np.pi,40)
-		plot_curve=ax.plot(np.cos(curve), np.sin(curve), 0,
-		label='cross section to integrate')
-		curvevalues=np.sin(np.cos(curve)+np.sin(curve))
-		curveonsurface=ax.bar3d(np.cos(curve),np.sin(curve),0,
-		dx=0.01, dy=0.01, dz=curvevalues, alpha=0.5,
-		color='orange')
-		
-		plt.legend()
-		plt.show()
+import matplotlib.pyplot as plt
+import numpy as np
+#create figure
+ax = plt.figure().add_subplot(projection='3d')
+
+#plot sin(x+y)
+X,Y=np.meshgrid(np.linspace(-1,1,40), np.linspace(-1,1,40))
+Z=np.sin(X+Y)
+surface=ax.plot_surface(X, Y, Z, alpha=0.5,
+label='graph surface')
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_zlabel('sin(x+y)')
+
+#plot the curve and the cross section to integrate
+curve=np.linspace(-1,1,100)
+plot_curve=ax.plot(curve, curve**3, 0,
+label='cross section to integrate',color='red')
+curvevalues=np.sin(curve+curve**3)
+curveonsurface=ax.bar3d(curve, curve**3,0,
+dx=0.01, dy=0.01, dz=curvevalues, alpha=0.5,
+color='red')
+
+plt.legend()
+plt.show()
 	\end{lstlisting}
-	\begin{wrapfigure}{r}{0.75\textwidth} 
-		\includegraphics[width=0.75\textwidth]{sin.png}
+
+	\begin{wrapfigure}{r}{0.6\textwidth} 
+		\centering
+		\includegraphics[width=0.6\textwidth]{sin.png}
 	\end{wrapfigure}
+	This scalar line integral represents the signed cross-section area of the graph along the curve, and is colored in orange on the left figure.
+	What we need to do now is to unroll this cross section into 2D and perform a Riemann integral. However, a simple 
+	\[
+		\int_{-1}^{1} \ f(t,t^3) \ dt
+	\]
+	does not work - some parts of the curve are stretched and others are compressed. The red vertical bars are evenly spaced in t, but are denser near the origin. How much is this stretch/compression factor? It is represented by how quickly the curve is moving with respect to t, which is exactly $|r'(t)|$.
 	
+	For vector line integrals, we integrate the projection of $f$ onto the curve, so we can think of it as a scalar integral \[
+		\int_a^b \left[ f(r(t)) \cdot \frac{r'(t)}{|r'(t)|}  \right]   |r'(t)| \ dt
+	\]
+	where the first term is the signed length of the projection of $f$ onto the tangent vector, and the second term is from the definition scalar line integrals.
+	You might also recognize vector line integrals from the formula for work \[
+	W = \int \vec{F} \cdot d\vec{s} 
+	\]
+	in first quarter physics. If we parametrize $\gamma$ as $\vec{r}(x)$ for $x \in [0,t]$, we get 
+	\[
+		W = \int_0^t \ \vec{F}(r(t)) \cdot \vec{r}'(t) dt
+	\] 
+	, work equals to the integral of power with respect to time!
 	
+	\exercises
+	computation exercises follow...
+	\begin{enumerate}
+		\item The length of a curve can be obtained by integrating a constant with respect to ds. What is this constant that makes the cross section area equal (in value) to the arc length? 
+		\item compute the length of the following curves : aaa, bbb, ccc
+		\item compute the following line integrals : ddd, eee, fff
+	\end{enumerate}
+	
+	\section*{Fundamental Theorem of Line Integrals}
+	We want to build toward something that looks like 
+	\[
+		\int_{a}^{b} f(x) \ dx = F(b) - F(a)
+	\], something similar in line integrals would be \[
+		\int_\gamma f \cdot ds = F(b) - F(a)
+	\] where $a$ and $b$ are the end points of $\gamma$. This is unfortunately not true from [one of the previous exercises]. So what can we do? We define this to be a property of a special set of vector-valued functions, and see what other properties this gives us.
+	
+	\definition{Conservative Vector Fields}{
+		Let $U\subset\mathbb{R}^n$ be open+ other usual assumptions, and $f:U\to\mathbb{R}^n$. We say $f$ is \textbf{conservative} if there exists a function $F:U\to\mathbb{R}$ such that for every piecewise smooth curve $\gamma$ parametrized by $r: [a,b]\to U$
+		\[
+			\int_\gamma f \cdot ds = F(r(b)) - F(r(a)).
+		\] 
+	}
+	Informally, $F$ is the antiderivative of $f$, and line integrals depend only $F$ evaluated on the endpoints of the curve.
+	\proposition{
+		If such an F exists, \[
+			f = \nabla F.
+		\]
+	}
+	\begin{proof} \ \\
+		Idea: we consider the partial derivatives of $F$. Without loss of generality, it is enough to consider the partial derivative in the first variable $x$. \\
+		Let $\vec{p} \in U$, we want to show that $\frac{\partial F}{\partial x} \big| _{\vec{p}} = f(\vec{p}) \cdot \vec{e}_1$. We can also consider the straight line $\gamma_h(t) = \vec{p} + t\vec{e}_1$ for $t\in[0,h]$. We then have \begin{align*}
+			\frac{\partial F}{\partial x} \big| _{\vec{p}} &= \lim_{h\to 0} \frac{F(\vec{p}+h\vec{e}_1)-F(\vec{p})}{h} \\
+			&= \lim_{h\to 0} \frac{\int_{\gamma_h} f \cdot ds}{h} (definition of conservative vector field)\\
+			&= \lim_{h\to 0} \frac{\int_0^h f(\vec{p}+t\vec{e}_1) \cdot \vec{e}_1 \ dt}{h}
+		\end{align*}
+		The last expression is the (one dimensional) derivative of the function $f(\vec{p}+t\vec{e}_1) \cdot \vec{e}_1$ at t=0, so equals $f(\vec{p})\cdot \vec{e}_1$.
+	\end{proof}
+	
+	As a bonus, we get the uniqueness of $F$.
+	\proposition{
+		If such an $F$ exists, it is unique up to addition of a constant.
+	}
+	\begin{proof}
+		Let $G$ be another function that satisfies the equation in the definition of Conservative Vector Fields. Then $\nabla F - \nabla G = f-f =0$, so that $F-G$ is constant.
+	\end{proof}
+	
+	\proposition{
+	Let $f$ be conservative, and $\gamma_1$ and $\gamma_2$ be two curves with the same starting points and ending points. Then \[
+		\int_{\gamma_1} f \cdot ds = \int_{\gamma_2} f \cdot ds
+	\]
+	}
+	\begin{proof}
+		By definition of conservative vector fields.
+	\end{proof}
+	
+	\proposition{
+		Let f be conservative. Then for every closed curve $\gamma$,
+		\[
+			\int_\gamma f\cdot ds = 0
+		\]
+	}
+	\begin{proof}
+		Closed curves have coinciding endpoints.
+	\end{proof}
 \end{document}

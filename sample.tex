@@ -79,6 +79,8 @@
 }
 \newcommand{\proposition}[1]{\begin{tcolorbox}[title=Proposition,colframe=gray]{#1}\end{tcolorbox}
 }
+\newcommand{\theorem}[2]{\begin{tcolorbox}[title=Theorem ({#1}),colframe=red!70!black,colback=red!5!white]{#2}\end{tcolorbox}
+}
 %% THIS LINE IS MANDATORY
 \makepagenote
 
@@ -210,19 +212,38 @@ plt.show()
 	\proposition{
 	Let $f$ be conservative, and $\gamma_1$ and $\gamma_2$ be two curves with the same starting points and ending points. Then \[
 		\int_{\gamma_1} f \cdot ds = \int_{\gamma_2} f \cdot ds
+	\].
+	For every closed curve $\gamma$,
+	\[
+	\int_\gamma f\cdot ds = 0
 	\]
 	}
-	\begin{proof}
-		By definition of conservative vector fields.
-	\end{proof}
 	
-	\proposition{
-		Let f be conservative. Then for every closed curve $\gamma$,
-		\[
+	\begin{proof}
+		By definition, note that closed curves have coinciding endpoints.
+	\end{proof}
+	These few properties are actually equivalent to the definition of conservative vector fields!
+	\theorem{Fundamental Theorem of Line Integrals}{
+		Let f... usual assumptions.\\
+		The following are equivalent:
+		\begin{enumerate}
+			\item $f$ is conservative.
+			\item $f = \nabla F$ for some $F:\mathbb{R}^n \to \mathbb{R}$.
+			\item For every pair of curves $\gamma_1$ and $\gamma_2$ with the same starting points and ending points, \[
+			\int_{\gamma_1} f \cdot ds = \int_{\gamma_2} f \cdot ds
+			\]
+			\item For every closed curve $\gamma$,
+			\[
 			\int_\gamma f\cdot ds = 0
-		\]
+			\]
+		\end{enumerate}
 	}
 	\begin{proof}
-		Closed curves have coinciding endpoints.
+		$1 \implies 2$, $1 \implies 3$, $1 \implies 4$ are shown. $2 \implies 1$, $3 \implies 1$, $4 \implies 3$ is left as an exercise. 
 	\end{proof}
+	\exercises
+	\begin{enumerate}
+		\item Complete the proof to the Fundamental Theorem of Line Integrals.
+	\end{enumerate}
+	
 \end{document}

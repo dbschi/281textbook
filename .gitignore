@@ -48,3 +48,15 @@ Thumbs.db
 *.mov
 *.wmv
 
+.ipynb
+.xml
+.aux
+.bbl
+.bcf
+.ent
+.log
+.out
+.gz
+.csv
+.json
+.xlsx

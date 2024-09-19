@@ -77,10 +77,13 @@
 
 \newcommand{\definition}[2]{\begin{tcolorbox}[title=Definition ({#1}),colframe=black]{#2}\end{tcolorbox}
 }
-\newcommand{\proposition}[1]{\begin{tcolorbox}[title=Proposition,colframe=gray]{#1}\end{tcolorbox}
+\newcommand{\proposition}[1]{\begin{tcolorbox}[title=Proposition,colframe=red!50!blue!20!white,colback=red!35!blue!10!white, coltitle=black]{#1}\end{tcolorbox}
 }
 \newcommand{\theorem}[2]{\begin{tcolorbox}[title=Theorem ({#1}),colframe=red!70!black,colback=red!5!white]{#2}\end{tcolorbox}
 }
+\newcommand{\example}[1]{\begin{tcolorbox}[title=Example,colframe=yellow!50!white,colback=yellow!20!white,coltitle=black]{#1}\end{tcolorbox}
+}
+%\newcommand{\exercises}{\section*{\exercisename}}
 %% THIS LINE IS MANDATORY
 \makepagenote
 
@@ -195,10 +198,10 @@ plt.show()
 		Idea: we consider the partial derivatives of $F$. Without loss of generality, it is enough to consider the partial derivative in the first variable $x$. \\
 		Let $\vec{p} \in U$, we want to show that $\frac{\partial F}{\partial x} \big| _{\vec{p}} = f(\vec{p}) \cdot \vec{e}_1$. We can also consider the straight line $\gamma_h(t) = \vec{p} + t\vec{e}_1$ for $t\in[0,h]$. We then have \begin{align*}
 			\frac{\partial F}{\partial x} \big| _{\vec{p}} &= \lim_{h\to 0} \frac{F(\vec{p}+h\vec{e}_1)-F(\vec{p})}{h} \\
-			&= \lim_{h\to 0} \frac{\int_{\gamma_h} f \cdot ds}{h} (definition of conservative vector field)\\
+			&= \lim_{h\to 0} \frac{\int_{\gamma_h} f \cdot ds}{h} \textrm{(definition of conservative vector field)}\\
 			&= \lim_{h\to 0} \frac{\int_0^h f(\vec{p}+t\vec{e}_1) \cdot \vec{e}_1 \ dt}{h}
 		\end{align*}
-		The last expression is the (one dimensional) derivative of the function $f(\vec{p}+t\vec{e}_1) \cdot \vec{e}_1$ at t=0, so equals $f(\vec{p})\cdot \vec{e}_1$.
+		The last expression is the (one dimensional) derivative of the function $g(t)=f(\vec{p}+t\vec{e}_1) \cdot \vec{e}_1$ at t=0, so equals $f(\vec{p})\cdot \vec{e}_1$ from the Fundamental Theorem of Calculus.
 	\end{proof}
 	
 	As a bonus, we get the uniqueness of $F$.
@@ -224,7 +227,7 @@ plt.show()
 	\end{proof}
 	These few properties are actually equivalent to the definition of conservative vector fields!
 	\theorem{Fundamental Theorem of Line Integrals}{
-		Let f... usual assumptions.\\
+		Let f... usual assumptions "Nice enough" $U$ connected open etc.\\
 		The following are equivalent:
 		\begin{enumerate}
 			\item $f$ is conservative.
@@ -239,8 +242,64 @@ plt.show()
 		\end{enumerate}
 	}
 	\begin{proof}
-		$1 \implies 2$, $1 \implies 3$, $1 \implies 4$ are shown. $2 \implies 1$, $3 \implies 1$, $4 \implies 3$ is left as an exercise. 
+		$1 \implies 2$, $1 \implies 3$, $1 \implies 4$ have been proved.\\
+		$2 \implies 1$:\\
+		Idea: we want to create an $F$ for an antiderivative, and there is already a candidate for $F$!
+		Let's try to show that $F$ is indeed an antiderivative for $f$.
+		Let $f=\nabla F$, and $gamma$ smooth parametrized by $r:[a,b]\to U$. Then
+		\begin{align*}
+			\int_\gamma f \cdot ds &= \int_\gamma \nabla F \cdot ds \\
+			&= \int_a^b \nabla F(r(t)) \cdot r'(t) dt \\
+			&= \int_a^b \frac{d \partial F(r(t))}{dt} \ dt \textrm{ (chain rule)}\\
+			&= F(r(b)) - F(r(a)) \textrm{ (Fundamental Theorem of Calculus)}
+		\end{align*} 
+		The case where $\gamma$ is piecewise smooth is similar, you should get a telescoping series.
+		$3 \implies 1$:\\
+		We define $F$ by a line integral.
+		Let $x \in U$, and $F(y) = \int_\gamma f \cdot ds$, where $\gamma$ is a (piecewise) smooth from $x$ to $y$.
+		Because the integral is same regardless of the path, $F$ is well-defined.
+		So that for every curve $\Gamma$that goes from $a$ to $b$, replace the line integral with a path $\gamma_1$ that goes from $a$ to $x$
+		and $\gamma_2$ that goes from $x$ to $b$.
+		so that \begin{align*}
+			\int_\Gamma f\cdot ds &= \int_{\gamma_1} f\cdot ds + \int_{\gamma_2} f\cdot ds \\
+			&= - (F(a) - F(x) ) + (F(x) + F(b))\\
+			&= F(b) - F(a)
+		\end{align*}
+		$4 \implies 3$ is left as an exercise. 
 	\end{proof}
+	
+	\example{
+	Let $N$ be a positive integer, and set $\vec{p}_j = (j/N,j/N,j/N)$ for integers $0 \leq j < N$.
+	Let $\gamma$ be the concatenation of lines $\vec{p}_j$ to $(\vec{p}_j+ 1/N \ \vec{e}_1)$,
+	$(\vec{p}_j+ 1/N \ \vec{e}_1)$ to $(\vec{p}_j+ 1/N \ (\vec{e}_1 + \vec{e}_2))$, and 
+	$(\vec{p}_j+ 1/N \ (\vec{e}_1 + \vec{e}_2))$ to $(\vec{p}_j+ 1/N \ (\vec{e}_1 + \vec{e}_2 + \vec{e}_3))$ for all $j$,
+	Compute the line integral of $f(x,y,z)= (yz,xz,xy)$ along $\gamma$.
+	}
+	... what? $\gamma$ is intentionally complicated here, and you can definitely compute the integral as a summation of $3N$ line integrals.
+	As a visualization exercise, try to predict what $\gamma$ looks like.
+	\begin{lstlisting}[language=Python]
+import matplotlib.pyplot as plt
+import numpy as np
+#create figure
+fig=plt.figure(figsize=(5,4))
+ax = fig.add_subplot(projection='3d')
+N=10
+p_j=[i/N for i in range(N)]
+X=[j for i in p_j for j in [i,i+1/N,i+1/N] ]+[1]
+Y=[j for i in p_j for j in [i,i,i+1/N] ]+[1]
+Z=[j for i in p_j for j in [i,i,i] ]+[1]
+plt.plot(X,Y,Z)
+plt.show()
+	\end{lstlisting}
+	No one wants to do the annoying computation, so let's find another way.
+	Could this be a conservative vector field? We need to find an antiderivative $F$ and evaluate it at the endpoints $(0,0,0)$ and $(1,1,1)$.
+	We want something that is $yz$ differentiated with respect to (wrt) $x$, $xz$ differentiated wrt $y$, $xy$ differentiated wrt $z$.
+	One solution is $F(x,y,z)=xyz$, which you can check very quickly it gives the correct partial derivatives.
+	Now we apply the Fundamental Theorem of Line Integrals to show that
+	\[
+	\int_{\gamma} f\cdot ds = F(1,1,1) - F(0,0,0) = 1
+	\]
+	Elegant!
 	\exercises
 	\begin{enumerate}
 		\item Complete the proof to the Fundamental Theorem of Line Integrals.

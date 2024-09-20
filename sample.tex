@@ -93,51 +93,70 @@
 	
 	%in the actual thing, would ideally create a macro to have piecewise smooth reference the definition (in pdf
 	
-	In this chapter, we start with line integrals, and gradually build towards the analogous theorem of the fundamental theorem of calculus.
-	
 	\definition{Line Integral - scalar}{
-		Let $U \subset \mathbb{R}^n$, $\gamma \subset U$ be a piecewise smooth curve, and $f: U \to \mathbb{R}$. The \textbf{line integral of $f$ along $\gamma$} is defined as
+		Let $U \subset \mathbb{R}^n$, $\gamma \subset U$ be a smooth curve, and $f: U \to \mathbb{R}$. The \textbf{line integral of $f$ along $\gamma$} is defined as
 		\[
 		\int_\gamma \ f \ ds \ = \ \int_a^b f(r(t)) \ |r'(t)| \ dt
 		\]
 		where $r : [a,b] \to \gamma$ is any parameterization of $\gamma$.
+
+		If $\gamma =  \gamma_1 \cdot \gamma_2 \cdot ... \cdot \gamma_n  $ is piecewise smooth, where $\gamma_j$ is smooth,
+
+		\[
+		\int_\gamma \ f \ ds \ = \int_{\gamma_1} \ f \ ds + ... + \int_{\gamma_n} \ f \ ds
+		\]
 	}
 	\definition{Line Integral - vector}{
-		Let $U \subset \mathbb{R}^n$, $\gamma \subset U$ be a piecewise smooth curve, and $f: U \to \mathbb{R}^n$. The \textbf{line integral of $f$ along $\gamma$} is defined as
+		Let $U \subset \mathbb{R}^n$, $\gamma \subset U$ be a smooth curve, and $f: U \to \mathbb{R}^n$. The \textbf{line integral of $f$ along $\gamma$} is defined as
 		\[
 		\int_\gamma \ f  \cdot ds \ = \ \int_a^b f(r(t)) \cdot r'(t)  \ dt
 		\]
 		where $r : [a,b] \to \gamma$ is any parameterization of $\gamma$.
+
+		If $\gamma =  \gamma_1 \cdot \gamma_2 \cdot ... \cdot \gamma_n  $ is piecewise smooth, where $\gamma_j$ is smooth,
+		\[
+		\int_\gamma \ f \ ds \ = \int_{\gamma_1} \ f \cdot ds + ... + \int_{\gamma_n} \ f \cdot ds
+		\]
 	}
-	
+
 	The line integral does not depend on the parameterization of $\gamma$. One exercise will guide you through the proof.
 	\section*{Geometric intuition}
 	%todo - plot in python
-	For a visualization, let's plot a 2D function (so visualizing the graph in 3D) in Python. We want to integrate the function $f(x,y)=\sin(x+y)$ along the the curve $y=x^3$ for $-1<x<1$. That is, we can parametrize this curve as $(t,t^3)$ for $t\in[0,1]$.
+	\example{
+		Let $\gamma$ be the segment of the curve $y=x^3$ for $-1<x<1$ starting at $(-1,-1)$.
+		Express 
+		\[
+		\int_{\gamma} (x^2 +y^2) ds
+		\]
+		as a single variable integral.
+	}
+	For a visualization, let's plot a 2D function (so visualizing the graph in 3D) in Python. $\gamma$ can be parametrized as $r(t) = (t,t^3)$ for $t\in[-1,1]$.
 	\begin{lstlisting}[language=Python]
 import matplotlib.pyplot as plt
 import numpy as np
 #create figure
-ax = plt.figure().add_subplot(projection='3d')
+fig=plt.figure(figsize=(5,4))
+ax = fig.add_subplot(projection='3d')
 
 #plot sin(x+y)
-X,Y=np.meshgrid(np.linspace(-1,1,40), np.linspace(-1,1,40))
-Z=np.sin(X+Y)
+X,Y=np.meshgrid(np.linspace(-1,1,10), np.linspace(-1,1,10))
+Z=(X**2)+Y**2
 surface=ax.plot_surface(X, Y, Z, alpha=0.5,
 label='graph surface')
 ax.set_xlabel('x')
 ax.set_ylabel('y')
-ax.set_zlabel('sin(x+y)')
+ax.set_zlabel('x^2 + y^2')
 
 #plot the curve and the cross section to integrate
-curve=np.linspace(-1,1,100)
+curve=np.linspace(-1,1,50)
 plot_curve=ax.plot(curve, curve**3, 0,
 label='cross section to integrate',color='red')
-curvevalues=np.sin(curve+curve**3)
+curvevalues=curve**2 + curve**2**3
 curveonsurface=ax.bar3d(curve, curve**3,0,
 dx=0.01, dy=0.01, dz=curvevalues, alpha=0.5,
 color='red')
 
+#show curve
 plt.legend()
 plt.show()
 	\end{lstlisting}
@@ -149,22 +168,63 @@ plt.show()
 	This scalar line integral represents the signed cross-section area of the graph along the curve, and is colored in orange on the left figure.
 	What we need to do now is to unroll this cross section into 2D and perform a Riemann integral. However, a simple 
 	\[
-		\int_{-1}^{1} \ f(t,t^3) \ dt
+		\int_{-1}^{1} \ t^2 + (t^3)^2 \ dt
 	\]
-	does not work - some parts of the curve are stretched and others are compressed. The red vertical bars are evenly spaced in t, but are denser near the origin. How much is this stretch/compression factor? It is represented by how quickly the curve is moving with respect to t, which is exactly $|r'(t)|$.
-	
-	For vector line integrals, we integrate the projection of $f$ onto the curve, so we can think of it as a scalar integral \[
+	does not work - some parts of the curve are stretched and others are compressed. The red vertical bars are evenly spaced in t, but are denser near the origin. How much is this stretch/compression factor? 
+	It is represented by how quickly the curve is moving with respect to t, which is exactly $|r'(t)|$.
+	Since $r'(t) = \begin{pmatrix}
+		1 \\ 3t^2
+	\end{pmatrix}$, the full computation is
+	\begin{align*}
+		\int_\gamma x^2+y^2 ds &= \int_{-1}^1 (t^2+t^6)  \ |\begin{pmatrix}
+			1 \\ 3t^2
+		\end{pmatrix}| \ dt \\
+		&= \int_{-1}^{1} (t^2+t^6) \sqrt{1+9t^4} \ dt
+		\\
+	\end{align*}
+
+	\example{
+		Let $\gamma$ be the segment of the curve $y=x^3$ for $0<x<1$ starting at $(0,0)$.
+		Compute 
+		\[
+		\int_{\gamma} \begin{pmatrix}
+			x^2 \\ y^2
+		\end{pmatrix} \cdot ds
+		\]
+		.
+	}
+	For vector line integrals, we integrate the \textbf{projection} of $f$ onto the curve, so we can think of it as a scalar integral \[
 		\int_a^b \left[ f(r(t)) \cdot \frac{r'(t)}{|r'(t)|}  \right]   |r'(t)| \ dt
 	\]
-	where the first term is the signed length of the projection of $f$ onto the tangent vector, and the second term is from the definition scalar line integrals.
+	. The first term is the signed length of the projection of $f$ onto the tangent vector, the scalar we want to integrate.
+	\\
+	We can parametrize $\gamma$ as $r(t) = (t,t^3)$ as $t$ goes from $0$ to $1$.
+	The explicit formula is \begin{align*}
+		\int_{\gamma} \begin{pmatrix}
+			x^2 \\ y^2
+		\end{pmatrix} \cdot ds &= \int_{0}^1 \begin{pmatrix}
+			t^2 \\ t^6
+		\end{pmatrix} \cdot  \begin{pmatrix}
+			1 \\ 3t^2
+		\end{pmatrix} \ dt
+		\\
+		&= \int_0^1 t^2+3t^8 dt \\
+		&= \frac{2}{3}.
+	\end{align*}
+	\example{
+		Previous example rephrased in physics terms:\\
+		Alice is pushing a box. After $t$ seconds, the box is at $(t,t^3)$. Alice's force on the box at $(x,y)$ can be modelled by
+		$x^2 \ \vec{i} + y^2\ \vec{j}$. After $1$ second, how much work did Alice do on the box?
+	}
 	You might also recognize vector line integrals from the formula for work \[
 	W = \int \vec{F} \cdot d\vec{s} 
 	\]
-	in first quarter physics. If we parametrize $\gamma$ as $\vec{r}(x)$ for $x \in [0,t]$, we get 
-	\[
-		W = \int_0^t \ \vec{F}(r(t)) \cdot \vec{r}'(t) dt
-	\] 
-	, work equals to the integral of power with respect to time!
+	in first quarter physics. If we parametrize $\gamma$ as ${r}(x)$ for $x \in [0,t]$, we get 
+	\begin{align*}
+		W &= \int_0^t \ \vec{F}(r(t)) \cdot {r}'(t) dt \\
+		&= \int_0^t \vec{F} \cdot v(t) dt \textrm{, $v$ denotes velocity}
+	\end{align*}
+	This is the same as "work equals to the integral of power with respect to time"!
 	
 	\exercises
 	computation exercises follow...
@@ -187,6 +247,7 @@ plt.show()
 		\[
 			\int_\gamma f \cdot ds = F(r(b)) - F(r(a)).
 		\] 
+		If $F$ exists, we call it a \textbf{scalar potential} for $f$.
 	}
 	Informally, $F$ is the antiderivative of $f$, and line integrals depend only $F$ evaluated on the endpoints of the curve.
 	\proposition{
@@ -226,7 +287,7 @@ plt.show()
 		By definition, note that closed curves have coinciding endpoints.
 	\end{proof}
 	These few properties are actually equivalent to the definition of conservative vector fields!
-	\theorem{Fundamental Theorem of Line Integrals}{
+	\theorem{Equivalent definitions of conservative vector fields}{
 		Let f... usual assumptions "Nice enough" $U$ connected open etc.\\
 		The following are equivalent:
 		\begin{enumerate}
@@ -244,8 +305,8 @@ plt.show()
 	\begin{proof}
 		$1 \implies 2$, $1 \implies 3$, $1 \implies 4$ have been proved.\\
 		$2 \implies 1$:\\
-		Idea: we want to create an $F$ for an antiderivative, and there is already a candidate for $F$!
-		Let's try to show that $F$ is indeed an antiderivative for $f$.
+		Idea: we want to create an $F$ for a scalar potential, and there is already a candidate for $F$!
+		Let's try to show that $F$ is indeed a scalar potential for $f$.
 		Let $f=\nabla F$, and $gamma$ smooth parametrized by $r:[a,b]\to U$. Then
 		\begin{align*}
 			\int_\gamma f \cdot ds &= \int_\gamma \nabla F \cdot ds \\
@@ -268,15 +329,26 @@ plt.show()
 		$4 \implies 3$ is left as an exercise. 
 	\end{proof}
 	
-	\example{
-	Let $N$ be a positive integer, and set $\vec{p}_j = (j/N,j/N,j/N)$ for integers $0 \leq j < N$.
-	Let $\gamma$ be the concatenation of lines $\vec{p}_j$ to $(\vec{p}_j+ 1/N \ \vec{e}_1)$,
-	$(\vec{p}_j+ 1/N \ \vec{e}_1)$ to $(\vec{p}_j+ 1/N \ (\vec{e}_1 + \vec{e}_2))$, and 
-	$(\vec{p}_j+ 1/N \ (\vec{e}_1 + \vec{e}_2))$ to $(\vec{p}_j+ 1/N \ (\vec{e}_1 + \vec{e}_2 + \vec{e}_3))$ for all $j$,
-	Compute the line integral of $f(x,y,z)= (yz,xz,xy)$ along $\gamma$.
+	We thus have our first analogous theorem for FTC.
+	\theorem{Gradient}{
+		[Conditions of niceness, endpoints $\vec{a}$ and $\vec{b}$]
+		then \[
+			\int_\gamma \nabla F \cdot ds = F(\vec{b})-F(\vec{a})
+		\]
 	}
-	... what? $\gamma$ is intentionally complicated here, and you can definitely compute the integral as a summation of $3N$ line integrals.
+	\example{
+	A particle starts from $(0,0,0)$ and does the following:
+	\begin{enumerate}
+		\item move $1/10$ units in $x$
+		\item move $1/10$ units in $y$
+		\item move $1/10$ units in $z$
+		\item repeat first three moves until it reaches $(1,1,1)$
+	\end{enumerate}
+	Compute the line integral of $f(x,y,z)= (yz,xz,xy)$ along the path $\gamma$ traced by the particle.
+	}
+	... what? $\gamma$ is intentionally complicated here, but you can definitely compute the integral as a summation of $30$ line integrals.
 	As a visualization exercise, try to predict what $\gamma$ looks like.
+	
 	\begin{lstlisting}[language=Python]
 import matplotlib.pyplot as plt
 import numpy as np
@@ -291,18 +363,32 @@ Z=[j for i in p_j for j in [i,i,i] ]+[1]
 plt.plot(X,Y,Z)
 plt.show()
 	\end{lstlisting}
-	No one wants to do the annoying computation, so let's find another way.
-	Could this be a conservative vector field? We need to find an antiderivative $F$ and evaluate it at the endpoints $(0,0,0)$ and $(1,1,1)$.
-	We want something that is $yz$ differentiated with respect to (wrt) $x$, $xz$ differentiated wrt $y$, $xy$ differentiated wrt $z$.
+	Before we do any annoying computation... could this be a conservative vector field? We want scalar function that is $yz$ differentiated with respect to (wrt) $x$, $xz$ differentiated wrt $y$, $xy$ differentiated wrt $z$.
 	One solution is $F(x,y,z)=xyz$, which you can check very quickly it gives the correct partial derivatives.
 	Now we apply the Fundamental Theorem of Line Integrals to show that
 	\[
 	\int_{\gamma} f\cdot ds = F(1,1,1) - F(0,0,0) = 1
 	\]
-	Elegant!
+	Much shorter!
+	\newpage
+	
+	\includegraphics[width=0.6\textwidth]{staircase.png}
+	
+	For this problem, $\gamma$ looks like a staircase, but we could replace it with any curve that starts at $(0,0,0)$ and ends at $(1,1,1)$. The answer will still be the same.
 	\exercises
 	\begin{enumerate}
-		\item Complete the proof to the Fundamental Theorem of Line Integrals.
+		
+		\item For this question, take for granted that the derivative of $tan^{-1}(x) = 1/(1+x^2)$. \begin{enumerate}
+			\item Verify that $\nabla tan^{-1}(y/x) = (\frac{-y}{x^2+y^2}, \frac{x}{x^2+y^2})$.
+			\item Integrate $(\frac{-y}{x^2+y^2}, \frac{x}{x^2+y^2})$ over the unit circle, oriented counter-clockwise.
+			\item Is $\nabla tan^{-1}(y/x)$ conservative? When can you apply the Gradient Theorem to this function?
+		\end{enumerate}
+		\item Let $f:\mathbb{R}^n\setminus\{\vec{0}\} \to\mathbb{R}^n$ be continuous and radially symmetric. That is, there is some scalar function $k$ such that $f(\vec{x})= k(|\vec{x}|) \ \vec{x}/ |\vec{x}|$. [ideally want to plot something here] \begin{enumerate}
+			\item What is the line integral of $f$ along any circlular arc $C$ centered at the origin? Conclude that if $f$ is conservative, its scalar potential has to be radially symmetric too. 
+			That is, the value of $F(\vec{x})$ is only dependent on $|\vec{x}|$.
+			\item Integrate $f$ over a (well-chosen) path to find a scalar potential for $f$.
+			\item Justify the terminology for gravitational, elastic, and electric \textbf{potential}.  
+		\end{enumerate}
 	\end{enumerate}
 	
 \end{document}

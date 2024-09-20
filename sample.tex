@@ -91,11 +91,11 @@
 
 \begin{document}
 	
-	\chapter{Sample; vector calculus}
+	\chapter{Sample: vector calculus}
 	
 	%in the actual thing, would ideally create a macro to have piecewise smooth reference the definition (in pdf
 	[input definitions of parametrization and orientation]
-	\definition{Line Integral; scalar}{
+	\definition{Line Integral: scalar}{
 		Let $U \subset \mathbb{R}^n$, $\gamma \subset U$ be a smooth oriented curve, and $f: U \to \mathbb{R}$. The \textbf{line integral of $f$ along $\gamma$} is defined as
 		\[
 		\int_\gamma \ f \ ds \ = \ \int_a^b f(r(t)) \ |r'(t)| \ dt
@@ -108,7 +108,7 @@
 		\int_\gamma \ f \ ds \ = \int_{\gamma_1} \ f \ ds + ... + \int_{\gamma_n} \ f \ ds
 		\]
 	}
-	\definition{Line Integral; vector}{
+	\definition{Line Integral: vector}{
 		Let $U \subset \mathbb{R}^n$, $\gamma \subset U$ be a smooth oriented curve, and $f: U \to \mathbb{R}^n$. The \textbf{line integral of $f$ along $\gamma$} is defined as
 		\[
 		\int_\gamma \ f  \cdot ds \ = \ \int_a^b f(r(t)) \cdot r'(t)  \ dt
@@ -178,9 +178,9 @@ plt.show()
 		1 \\ 3t^2
 	\end{pmatrix}$, the full computation is
 	\begin{align*}
-		\int_\gamma x^2+y^2 ds &= \int_{-1}^1 (t^2+t^6)  \ |\begin{pmatrix}
+		\int_\gamma x^2+y^2 ds &= \int_{-1}^1 (t^2+t^6)  \ \left|\begin{pmatrix}
 			1 \\ 3t^2
-		\end{pmatrix}| \ dt \\
+		\end{pmatrix}\right| \ dt \\
 		&= \int_{-1}^{1} (t^2+t^6) \sqrt{1+9t^4} \ dt
 		\\
 	\end{align*}
@@ -261,7 +261,7 @@ plt.show()
 			&= \lim_{h\to 0} \frac{\int_{\gamma_h} f \cdot ds}{h}\\
 			&= \lim_{h\to 0} \frac{\int_0^h f(\vec{p}+t\vec{e}_1) \cdot \vec{e}_1 \ dt}{h}
 		\end{align*}
-		The last expression is the (one dimensional) derivative of the function $g(x)=\int_0^x f(\vec{p}+t\vec{e}_1) \cdot \vec{e}_1 \ dt$ at x=0, so equals $f(\vec{p})\cdot \vec{e}_1$ from the Fundamental Theorem of Calculus.
+		The last expression is the (one dimensional) derivative of the function $g(x)=\int_0^x f(\vec{p}+t\vec{e}_1) \cdot \vec{e}_1 \ dt$ at $x=0$, so equals $f(\vec{p})\cdot \vec{e}_1$ from the Fundamental Theorem of Calculus.
 	\end{proof}
 	
 	We thus motivate the following definition:
@@ -385,9 +385,9 @@ plt.show()
 	\begin{enumerate}
 		
 		\item For this question, take for granted that the derivative of $\tan^{-1}(x) = 1/(1+x^2)$. \begin{enumerate}
-			\item Verify that $\nabla tan^{-1}(y/x) = (\frac{-y}{x^2+y^2}, \frac{x}{x^2+y^2})$.
+			\item Verify that $\nabla \tan^{-1}(y/x) = (\frac{-y}{x^2+y^2}, \frac{x}{x^2+y^2})$.
 			\item Integrate $(\frac{-y}{x^2+y^2}, \frac{x}{x^2+y^2})$ over the unit circle, oriented counter-clockwise.
-			\item Is $\nabla tan^{-1}(y/x)$ conservative? When can you apply the Gradient Theorem to this function? Some interesting phenomena arise from this ``paradox", as an example, see the Aharonov-Bohn Effect.
+			\item Is $\nabla \tan^{-1}(y/x)$ conservative? When can you apply the Gradient Theorem to this function? Some interesting phenomena arise from this ``paradox", as an example, see the Aharonov-Bohn Effect.
 		\end{enumerate}
 		\item Let $f:\mathbb{R}^n\setminus\{\vec{0}\} \to\mathbb{R}^n$ be continuous and radially symmetric. That is, there is some scalar function $k$ such that $f(\vec{x})= k(|\vec{x}|) \ \vec{x}/ |\vec{x}|$. [ideally want to plot something here] \begin{enumerate}
 			\item What is the line integral of $f$ along any circlular arc $C$ centered at the origin? Conclude that if $f$ is conservative, its scalar potential has to be radially symmetric too. 

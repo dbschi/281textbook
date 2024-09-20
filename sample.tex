@@ -83,6 +83,8 @@
 }
 \newcommand{\example}[1]{\begin{tcolorbox}[title=Example,colframe=yellow!50!white,colback=yellow!20!white,coltitle=black]{#1}\end{tcolorbox}
 }
+\newcommand{\corollary}[1]{\begin{tcolorbox}[]{Corollary: {#1}}\end{tcolorbox}
+}
 %\newcommand{\exercises}{\section*{\exercisename}}
 %% THIS LINE IS MANDATORY
 \makepagenote
@@ -92,9 +94,9 @@
 	\chapter{Sample - vector calculus}
 	
 	%in the actual thing, would ideally create a macro to have piecewise smooth reference the definition (in pdf
-	
+	[input definitions of parametrization and orientation]
 	\definition{Line Integral - scalar}{
-		Let $U \subset \mathbb{R}^n$, $\gamma \subset U$ be a smooth curve, and $f: U \to \mathbb{R}$. The \textbf{line integral of $f$ along $\gamma$} is defined as
+		Let $U \subset \mathbb{R}^n$, $\gamma \subset U$ be a smooth oriented curve, and $f: U \to \mathbb{R}$. The \textbf{line integral of $f$ along $\gamma$} is defined as
 		\[
 		\int_\gamma \ f \ ds \ = \ \int_a^b f(r(t)) \ |r'(t)| \ dt
 		\]
@@ -107,7 +109,7 @@
 		\]
 	}
 	\definition{Line Integral - vector}{
-		Let $U \subset \mathbb{R}^n$, $\gamma \subset U$ be a smooth curve, and $f: U \to \mathbb{R}^n$. The \textbf{line integral of $f$ along $\gamma$} is defined as
+		Let $U \subset \mathbb{R}^n$, $\gamma \subset U$ be a smooth oriented curve, and $f: U \to \mathbb{R}^n$. The \textbf{line integral of $f$ along $\gamma$} is defined as
 		\[
 		\int_\gamma \ f  \cdot ds \ = \ \int_a^b f(r(t)) \cdot r'(t)  \ dt
 		\]
@@ -242,16 +244,13 @@ plt.show()
 		\int_\gamma f \cdot ds = F(b) - F(a)
 	\] where $a$ and $b$ are the end points of $\gamma$. This is unfortunately not true from [one of the previous exercises]. So what can we do? We define this to be a property of a special set of vector-valued functions, and see what other properties this gives us.
 	
-	\definition{Conservative Vector Fields}{
-		Let $U\subset\mathbb{R}^n$ be open+ other usual assumptions, and $f:U\to\mathbb{R}^n$. We say $f$ is \textbf{conservative} if there exists a function $F:U\to\mathbb{R}$ such that for every piecewise smooth curve $\gamma$ parametrized by $r: [a,b]\to U$
-		\[
-			\int_\gamma f \cdot ds = F(r(b)) - F(r(a)).
-		\] 
-		If $F$ exists, we call it a \textbf{scalar potential} for $f$.
-	}
-	Informally, $F$ is the antiderivative of $f$, and line integrals depend only $F$ evaluated on the endpoints of the curve.
+	
 	\proposition{
-		If such an F exists, \[
+		Let $U\subset\mathbb{R}^n$ be open, $f:U\to\mathbb{R}^n$ be continuous, and $F:U\to\mathbb{R}$ satisfy the condition that for every piecewise smooth oriented curve $\gamma$ parametrized by $r: [a,b]\to U$
+		\[
+		\int_\gamma f \cdot ds = F(r(b)) - F(r(a)).
+		\] 
+		Then, \[
 			f = \nabla F.
 		\]
 	}
@@ -259,63 +258,116 @@ plt.show()
 		Idea: we consider the partial derivatives of $F$. Without loss of generality, it is enough to consider the partial derivative in the first variable $x$. \\
 		Let $\vec{p} \in U$, we want to show that $\frac{\partial F}{\partial x} \big| _{\vec{p}} = f(\vec{p}) \cdot \vec{e}_1$. We can also consider the straight line $\gamma_h(t) = \vec{p} + t\vec{e}_1$ for $t\in[0,h]$. We then have \begin{align*}
 			\frac{\partial F}{\partial x} \big| _{\vec{p}} &= \lim_{h\to 0} \frac{F(\vec{p}+h\vec{e}_1)-F(\vec{p})}{h} \\
-			&= \lim_{h\to 0} \frac{\int_{\gamma_h} f \cdot ds}{h} \textrm{(definition of conservative vector field)}\\
+			&= \lim_{h\to 0} \frac{\int_{\gamma_h} f \cdot ds}{h}\\
 			&= \lim_{h\to 0} \frac{\int_0^h f(\vec{p}+t\vec{e}_1) \cdot \vec{e}_1 \ dt}{h}
 		\end{align*}
 		The last expression is the (one dimensional) derivative of the function $g(t)=f(\vec{p}+t\vec{e}_1) \cdot \vec{e}_1$ at t=0, so equals $f(\vec{p})\cdot \vec{e}_1$ from the Fundamental Theorem of Calculus.
 	\end{proof}
 	
+	We thus motivate the following definition:
+	\definition{Conservative Vector Fields}{
+		Let $U\subset\mathbb{R}^n$ be open, $f:U\to\mathbb{R}^n$ be continuous. We say that $f$ is \textbf{conservative} if
+		$f = \nabla F $ for some scalar valued function $F:U\to\mathbb{R}$.
+		If such an $F$ exists, we call it a \textbf{scalar potential} of $f$.
+	}
+ 
+	
 	As a bonus, we get the uniqueness of $F$.
 	\proposition{
-		If such an $F$ exists, it is unique up to addition of a constant.
+		If such an $F$ exists, it is unique up to addition of a constant on each connected subset.
+	}
+	
+	\begin{proof}
+		Let $f=\nabla G$. Then $\nabla(F-G)=\nabla F - \nabla G = f-f =0$, so that $F-G$ is constant on each connected subset.
+	\end{proof}
+	Informally, $F$ is some sort of "antiderivative" of $f$.
+	\theorem{Gradient}{
+		Let $U\in\mathbb{R}^n$ be open, F, $\gamma\in U$ be a piecewise smooth oriented curve starting at $\vec{a}$ and ending at $\vec{b}$
+		then \[
+		\int_\gamma \nabla F \cdot ds = F(\vec{b})-F(\vec{a})
+		\]
 	}
 	\begin{proof}
-		Let $G$ be another function that satisfies the equation in the definition of Conservative Vector Fields. Then $\nabla F - \nabla G = f-f =0$, so that $F-G$ is constant.
+		Consider the case where $gamma$ is smooth and parametrized by $r:[a,b]\to U$. Then
+		\begin{align*}
+			\int_\gamma \nabla F \cdot ds &= \int_a^b \nabla F(r(t)) \cdot r'(t) dt \\
+			&= \int_a^b \frac{d \partial F(r(t))}{dt} \ dt \textrm{ (chain rule)}\\
+			&= F(r(\vec{b})) - F(r(\vec{a})) \textrm{ (Fundamental Theorem of Calculus)}
+		\end{align*} 
+		The case where $\gamma$ is piecewise smooth is similar, you should get a telescoping series by applying the Gradient Theorem to each smooth piece of $\gamma$.
 	\end{proof}
+	\example{
+		A particle starts from $(0,0,0)$ and does the following:
+		\begin{enumerate}
+			\item move $1/10$ units in $x$
+			\item move $1/10$ units in $y$
+			\item move $1/10$ units in $z$
+			\item repeat first three moves until it reaches $(1,1,1)$
+		\end{enumerate}
+		Compute the line integral of $f(x,y,z)= (yz,xz,xy)$ along the path $\gamma$ traced by the particle.
+	}
+	... what? $\gamma$ is intentionally complicated here, but you can definitely compute the integral as a summation of $30$ line integrals.
+	As a visualization exercise, try to predict what $\gamma$ looks like.
 	
+	\begin{lstlisting}[language=Python]
+		import matplotlib.pyplot as plt
+		import numpy as np
+		#create figure
+		fig=plt.figure(figsize=(5,4))
+		ax = fig.add_subplot(projection='3d')
+		N=10
+		p_j=[i/N for i in range(N)]
+		X=[j for i in p_j for j in [i,i+1/N,i+1/N] ]+[1]
+		Y=[j for i in p_j for j in [i,i,i+1/N] ]+[1]
+		Z=[j for i in p_j for j in [i,i,i] ]+[1]
+		plt.plot(X,Y,Z)
+		plt.show()
+	\end{lstlisting}
+	
+	Before we do any annoying computation... could this be a conservative vector field? We want scalar function that is $yz$ differentiated with respect to (wrt) $x$, $xz$ differentiated wrt $y$, $xy$ differentiated wrt $z$.
+	\begin{wrapfigure}{r}{0.6\textwidth}
+		\centering
+		\includegraphics[width=0.6\textwidth]{staircase.png}
+	\end{wrapfigure}
+	One solution is $F(x,y,z)=xyz$, which you can check very quickly it gives the correct partial derivatives.
+	Now we apply the Fundamental Theorem of Line Integrals to show that
+	\[
+	\int_{\gamma} f\cdot ds = F(1,1,1) - F(0,0,0) = 1
+	\]\
+	 Much shorter!
+	For this problem, $\gamma$ looks like a staircase, but we could replace it with any curve that starts at $(0,0,0)$ and ends at $(1,1,1)$. The answer will still be the same.
+	\subsection{Path Independence}
+	\definition{Path Independent Vector Fields}{
+		Let $U\subset\mathbb{R}^n$ be open, $f:U\to\mathbb{R}^n$ be continuous. We say that $f$ is \textbf{path-independent} if for every pair of curves
+		$\gamma_1$ and $\gamma_2$ with the same starting points and ending points, \[
+		\int_{\gamma_1} f \cdot ds = \int_{\gamma_2} f \cdot ds
+	\].
+	}
 	\proposition{
+		$f$ is path-independent if and only if $\int_\gamma f\cdot ds =0$ for every piecewise-smooth closed curve $\gamma$.
+	}
+	\begin{proof}
+		[placeholder]
+	\end{proof}
+	A quick corollary of the Gradient Theorem is that gradients are path-independent.
+	\corollary{
 	Let $f$ be conservative, and $\gamma_1$ and $\gamma_2$ be two curves with the same starting points and ending points. Then \[
 		\int_{\gamma_1} f \cdot ds = \int_{\gamma_2} f \cdot ds
 	\].
-	For every closed curve $\gamma$,
-	\[
-	\int_\gamma f\cdot ds = 0
-	\]
 	}
 	
 	\begin{proof}
-		By definition, note that closed curves have coinciding endpoints.
+		Here is a hint:
+		Let $\gamma_1$ and $\gamma_2$ start at $\vec{a}$ and end at $\vec{b}$, then apply the Gradient Theorem.
 	\end{proof}
-	These few properties are actually equivalent to the definition of conservative vector fields!
-	\theorem{Equivalent definitions of conservative vector fields}{
-		Let f... usual assumptions "Nice enough" $U$ connected open etc.\\
-		The following are equivalent:
-		\begin{enumerate}
-			\item $f$ is conservative.
-			\item $f = \nabla F$ for some $F:\mathbb{R}^n \to \mathbb{R}$.
-			\item For every pair of curves $\gamma_1$ and $\gamma_2$ with the same starting points and ending points, \[
-			\int_{\gamma_1} f \cdot ds = \int_{\gamma_2} f \cdot ds
-			\]
-			\item For every closed curve $\gamma$,
-			\[
-			\int_\gamma f\cdot ds = 0
-			\]
-		\end{enumerate}
+	Under some conditions,These few properties are actually equivalent to the definition of conservative vector fields!
+	\theorem{Gradient (converse)}{
+		Let $U\in\mathbb{R}^n$ be open and \textbf{connected}, $f:U\to\mathbb{R}^n$. \\
+		Then $f$ is conservative if and only if $f$ is path-independent.
 	}
 	\begin{proof}
-		$1 \implies 2$, $1 \implies 3$, $1 \implies 4$ have been proved.\\
-		$2 \implies 1$:\\
-		Idea: we want to create an $F$ for a scalar potential, and there is already a candidate for $F$!
-		Let's try to show that $F$ is indeed a scalar potential for $f$.
-		Let $f=\nabla F$, and $gamma$ smooth parametrized by $r:[a,b]\to U$. Then
-		\begin{align*}
-			\int_\gamma f \cdot ds &= \int_\gamma \nabla F \cdot ds \\
-			&= \int_a^b \nabla F(r(t)) \cdot r'(t) dt \\
-			&= \int_a^b \frac{d \partial F(r(t))}{dt} \ dt \textrm{ (chain rule)}\\
-			&= F(r(b)) - F(r(a)) \textrm{ (Fundamental Theorem of Calculus)}
-		\end{align*} 
-		The case where $\gamma$ is piecewise smooth is similar, you should get a telescoping series.
-		$3 \implies 1$:\\
+		$\implies$ is the Gradient Theorem.\\
+		$\impliedby$:
 		We define $F$ by a line integral.
 		Let $x \in U$, and $F(y) = \int_\gamma f \cdot ds$, where $\gamma$ is a (piecewise) smooth from $x$ to $y$.
 		Because the integral is same regardless of the path, $F$ is well-defined.
@@ -326,62 +378,16 @@ plt.show()
 			&= - (F(a) - F(x) ) + (F(x) + F(b))\\
 			&= F(b) - F(a)
 		\end{align*}
-		$4 \implies 3$ is left as an exercise. 
+		By a proposition we have proved earlier, $f=\nabla F$ and is conservative. 
 	\end{proof}
 	
-	We thus have our first analogous theorem for FTC.
-	\theorem{Gradient}{
-		[Conditions of niceness, endpoints $\vec{a}$ and $\vec{b}$]
-		then \[
-			\int_\gamma \nabla F \cdot ds = F(\vec{b})-F(\vec{a})
-		\]
-	}
-	\example{
-	A particle starts from $(0,0,0)$ and does the following:
-	\begin{enumerate}
-		\item move $1/10$ units in $x$
-		\item move $1/10$ units in $y$
-		\item move $1/10$ units in $z$
-		\item repeat first three moves until it reaches $(1,1,1)$
-	\end{enumerate}
-	Compute the line integral of $f(x,y,z)= (yz,xz,xy)$ along the path $\gamma$ traced by the particle.
-	}
-	... what? $\gamma$ is intentionally complicated here, but you can definitely compute the integral as a summation of $30$ line integrals.
-	As a visualization exercise, try to predict what $\gamma$ looks like.
-	
-	\begin{lstlisting}[language=Python]
-import matplotlib.pyplot as plt
-import numpy as np
-#create figure
-fig=plt.figure(figsize=(5,4))
-ax = fig.add_subplot(projection='3d')
-N=10
-p_j=[i/N for i in range(N)]
-X=[j for i in p_j for j in [i,i+1/N,i+1/N] ]+[1]
-Y=[j for i in p_j for j in [i,i,i+1/N] ]+[1]
-Z=[j for i in p_j for j in [i,i,i] ]+[1]
-plt.plot(X,Y,Z)
-plt.show()
-	\end{lstlisting}
-	Before we do any annoying computation... could this be a conservative vector field? We want scalar function that is $yz$ differentiated with respect to (wrt) $x$, $xz$ differentiated wrt $y$, $xy$ differentiated wrt $z$.
-	One solution is $F(x,y,z)=xyz$, which you can check very quickly it gives the correct partial derivatives.
-	Now we apply the Fundamental Theorem of Line Integrals to show that
-	\[
-	\int_{\gamma} f\cdot ds = F(1,1,1) - F(0,0,0) = 1
-	\]
-	Much shorter!
-	\newpage
-	
-	\includegraphics[width=0.6\textwidth]{staircase.png}
-	
-	For this problem, $\gamma$ looks like a staircase, but we could replace it with any curve that starts at $(0,0,0)$ and ends at $(1,1,1)$. The answer will still be the same.
 	\exercises
 	\begin{enumerate}
 		
 		\item For this question, take for granted that the derivative of $tan^{-1}(x) = 1/(1+x^2)$. \begin{enumerate}
 			\item Verify that $\nabla tan^{-1}(y/x) = (\frac{-y}{x^2+y^2}, \frac{x}{x^2+y^2})$.
 			\item Integrate $(\frac{-y}{x^2+y^2}, \frac{x}{x^2+y^2})$ over the unit circle, oriented counter-clockwise.
-			\item Is $\nabla tan^{-1}(y/x)$ conservative? When can you apply the Gradient Theorem to this function?
+			\item Is $\nabla tan^{-1}(y/x)$ conservative? When can you apply the Gradient Theorem to this function? Some interesting phenomena arise from this "paradox", as an example, see the Aharonov-Bohn Effect.
 		\end{enumerate}
 		\item Let $f:\mathbb{R}^n\setminus\{\vec{0}\} \to\mathbb{R}^n$ be continuous and radially symmetric. That is, there is some scalar function $k$ such that $f(\vec{x})= k(|\vec{x}|) \ \vec{x}/ |\vec{x}|$. [ideally want to plot something here] \begin{enumerate}
 			\item What is the line integral of $f$ along any circlular arc $C$ centered at the origin? Conclude that if $f$ is conservative, its scalar potential has to be radially symmetric too. 
@@ -389,6 +395,7 @@ plt.show()
 			\item Integrate $f$ over a (well-chosen) path to find a scalar potential for $f$.
 			\item Justify the terminology for gravitational, elastic, and electric \textbf{potential}.  
 		\end{enumerate}
+		
 	\end{enumerate}
 	
 \end{document}

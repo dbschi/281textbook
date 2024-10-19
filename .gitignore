@@ -61,3 +61,5 @@ Thumbs.db
 *.csv
 *.json
 *.xlsx
+*.fdb_latexmk
+*.fls

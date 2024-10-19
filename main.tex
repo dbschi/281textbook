@@ -1,0 +1,123 @@
+\documentclass[11pt,openany]{book}
+\usepackage{blindtext}
+\usepackage{tikz,tcolorbox}
+\usepackage{xcolor}
+\usepackage{amsfonts}
+\usepackage{hyperref} 
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage[normalem]{ulem}
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\usepackage{appendix}
+\usepackage{tabularx}
+\usepackage{amsmath,amssymb}
+\usepackage{mathtools}
+\usepackage{makecell}
+\graphicspath{ {./images/} }
+\usepackage{enumitem}
+\usepackage{soul}
+\usepackage{mathtools}
+\usepackage{wrapfig}
+\usepackage{mathrsfs}
+\usepackage{centernot}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{biblatex}
+\addbibresource{bibliograph.bib}
+
+\usepackage{pagenote}
+
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+%% End notes to be printed as sections at the
+%% end of each chapter.
+\renewcommand*{\notedivision}{\section*{\notesname}}
+\renewcommand*{\pagenotesubhead}[1]{}
+
+\newcommand*{\exercises}{\section*{\exercisename}}
+%%%%%%%%%%%%% For customising the endnote markers. Comment these out if you don't want them.
+% To prefix each note number with the chapter number
+\renewcommand{\thepagenote}{\thechapter-\arabic{pagenote}}
+
+% To have a slightly different formatting for the endnote numbers in the text -- smaller text, sans-serif, square brackets
+\renewcommand\notenumintext[1]{\space{\footnotesize\sffamily[FN-#1]}}
+
+% To have a slightly different formatting for the endnote numbers in the notes section. Just the square brackets and sans-serif; normal size.
+\renewcommand\notenuminnotes[1]{{\sffamily[FN-#1] }}
+
+% If you want a different name/heading for the end notes
+\renewcommand{\notesname}{End Notes}
+\newcommand{\exercisename}{Exercises}
+%%%%%%%%%%%%% End customisation
+
+\newcommand{\definition}[2]{\begin{tcolorbox}[title=Definition ({#1}),colframe=black]{#2}\end{tcolorbox}
+}
+\newcommand{\proposition}[1]{\begin{tcolorbox}[title=Proposition,colframe=red!50!blue!20!white,colback=red!35!blue!10!white, coltitle=black]{#1}\end{tcolorbox}
+}
+\newcommand{\theorem}[2]{\begin{tcolorbox}[title=Theorem ({#1}),colframe=red!70!black,colback=red!5!white]{#2}\end{tcolorbox}
+}
+\newcommand{\example}[1]{\begin{tcolorbox}[title=Example,colframe=yellow!50!white,colback=yellow!20!white,coltitle=black]{#1}\end{tcolorbox}
+}
+\newcommand{\corollary}[1]{\begin{tcolorbox}[]{Corollary: {#1}}\end{tcolorbox}
+}
+%\newcommand{\exercises}{\section*{\exercisename}}
+%% THIS LINE IS MANDATORY
+\makepagenote
+
+\begin{document}
+	% sample chapter
+	\chapter*{Sample chapter}
+	\section*{Section}
+	This is a sample chapter structure.\\
+	\definition{Real numbers}{
+		We denote $\mathbb{R}$ as the set of real numbers. Intuitively, this set contains all the "decimals" including the non-terminating ones.
+	}
+	\theorem{Cantor}{
+		The cardinality $|\mathbb{R}|$ is larger than $|\mathbb{Z}|$.
+	}
+	\begin{proof}
+		Left as an exercise.
+	\end{proof}
+	\corollary{
+		There is no bijective function mapping $\mathbb{Q}$ to $\mathbb{R}$.
+	}
+	\begin{proof}
+		There is a bijective function from $\mathbb{Z}$ to $\mathbb{Q}$.
+	\end{proof}
+	\example{
+		$1.3$ is a real number. So we say $1.3 \in \mathbb{R}$. \\
+		$\pi$ is a real number. So we say $\pi \in \mathbb{R}$.
+	}
+
+	\exercisename
+
+	\begin{enumerate}
+		\item Show that all the zeros of $\zeta(s)$ lie on the line $\Re (z)=1/2$.
+	\end{enumerate}
+	
+\end{document}

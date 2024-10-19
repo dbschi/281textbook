@@ -1,0 +1,41 @@
+\chapter{Linear Algebra Basics}
+    The foundational abstraction of linear algebra is the vector space. A \textit{vector space} is essentially a collection of objects that it
+makes sense to take linear combinations of. Two operations must be defined: addition and scalar multiplication. A well defined
+vector space meets all of the vector space axioms, which will be listed shortly. Many consequences can be drawn from these axioms,
+and we can build up linear algebra to solve any linear problem.
+
+Remark: One has to specify the field of scalars (\textit{field} just means number system) related to the vector space. In most cases
+here, we will be talking about real vector spaces (the field of scalars is $\mathbb{R}$). However, vector spaces can be defined with
+many other fields of scalars. Examples will follow the definition.
+
+\definition{Vector Space Axioms} {
+    A \textit{vector space} $V$ is a set closed under operations of addition ($V + V \rightarrow V$) and scalar multiplication 
+    ($\mathbb{K} \cdot V \rightarrow V$) for field of scalars $mathbb{K}$ that obeys the following 8 axioms: \newline
+    (VS1) $x + y = y + x$  $\forall x, y \in V$ (commutativity of vector addition) \newline
+    (VS2) $x + (y + z) = (x + y) + z$  $\forall x, y, z \in V$ (associativity of vector addition) \newline
+    (VS3) There exists some vector $0_V$ s.t. $x + 0_V = x$  $\forall x \in V$ (additive identity / the zero vector) \newline
+    (VS4) $\forall x \in V$,  $\exists y \in V$ s.t. $x + y = 0_v$ (additive inverse) \newline
+    (VS5) $1 \cdot x = x$  $\forall x \in V$ (multiplicative identity) \newline
+    (VS6) $a \cdot (b \cdot x) = (a \cdot b) \cdot x$  $\forall a, b \in \mathbb{K}, x \in V$ (commutativity of scalar multiplication) \newline
+    (VS7) $a \cdot (x + y) = a \cdot x + a \cdot y$  $\forall a \in \mathbb{K}, x, y \in V$ \newline
+    (distributivity of scalar multiplication over vector addition) \newline
+    (VS8) $(a + b) \cdot x = a \cdot x + b \cdot x$  $\forall a, b \in \mathbb{K}, x \in V$ \newline 
+    (distributivity of scalar multiplication over scalar addition) \newline
+}
+
+$\mathbb{R}^{n}$ is the most intuitive example of a vector space, and it is easy to check that all of the axioms hold for it. Note
+that many other properties also hold for $\mathbb{R}^n$. The reason these properties are not axioms is because they are derivable
+from the axioms (Examples?)
+
+Definition: If $V$ is a vector space and $W \subseteq V$, then $W$ is a \textit{subspace} of $V$ if and only if $W$ is a vector space
+in its own right (it's closed under addition and scalar multiplication). Note that you do not have to recheck the axioms for $W$,
+since you know they hold for $V$ and $W \subseteq V$.
+
+Remark: Returning to the idea of vector spaces over fields other than the real numbers, the best example is $\mathbb{C}$ (the complex numbers).
+It is a vector space over the field of real numbers, where it is isomorphic to $\mathbb{R}^2$, but it is also a vector space over the complex
+numbers (a complex vector space), where is is isomorphic to $\mathbb{R}^1$. Another example is $\mathbb{Q}^1 \subset \mathbb{R}^1$. This is
+not a subspace, since it's not closed under scalar multiplication by real numbers, but it is a vector space  when using the field of rational
+numbers, since it is then closed under scalar multiplication.
+
+Moving forward, it can be assumed that any vector space is over the field of real numbers, unless otherwise noted.
+

@@ -183,7 +183,7 @@ Let $\vec{v}\in\reals^n$. The magnitude of $\vec{v}$ is denoted \[
 \]
 }
 We build intuition through the lower dimensional cases.
-In $\reals^2$, let us consider the point $(4,3)$.
+In $\reals^2$, let us consider the point $(4,3)$.\\
 \begin{wrapfigure}{r}{0.3\textwidth}
 	\begin{tikzpicture}
 		\node (X)[draw=none,label=left:{$\vec{0}$}] at (0,0) {\textbullet};
@@ -283,4 +283,56 @@ Simplifying, we get\[
 	50 - 2 \sqrt{10} \sqrt{40} \cos(\angle AOB) = 50 \implies \cos(\angle AOB) = 0.
 \]
 So the angle is $\pi/2$.
+
+\example{
+	Find a closed form formula for the cosine of an angle formed by two vectors $\vec{v},\vec{w} \in\reals^n$.
+}
+Let the angle formed be $\theta$. Using the intuition from 2-D space, we can form a triangle (in a very complex n-dimensional space). We write the Law of Cosine in terms of vectors
+\begin{tikzpicture}
+	
+	\draw [->](0,0) -- (2,1) node [midway, above left]{$\vec{v}$};
+	\draw [->](0,0)--(3,0) node [midway, below]{$\vec{w}$};
+	\draw [->](2,1)--(3,0)node [midway, right]{$\vec{w}-\vec{v}$};
+	%pic["$\alpha$",draw=orange,<->,angle eccentricity=1.2,angle radius=1cm] {angle=(0,0)--(2,1)--(3,0)};
+\end{tikzpicture}
+ \[
+|\vec{v}|^2+|\vec{w}|^2-2|\vec{v}||\vec{w}|= |\vec{w}-\vec{v}|^2.
+\]
+This expands to \begin{align*}
+	\sum_{i=1}^{n} v_i^2 + \sum_{j=1}^{n} w_j^2  - 2 \sqrt{\sum_{i=1}^{n} v_i^2}\sqrt{\sum_{j=1}^{n} w_j^2} \ \cos(\theta) =
+	\sum_{i=1}^n (w_i-v_i)^2.
+\end{align*}
+Rearranging $(a-b)^2 = a^2+b^2-2ab$,
+\[
+2 \sqrt{\sum_{i=1}^{n} v_i^2}\sqrt{\sum_{j=1}^{n} w_j^2} \ \cos(\theta) = \sum_{i=1}^n 2 w_i v_i 
+\]
+so \[
+\cos(\theta) = \frac{\sum_{i=1}^n w_i v_i }{\sqrt{\sum_{i=1}^{n} v_i^2}\sqrt{\sum_{j=1}^{n} w_j^2}}.
+\]
+\definition{Dot Product}{
+	Let $\vec{v},\vec{w}\in\reals^n$, the \textbf{dot product} between $\vec{v}$ and $\vec{w}$ is \[
+		\vec{v} \cdot \vec{w} \defeq \sum_{i=1}^n v_i w_i. 
+	\]
+}
+\proposition{
+	Let $\vec{u},\vec{v},\vec{w}\in\reals^n$, $c\in\reals$. The dot product satisfies the following properties:
+	\begin{itemize}
+		\item \textit{(Symmetry)} $\vec{v}\cdot\vec{w}=\vec{w}\cdot\vec{v}$.
+		\item \textit{(Linearity 1)} $(c\vec{v})\cdot\vec{w} = c (\vec{v}\cdot\vec{w}) \textrm{(}= \vec{v}\cdot(c\vec{w})\textrm{  by symmetry)}$.
+		\item \textit{(Linearity 2)} $(\vec{v}+\vec{u})\cdot\vec{w} = \vec{v}\cdot\vec{w}+\vec{u}\cdot\vec{w}$.
+		\item \textit{(Positive definiteness)} $\vec{v} \cdot\vec{v}\geq0$, with equality if and only if $\vec{v}=\vec{0}$.
+	\end{itemize}
+}
+\begin{proof}
+	\textbf{TODO: write the proof, or put it as an exercise.}
+\end{proof}
+\corollary{
+\[
+	|\vec{v}-\vec{w}|^2 = |\vec{v}|^2 + |\vec{w}|^2 - 2 |\vec{v}||\vec{w}|
+\]
+If $\vec{v},\vec{w}\neq \vec{0}$, the angle between $\vec{v}$ and $\vec{w}$ is\[
+	\cos^{-1}(\frac{\vec{v}\cdot\vec{w}}{|\vec{v}||\vec{w}|}).
+\]
+In particular, the angle is $\pi/2$ when $\vec{v}\cdot\vec{w}=0$.
+}
 \exercises

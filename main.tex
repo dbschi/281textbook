@@ -23,8 +23,8 @@
 \usepackage{centernot}
 \usepackage{amsthm}
 \usepackage{listings}
-\usepackage{biblatex}
-\addbibresource{bibliograph.bib}
+%\usepackage{biblatex}
+%\addbibresource{bibliograph.bib}
 
 \usepackage{pagenote}
 
@@ -69,12 +69,12 @@
 
 % To have a slightly different formatting for the endnote numbers in the notes section. Just the square brackets and sans-serif; normal size.
 \renewcommand\notenuminnotes[1]{{\sffamily[FN-#1] }}
-
 % If you want a different name/heading for the end notes
 \renewcommand{\notesname}{End Notes}
 \newcommand{\exercisename}{Exercises}
 %%%%%%%%%%%%% End customisation
-
+\newcommand{\reals}{\mathbb{R}}
+\newcommand\defeq{\mathrel{\stackrel{\makebox[0pt]{\mbox{\normalfont\tiny def}}}{=}}}
 \newcommand{\definition}[2]{\begin{tcolorbox}[title=Definition ({#1}),colframe=black]{#2}\end{tcolorbox}
 }
 \newcommand{\proposition}[1]{\begin{tcolorbox}[title=Proposition,colframe=red!50!blue!20!white,colback=red!35!blue!10!white, coltitle=black]{#1}\end{tcolorbox}
@@ -85,6 +85,8 @@
 }
 \newcommand{\corollary}[1]{\begin{tcolorbox}[]{Corollary: {#1}}\end{tcolorbox}
 }
+\newtheorem*{remark}{Remark}
+\newtheorem*{notation}{}
 %\newcommand{\exercises}{\section*{\exercisename}}
 %% THIS LINE IS MANDATORY
 \makepagenote
@@ -119,5 +121,6 @@
 	\begin{enumerate}
 		\item Show that all the zeros of $\zeta(s)$ lie on the line $\Re (z)=1/2$.
 	\end{enumerate}
+	\input{coordinate_geometry/Chapter 1.tex}
 	
 \end{document}

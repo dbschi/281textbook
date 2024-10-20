@@ -1,12 +1,12 @@
 \chapter{Coordinate Geometry}
 
 \section{Introduction}
-Many of you have encountered some form of coordinate geometry in high school. For instance, the "standard" way to visualize a graph e.g. $f(x)=x^2$ is to visualize the points in 2-D space $(x,y)$ where $y=x^2$. We give an demonstration in Python code.
+Many of you have encountered some form of coordinate geometry in high school. For instance, the ``standard" way to visualize a graph e.g. $f(x)=x^2$ is to visualize the points in 2-D space $(x,y)$ where $y=x^2$. We give an demonstration in Python code.
 
 \begin{lstlisting}[language=Python]
 import matplotlib.pyplot as plt
 import numpy as np
-X=np.array(range(-100,100)) #create list of numbers from -100 to 100
+X=np.arange(-100,100) #create list of numbers from -100 to 100
 Y= X**2 #calculate the square of at each x
 plt.plot(X,Y) #plot all the pairs of points in 2d plane
 plt.xlabel('x')
@@ -176,7 +176,7 @@ This statement is easy to verify. In fact, most of our intuition for the real nu
 \begin{remark}
 	These $8$ conditions are the axioms of a vector space. Later in the course, we will generalize the notion of vectors in $\reals^n$ to other spaces (playing fields).
 \end{remark}
-\subsection{Length, angles and projections}
+\section{Length, angles and projections}
 \definition{Magnitude}{
 Let $\vec{v}\in\reals^n$. The magnitude of $\vec{v}$ is denoted \[
 |\vec{v}| \defeq \sqrt{v_1^2 + v_2 ^2+ ... v_n^2}.
@@ -206,9 +206,11 @@ The magnitude of this vector is $\sqrt{3^2+4^2}=5$. If this sounds very familiar
 		\node at (0,3.5,0){$x_2$};
 		\draw[->] (0,0,0) -- (xyz cylindrical cs:z=3);
 		\node at (0,0,3.5){$x_3$};
-		\draw[->,dotted,thick,color=red] (0,0,0) -- (2,0,0);
-		\draw[->,dotted,thick,color=red] (2,0,0) -- (2,3,0);
-		\draw[->,dotted,thick,color=red] (2,3,0) -- (2,3,1);
+		\draw[->,dotted,thick,color=red] (0,0,0) -- (2,0,0)
+		node[midway,below]{a};
+		\draw[->,dotted,thick,color=red] (2,0,0) -- (2,3,0) node[midway,right]{b};
+		\draw[->,dotted,thick,color=red] (2,3,0) -- (2,3,1)
+		node[midway,above]{c};
 		\draw[->,color=blue] 
 		(0,0,0) -- (2,3,1)
 		node[midway, below]{$\vec{x}$};
@@ -222,8 +224,9 @@ The magnitude of this vector is $\sqrt{3^2+4^2}=5$. If this sounds very familiar
 		\node at (0,3.5,0){$x_2$};
 		\draw[->] (0,0,0) -- (xyz cylindrical cs:z=3);
 		\node at (0,0,3.5){$x_3$};
-		\draw[->,dotted,thick,color=red] (0,0,0) -- (2,0,0);
-		\draw[->,dotted,thick,color=red] (2,0,0) -- (2,3,0);
+		\draw[->,dotted,thick,color=red] (0,0,0) -- (2,0,0)
+		node[midway,below]{a};
+		\draw[->,dotted,thick,color=red] (2,0,0) -- (2,3,0) node[midway,right]{b};
 		\draw[->,color=brown] 
 		(0,0,0) -- (2,3,0)
 		node[midway, left]{$\sqrt{a^2+b^2}$};
@@ -242,7 +245,7 @@ The magnitude of this vector is $\sqrt{3^2+4^2}=5$. If this sounds very familiar
 		(0,0,0) -- (2,3,0)
 		node[midway, right]{$\sqrt{a^2+b^2}$};
 		
-		\draw[->,dotted,thick,color=red] (2,3,0) -- (2,3,-1);
+		\draw[->,dotted,thick,color=red] (2,3,0) -- (2,3,-1) node[midway, above]{c};
 		\draw[->,color=blue] 
 		(0,0,0) -- (2,3,-1)
 		node[midway, left]{$\sqrt{a^2+b^2+c^2}$};

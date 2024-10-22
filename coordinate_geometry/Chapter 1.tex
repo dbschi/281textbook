@@ -130,7 +130,7 @@ This way, we can write the line from $\vec{x}$ to $\vec{y}$ as $\vec{y}-\vec{x}$
 	Lines are translation invariant. That is, for every $\vec{x},\vec{y},\vec{v}\in\mathbb{R}^n$, then the 
 	line from $\vec{x}$ to $\vec{y}$ is the same as the line from $\vec{x}+\vec{v}$ to $\vec{y}+\vec{v}$.
 }
-Let us illustrate what this statement is trying to convey. We have two points $\vec{x}$, $\vec{y}$, and now we translate each of these points by $\vec{v}$, and we want the line between the points to be preserved under this translation.
+Let us illustrate what this statement is trying to convey. We have two points $\vec{x}$, $\vec{y}$; now we translate each of these points by $\vec{v}$, and we want the line between the points to be preserved under this translation.\\
 \begin{tikzpicture}
 	\node (X)[draw=none,label=left:$\vec{x}$] at (0,0) {\textbullet};
 	\node (Y)[draw=none,label=below:$\vec{y}$] at (5,-1) {\textbullet};
@@ -176,6 +176,18 @@ This statement is easy to verify. In fact, most of our intuition for the real nu
 \begin{remark}
 	These $8$ conditions are the axioms of a vector space. Later in the course, we will generalize the notion of vectors in $\reals^n$ to other spaces (playing fields).
 \end{remark}
+\definition{Vector decomposition}{
+	We denote in $\reals^n$, \begin{align*}
+		\vec{e}_1 &\defeq (1,0,0,...,0,0,0),\\
+		\vec{e}_2 &\defeq (0,1,0,...,0,0,0),\\
+		\vec{e}_{n-1}&\defeq (0,0,0,...,0,1,0),\\
+		\vec{e}_n&\defeq(0,0,0,...,0,0,1),
+	\end{align*}
+	so that $\vec{v}=\sum_{i=1}^n v_i \vec{e}_i$.
+	In $\reals^3$, we sometimes write \[
+		\vec{i}\defeq \vec{e}_1, \quad \vec{j}\defeq \vec{e}_2,\quad \vec{k}\defeq\vec{e}_3
+	\]to accommodate the physicists.
+}
 \section{Length, angles and projections}
 \definition{Magnitude}{
 Let $\vec{v}\in\reals^n$. The magnitude of $\vec{v}$ is denoted \[
@@ -189,7 +201,8 @@ In $\reals^2$, let us consider the point $(4,3)$.\\
 		\node (X)[draw=none,label=left:{$\vec{0}$}] at (0,0) {\textbullet};
 		\node (Y)[draw=none,label=left:{$(4,3)$}] at (2,1.5) {\textbullet};
 		\draw[->]
-		(X)--(Y);
+		(X)--(Y)
+		node [midway, below right] {$|\vec{v}|=5$};
 	\end{tikzpicture}
 \end{wrapfigure}
 
@@ -252,12 +265,15 @@ The magnitude of this vector is $\sqrt{3^2+4^2}=5$. If this sounds very familiar
 	
 	\end{tikzpicture}
 \end{figure}\ \\
-To further show this, we can show that multiplying the vector by a number scales the length by exactly that number. 
+
 \proposition{
 	Let $\vec{v} \in \reals^n, a\in\reals$. Then \[
 	|a\vec{v}| = |a||\vec{v}|.
 	\]
-}
+}\ \\
+We have now transported the notions of length and scaling into the coordinate system, and this allows us to make ``measurements'' such as angles and area.
+
+\subsection{The Dot Product}
 \example{
 Let points A=$(5,8)$, B=$(-2, 7)$, O=$(4,5)$. Find the angle $\angle AOB$.
 }
@@ -330,12 +346,32 @@ so \[
 	\textbf{TODO: write the proof, or put it as an exercise.}
 \end{proof}
 \corollary{
-\[
-	|\vec{v}-\vec{w}|^2 = |\vec{v}|^2 + |\vec{w}|^2 - 2 |\vec{v}||\vec{w}|
-\]
-If $\vec{v},\vec{w}\neq \vec{0}$, the angle between $\vec{v}$ and $\vec{w}$ is\[
-	\cos^{-1}(\frac{\vec{v}\cdot\vec{w}}{|\vec{v}||\vec{w}|}).
-\]
-In particular, the angle is $\pi/2$ when $\vec{v}\cdot\vec{w}=0$.
+	\begin{enumerate}
+		\item $
+		|\vec{v}-\vec{w}|^2 = |\vec{v}|^2 + |\vec{w}|^2 - 2 \vec{v}\cdot\vec{w}.
+		$
+		\item If $\vec{v},\vec{w}\neq \vec{0}$, the angle between $\vec{v}$ and $\vec{w}$ is\[
+		\cos^{-1}(\frac{\vec{v}\cdot\vec{w}}{|\vec{v}||\vec{w}|}).
+		\]
+		In particular, the angle is $\pi/2$ when $\vec{v}\cdot\vec{w}=0$. 
+		\item $|\vec{v}\cdot\vec{w}|\leq |\vec{v}||\vec{w}|.$
+	\end{enumerate}
 }
+\example{
+	Find all vectors $\vec{v}\in\reals^3$ such that $\vec{v}\cdot(-3\vec{i}+2\vec{j}+6\vec{k}) =49$. Sketch the locus of corresponding points in $\reals^3$.
+}
+The condition expands to \begin{align*}
+	-3v_1+2v_2+6v_3 &= 49 \\
+	\implies v_3 &= \frac{49+3v_1 - 2v_2}{6}  
+\end{align*}
+so that the set of all vectors is \[
+	\left\{s \vec{i}+t \vec{j}+\left(\frac{49+3s - 2t}{6}\right) \vec{k} | s,t\in\reals\right\}.
+\]
+
 \exercises
+\begin{enumerate}
+	\item computation exercises
+	\item Verify that the dot product is symmetric, linear, and positive definite.
+	\item Show that $|a\vec{v}| = |a||\vec{v}|$.
+	
+\end{enumerate}

@@ -1,5 +1,7 @@
 \chapter{Coordinate Geometry}
+\setcounter{exercisecounter}{0}
 
+\setcounter{thmcounter}{1}
 \section{Introduction}
 Many of you have encountered some form of coordinate geometry in high school. For instance, the ``standard" way to visualize a graph e.g. $f(x)=x^2$ is to visualize the points in 2-D space $(x,y)$ where $y=x^2$. We give an demonstration in Python code.
 
@@ -62,15 +64,18 @@ What would this line look like? To get from $\mathbf{x}$ to $\mathbf{y}$, we hav
 \]
 
 This is very similar to a point as an n-tuple, but this is "spiritually" different to a point. This tuple represents the direction of line. One way to think of the correspondence between $(x_1,...,x_n)$ point and $(x_1,...,x_n)$ line is that $(x_1,...,x_n)$ line is the line connecting $(0,0,...0)$ to $(x_1,...,x_n)$ point. Because of this, we can identify a tuple as both the point and the line, and we call it a "vector" to abstract away from the actual geometric meaning.
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[node distance=2cm]
+		\node (A)[draw=none,label=below:{$(0,..,0)$}] at (0,0) {\textbullet};
+		\node (B)[draw=none,label=below:{point $(x_1,...,x_n)$}] at (9.5,1) {\textbullet};
+		
+		\draw[thick, ->]
+		(A) -- (B) 
+		node[midway, below right] {line $(x_1,..,x_n)$};
+	\end{tikzpicture}
+\end{figure}
 
-\begin{tikzpicture}[node distance=2cm]
-	\node (A)[draw=none,label=below:{$(0,..,0)$}] at (0,0) {\textbullet};
-	\node (B)[draw=none,label=below:{point $(x_1,...,x_n)$}] at (9.5,1) {\textbullet};
-	
-	\draw[thick, ->]
-	(A) -- (B) 
-	node[midway, below right] {line $(x_1,..,x_n)$};
-\end{tikzpicture}
 
 \subsection{Operation with lines}
 We need to translate a few more things from euclidean geometry.
@@ -122,10 +127,34 @@ Geometrically, this means if you connect $\mathbf{x}$ to $\mathbf{y}$ to $\mathb
 	Here we use the term "vectors", as we can in essence add points and lines together. How does one make sense of adding a line to a point? We can view this as translating the point along the path of the line, for instance, let us translate the point $(1,2)$ $3$ units in the first coordinate and $-1$ units in the second coordinate. This will give us $(4,1)$.
  	\textbf{TODO: ADD GRAPH}
 \end{remark}
-This way, we can write the line from $\vec{x}$ to $\vec{y}$ as $\vec{y}-\vec{x}$. The proof is a computational exercise.
+This way, we can write the line from $\vec{x}$ to $\vec{y}$ as $\vec{y}-\vec{x}$. The proof is a computational exercise. \\ 
 \begin{notation}
 	We now transferred for talking about points and the lines between points to addition. Therefore, we can overload the notation for points and lines as a vector $\vec{v}$, keeping in mind that they have the same arithmetic structure.
 \end{notation}
+
+
+In fact, most of our intuition for the real numbers translate to $\mathbb{R}$. For formality, we will list them here; in practice, we (almost always) take these properties for granted.
+\proposition{
+	Let $\vec{u},\vec{v},\vec{w} \in \mathbb{R}^n$, and $a,b \in \mathbb{R}$. Then the following hold:
+	\begin{itemize}
+		\item \textit{(Associativity)} $(\vec{u}+\vec{v})+\vec{w} = \vec{u}+(\vec{v}+\vec{w})$.
+		\item \textit{(Commutativity)} $\vec{u}+\vec{v} = \vec{v}+\vec{u}$.
+		\item \textit{(Identity)} The zero vector $\vec{0}\defeq (0,0,...,0)\in\reals$ satisfies $\vec{v}+\vec{0}=\vec{v}$.
+		\item \textit{(Inverse)} The inverse of $\vec{v}$, $-\vec{v}\defeq(-v_1,...,-v_n)$ satisfies $\vec{v}+(-\vec{v})=\vec{0}$.
+		\item \textit{(Scalar multiplication)} $a(b\vec{v})=(ab)\vec{v}$.
+		\item \textit{(Scalar Identity)} $1\vec{v}=\vec{v}$.
+		\item \textit{(Distributivity 1)}  $a(\vec{u}+\vec{v})=a\vec{u}+a\vec{v}$.
+		\item \textit{(Distributivity 2)}  $(a+b)\vec{v}=a\vec{v}+b\vec{v}$.
+	\end{itemize}
+} 
+\begin{remark}
+	All of these have good geometric intuition behind. For instance, the zero vector $\vec{0}$ is the ``don't move" vector, corresponding to the point at the origin, or the ``too short to be line''. The inverse of $\overrightarrow{\mathbf{xy}}$ is $\overrightarrow{\mathbf{yx}}$, where you go back from $\mathbf{x}$ to $\mathbf{y}$. \begin{tikzpicture}
+		
+	\end{tikzpicture}
+\end{remark}
+\begin{remark}
+	These $8$ conditions are the axioms of a vector space. Later in the course, we will generalize the notion of vectors in $\reals^n$ to other spaces (playing fields).
+\end{remark}
 \proposition{
 	Lines are translation invariant. That is, for every $\vec{x},\vec{y},\vec{v}\in\mathbb{R}^n$, then the 
 	line from $\vec{x}$ to $\vec{y}$ is the same as the line from $\vec{x}+\vec{v}$ to $\vec{y}+\vec{v}$.
@@ -154,28 +183,12 @@ Let us illustrate what this statement is trying to convey. We have two points $\
 	(XT)--(YT)
 	node[midway, below left] {?};
 \end{tikzpicture} \ \\
-This statement is easy to verify. In fact, most of our intuition for the real numbers translate to $\mathbb{R}$. For formality, we will list them here; in practice, we (almost always) take these properties for granted.
-\proposition{
-	Let $\vec{u},\vec{v},\vec{w} \in \mathbb{R}^n$, and $a,b \in \mathbb{R}$. Then the following hold:
-	\begin{itemize}
-		\item \textit{(Associativity)} $(\vec{u}+\vec{v})+\vec{w} = \vec{u}+(\vec{v}+\vec{w})$.
-		\item \textit{(Commutativity)} $\vec{u}+\vec{v} = \vec{v}+\vec{u}$.
-		\item \textit{(Identity)} The zero vector $\vec{0}\defeq (0,0,...,0)\in\reals$ satisfies $\vec{v}+\vec{0}=\vec{v}$.
-		\item \textit{(Inverse)} The inverse of $\vec{v}$, $-\vec{v}\defeq(-v_1,...,-v_n)$ satisfies $\vec{v}+(-\vec{v})=\vec{0}$.
-		\item \textit{(Scalar multiplication)} $a(b\vec{v})=(ab)\vec{v}$.
-		\item \textit{(Scalar Identity)} $1\vec{v}=\vec{v}$.
-		\item \textit{(Distributivity 1)}  $a(\vec{u}+\vec{v})=a\vec{u}+a\vec{v}$.
-		\item \textit{(Distributivity 1)}  $(a+b)\vec{v}=a\vec{v}+b\vec{v}$.
-	\end{itemize}
-} 
+The proof is one line: $(\vec{y}+\vec{v}) - (\vec{y}+\vec{v}) = \vec{y}-\vec{x} +\vec{v}-\vec{v}=\vec{y}-\vec{x}$. However, an immediate consequence of this is that we can ``transport'' vectors in space without distorting the vector. Colloquially, \textit{5 miles South} to you describes the same direction and length as \textit{5 miles South} to a person a few feet away. This justifies the way we visualize the correspondence between points and vectors - we ``transport'' the vectors to start from the origin $(0,...,0)$, and the end describes the point.
+
 \begin{remark}
-	All of these have good geometric intuition behind. For instance, the zero vector $\vec{0}$ is the ``don't move" vector, corresponding to the point at the origin, or the ``too short to be line''. The inverse of $\overrightarrow{\mathbf{xy}}$ is $\overrightarrow{\mathbf{yx}}$, where you go back from $\mathbf{x}$ to $\mathbf{y}$. \begin{tikzpicture}
-		
-	\end{tikzpicture}
+	Translation (and scaling) invariance is a property of Euclidean geometry. There are some exotic geometry systems that distort distance and direction through translation and scaling. One such example is the Poincar\'e metric.
 \end{remark}
-\begin{remark}
-	These $8$ conditions are the axioms of a vector space. Later in the course, we will generalize the notion of vectors in $\reals^n$ to other spaces (playing fields).
-\end{remark}
+%
 \definition{Vector decomposition}{
 	We denote in $\reals^n$, \begin{align*}
 		\vec{e}_1 &\defeq (1,0,0,...,0,0,0),\\
@@ -187,7 +200,17 @@ This statement is easy to verify. In fact, most of our intuition for the real nu
 	In $\reals^3$, we sometimes write \[
 		\vec{i}\defeq \vec{e}_1, \quad \vec{j}\defeq \vec{e}_2,\quad \vec{k}\defeq\vec{e}_3
 	\]to accommodate the physicists.
-}
+}\ \\
+\exercises
+\begin{exerciselist}
+	\item Compute $5\vec{v}-2\vec{w}$ and $-3\vec{w}$ for the following pairs of vectors: \begin{enumerate}[label=(\alph*)]
+		\item $\vec{v}=2\vec{i}+3\vec{j}$, $\vec{w}=4\vec{i}-9\vec{j}$
+		\item $\vec{v}=(1,2,-1)$, $\vec{w}=(2,-1,0)$
+		\item $\vec{v}=-2\vec{e}_3+4\vec{e}_5$, $\vec{w}=\vec{e}_1 -4\vec{e}_5$
+		\item $\vec{v}=(\cos t, \sin t)$, $\vec{w}=(\cos t)\vec{e}_2 - (\sin t) \vec{e}_1$
+	\end{enumerate}
+	\item Find the vector $\overrightarrow{PQ}$ connecting $P(7,2,9)$ to $Q(-2,1,4)$. Put your answer in the form $a\vec{i}+b\vec{j}+c\vec{k}$.
+\end{exerciselist}
 \section{Length, angles and projections}
 \definition{Magnitude}{
 Let $\vec{v}\in\reals^n$. The magnitude of $\vec{v}$ is denoted \[
@@ -211,6 +234,7 @@ The magnitude of this vector is $\sqrt{3^2+4^2}=5$. If this sounds very familiar
 \usetikzlibrary {3d}
 
 \begin{figure}
+	\centering
 	\begin{tikzpicture}
 		
 		\draw[->](0,0,0) -- (xyz cylindrical cs:radius=3);
@@ -245,6 +269,7 @@ The magnitude of this vector is $\sqrt{3^2+4^2}=5$. If this sounds very familiar
 		node[midway, left]{$\sqrt{a^2+b^2}$};
 		
 	\end{tikzpicture}
+	\centering
 	\begin{tikzpicture}
 		[z={(10:10mm)},x={(-45:5mm)}]
 		
@@ -346,20 +371,25 @@ so \[
 	\textbf{TODO: write the proof, or put it as an exercise.}
 \end{proof}
 \corollary{
+	
 	\begin{enumerate}
 		\item $
 		|\vec{v}-\vec{w}|^2 = |\vec{v}|^2 + |\vec{w}|^2 - 2 \vec{v}\cdot\vec{w}.
 		$
 		\item If $\vec{v},\vec{w}\neq \vec{0}$, the angle between $\vec{v}$ and $\vec{w}$ is\[
-		\cos^{-1}(\frac{\vec{v}\cdot\vec{w}}{|\vec{v}||\vec{w}|}).
+		\cos^{-1}\left(\frac{\vec{v}\cdot\vec{w}}{|\vec{v}||\vec{w}|}\right).
 		\]
 		In particular, the angle is $\pi/2$ when $\vec{v}\cdot\vec{w}=0$. 
 		\item $|\vec{v}\cdot\vec{w}|\leq |\vec{v}||\vec{w}|.$
 	\end{enumerate}
+}\label{dotproductcor}
+Since we can make sense of ``angles'' in higher dimensions, it is natural to generalize the notion of two vectors ``perpendicular'' to each other.
+\definition{Orthgonality}{
+Let $\vec{v},\vec{w}\in\reals^n$. We say $\vec{v}$ and $\vec{w}$ are \textbf{orthogonal} to each other if $\vec{v}\cdot\vec{w}=0$.
 }
 \example{
 	Find all vectors $\vec{v}\in\reals^3$ such that $\vec{v}\cdot(-3\vec{i}+2\vec{j}+6\vec{k}) =49$. Sketch the locus of corresponding points in $\reals^3$.
-}
+}\label{plane_projection}
 The condition expands to \begin{align*}
 	-3v_1+2v_2+6v_3 &= 49 \\
 	\implies v_3 &= \frac{49+3v_1 - 2v_2}{6}  
@@ -367,11 +397,95 @@ The condition expands to \begin{align*}
 so that the set of all vectors is \[
 	\left\{s \vec{i}+t \vec{j}+\left(\frac{49+3s - 2t}{6}\right) \vec{k} | s,t\in\reals\right\}.
 \]
+To plot this in 3D space, notice that this describes the equation of a plane $z={(49+3x-2y)}/{6}$. We pick any three points (of course we want those that are easy to calculate) $(0,0,49/6)$, $(0,49/12,0)$, $(-49/18,0,0)$.
+\iffalse
+\begin{figure}
+	\centering
 
+	\subfloat%[\centering label 1]
+	{{\includegraphics[width=7cm]{coordinate_geometry/plane1.png} }}%
+	\qquad
+	\subfloat%[\centering label 2]
+	{{\includegraphics[width=7cm]{coordinate_geometry/plane2.png} }}%
+	\caption{Two views of the plane}
+\end{figure}
+\fi
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{coordinate_geometry/plane2.png}
+	\caption{Two views of the plane}
+\end{figure}\ \\
+
+Interestingly, we see that $(-3,2,6)$ - the point corresponding to our vector - is a point on the plane!
+
+\subsection{Projection}
+\definition{Projection}{
+Let $\vec{v},\vec{w}\in\reals^n$, $\vec{v}\neq\vec{0}$, and $c\in\reals$, such that $\vec{v}\cdot(\vec{w}-c\vec{v})=0$ (or equivalently, $\vec{w}-c\vec{v}$ orthogonal to $\vec{v}$). 
+
+We say that $c\vec{v}\defeq \textrm{Proj}_{\vec{v}} (\vec{w})$ is the \textbf{vector projection of $\vec{w}$ on $\vec{v}$}.
+
+}\ \\
+
+\iffalse
+\begin{notation}
+	The vector projection ``encodes'' information about the scalar projection. Therefore, if we do not specify scalar or vector, assume are talking about vector projections.
+\end{notation}
+\fi
+To build intuition, it is always helpful to start with lower dimensions. We take a plane through $\vec{v}$ and $\vec{w}$. Looking at this slice, we can work in 2D.
+
+	\begin{tikzpicture}
+		\node (A) at (0,0) {TODO};
+	\end{tikzpicture}
+	
+	
+
+We see that $c\vec{v}$ is the the point on the extension of $\vec{v}$ such that it is closest to the point $\vec{w}$. To geometrically show this idea, we draw a circle centered at $\vec{w}$ with radius $|\vec{w}-c\vec{v}|$. The line generated by $\vec{v}$ is tangent to this circle, so the contact point at $c\vec{v}$ is indeed the closest point to $\vec{w}$. 
+
+We also see from this geometric construction that 1) the projection $c\vec{v}$ is unique thus well defined, 2) $c|\vec{v}|=|\vec{w}|\cos \theta$
+
+\proposition{
+The projection is unique and is given by \[
+	\textrm{Proj}_{\vec{v}}(\vec{w}) = \frac{\cos \theta |\vec{w}|}{|\vec{v}|} = \frac{\vec{v}\cdot\vec{w}}{|\vec{v}|^2} = \frac{\vec{v}\cdot\vec{w}}{\vec{v}\cdot\vec{v}}.
+\]
+
+}
+This is the first time we show that something is unique. The standard argument goes as follows: Suppose another object $a'$ satisfies all the properties you want for $a$. Then you can show $a=a'$, meaning every object that satisfies the properties is $a$, or equivalently, $a$ is unique. 
+
+So what happens if we pick two points $P$, $P'$ on $\vec{v}$ such that both make a right angle when connected to $\vec{w}$? We would can construct a triangle $\triangle PP'\vec{w}$ with two right angles!
+\begin{proof}
+	Let $c, c'\in\reals$ such that $\vec{p}_1=c\vec{v}$ and $\vec{p}_2=c'\vec{v}$ are both satisfy the definition of $\textrm{Proj}_{\vec{v}}({\vec{w}})$. We want to show that $c=c'$, so we consider $\vec{u}=(c-c')\vec{v}$, the line between the two projections.\\
+	By a corollary in \ref{dotproductcor}, we have two equations \begin{align*}
+	|\vec{w}-\vec{p}_1|^2&=|\vec{w}-\vec{p}_2|^2+|\vec{u}|^2 \\	
+	|\vec{w}-\vec{p}_2|^2&=|\vec{w}-\vec{p}_1|^2+|\vec{u}|^2 
+	\end{align*}
+	We can solve for $|\vec{u}|=0$, and by positive definiteness, $\vec{u}=\vec{0}$ and $c-c' = |\vec{u}|/|\vec{v}| =0$.\\
+	To show our formula for projection works, we can just compute that \[
+	\vec{v} \cdot \left(\vec{w}-\left(\frac{\vec{v}\cdot{\vec{w}}}{\vec{v}\cdot\vec{v}}\right)\vec{v}\right)=\vec{v}\cdot\vec{w} -\left(\frac{\vec{v}\cdot\vec{w}}{\vec{v}\cdot\vec{v}}\right)(\vec{v}\cdot\vec{v})=0.
+	\]
+\end{proof}
 \exercises
-\begin{enumerate}
+\begin{exerciselist}
+	\item Determine if the following pairs of vectors are orthogonal: \begin{enumerate}[label=(\alph*)]
+		\item $3\vec{e}_1+4\vec{e}_2$, $-4\vec{e}_1+3\vec{e}_2$
+		\item $(4,-1,2)$, $(3,0,-6)$
+		\item $3\vec{i}-2\vec{j}$, $-2\vec{i}-4\vec{k}$
+		\item $\vec{e}_1 + 3\vec{e}_3 + 5\vec{e}_5+ ...+(2k-1)\vec{e}_{2k-1}$, $2\vec{e}_2+4\vec{e}_4+...+(2k)\vec{e}_{2k}$
+	\end{enumerate}
+	\item Refer to the plane in the example in the previous section \ref{dotproductcor}. Show that $\textrm{Proj}_{-3\vec{i}+2\vec{j}+6\vec{k}}(\vec{v})$ is the same for any vector $\vec{v}$ such that $\vec{v}\cdot(-3\vec{i}+2\vec{j}+6\vec{k}) =49$, and compute this projection.
+	\item \textit{(Geometry of a methane molecule)} Place four points $P(0,0,0)$, $Q(1,1,0)$, $R(1,0,1)$, $S(0,1,1)$ in $reals^3$. \begin{enumerate}[label=(\alph*)]
+		\item Compute the distance between any two points of $PQRS$ and show that all $6$ pairs are the same. This means that $PQRS$ forms a regular tetrahedron.
+		\item  Verify that the geometric center of the tetrahedron $O(1/2, 1/2, 1/2)$ is equidistant to all of the vertices of the tetrahedron.
+		\item Compute the angle between two edges of the tetrahedron, rounded to $2$ decimal places. By symmetry, you only have to compute one angle.
+		\item Compute the angle $\angle POQ$, rounded to $2$ decimal places. Does this angle remind you of something from Chemistry?
+	\end{enumerate}
+\end{exerciselist}
+\section{Vector Product}
+\exercises
+\begin{exerciselist}
 	\item computation exercises
 	\item Verify that the dot product is symmetric, linear, and positive definite.
 	\item Show that $|a\vec{v}| = |a||\vec{v}|$.
+\end{exerciselist}
 	
-\end{enumerate}
+	
+

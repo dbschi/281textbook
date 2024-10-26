@@ -188,9 +188,15 @@ The proof is one line: $(\vec{y}+\vec{v}) - (\vec{y}+\vec{v}) = \vec{y}-\vec{x} 
 \begin{remark}
 	Translation (and scaling) invariance is a property of Euclidean geometry. There are some exotic geometry systems that distort distance and direction through translation and scaling. One such example is the Poincar\'e metric.
 \end{remark}
+Another notion we can carry from Euclidean geometry is parallel lines. Here we not only define what it means for two vectors to be parallel (never touching), we also give a definition for two vectors to be parallel but point in opposite directions.
+\definition{Parallel and Antiparallel Vectors}{
+	Let non-zero vectors $\vec{v},\vec{w}\in\reals^n$.
+	We say that $\vec{v}$ and $\vec{w}$ are \textbf{parallel} if there is some $c>0$ such that $\vec{v}=c\vec{w}$. We say that $\vec{v}$ and $\vec{w}$ are \textbf{antiparallel} if there is some $c<0$ such that $\vec{v}=c\vec{w}$.
+}
 %
-\definition{Vector decomposition}{
-	We denote in $\reals^n$, \begin{align*}
+Finally, the nice algebraic properties for adding and scaling vectors gives us a natural way to understand these vectors as a sum of $n$ component vectors, one for each dimension. These \textit{special} vectors deserve a name.
+\definition{Standard Basis Vectors and Vector Decomposition}{
+	We denote in $\reals^n$, the \textbf{standard basis vectors} \begin{align*}
 		\vec{e}_1 &\defeq (1,0,0,...,0,0,0),\\
 		\vec{e}_2 &\defeq (0,1,0,...,0,0,0),\\
 		\vec{e}_{n-1}&\defeq (0,0,0,...,0,1,0),\\
@@ -384,9 +390,10 @@ so \[
 	\end{enumerate}
 }\label{dotproductcor}
 Since we can make sense of ``angles'' in higher dimensions, it is natural to generalize the notion of two vectors ``perpendicular'' to each other.
-\definition{Orthgonality}{
+\definition{Orthogonality}{
 Let $\vec{v},\vec{w}\in\reals^n$. We say $\vec{v}$ and $\vec{w}$ are \textbf{orthogonal} to each other if $\vec{v}\cdot\vec{w}=0$.
 }
+
 \example{
 	Find all vectors $\vec{v}\in\reals^3$ such that $\vec{v}\cdot(-3\vec{i}+2\vec{j}+6\vec{k}) =49$. Sketch the locus of corresponding points in $\reals^3$.
 }\label{plane_projection}
@@ -445,13 +452,13 @@ We also see from this geometric construction that 1) the projection $c\vec{v}$ i
 
 \proposition{
 The projection is unique and is given by \[
-	\textrm{Proj}_{\vec{v}}(\vec{w}) = \frac{\cos \theta |\vec{w}|}{|\vec{v}|} = \frac{\vec{v}\cdot\vec{w}}{|\vec{v}|^2} = \frac{\vec{v}\cdot\vec{w}}{\vec{v}\cdot\vec{v}}.
+	\textrm{Proj}_{\vec{v}}(\vec{w}) = \frac{\cos \theta |\vec{w}|}{|\vec{v}|} = \frac{\vec{v}\cdot\vec{w}}{|\vec{v}|^2} = (\frac{\vec{v}\cdot\vec{w}}{\vec{v}\cdot\vec{v}})\vec{v}.
 \]
 
 }
 This is the first time we show that something is unique. The standard argument goes as follows: Suppose another object $a'$ satisfies all the properties you want for $a$. Then you can show $a=a'$, meaning every object that satisfies the properties is $a$, or equivalently, $a$ is unique. 
 
-So what happens if we pick two points $P$, $P'$ on $\vec{v}$ such that both make a right angle when connected to $\vec{w}$? We would can construct a triangle $\triangle PP'\vec{w}$ with two right angles!
+So what happens if we pick two points $P$, $P'$ on $\vec{v}$ such that both make a right angle when connected to $\vec{w}$? We would have constructed a triangle $\triangle PP'\vec{w}$ with two right angles!
 \begin{proof}
 	Let $c, c'\in\reals$ such that $\vec{p}_1=c\vec{v}$ and $\vec{p}_2=c'\vec{v}$ are both satisfy the definition of $\textrm{Proj}_{\vec{v}}({\vec{w}})$. We want to show that $c=c'$, so we consider $\vec{u}=(c-c')\vec{v}$, the line between the two projections.\\
 	By a corollary in \ref{dotproductcor}, we have two equations \begin{align*}
@@ -472,14 +479,300 @@ So what happens if we pick two points $P$, $P'$ on $\vec{v}$ such that both make
 		\item $\vec{e}_1 + 3\vec{e}_3 + 5\vec{e}_5+ ...+(2k-1)\vec{e}_{2k-1}$, $2\vec{e}_2+4\vec{e}_4+...+(2k)\vec{e}_{2k}$
 	\end{enumerate}
 	\item Refer to the plane in the example in the previous section \ref{dotproductcor}. Show that $\textrm{Proj}_{-3\vec{i}+2\vec{j}+6\vec{k}}(\vec{v})$ is the same for any vector $\vec{v}$ such that $\vec{v}\cdot(-3\vec{i}+2\vec{j}+6\vec{k}) =49$, and compute this projection.
-	\item \textit{(Geometry of a methane molecule)} Place four points $P(0,0,0)$, $Q(1,1,0)$, $R(1,0,1)$, $S(0,1,1)$ in $reals^3$. \begin{enumerate}[label=(\alph*)]
+	\item \textit{(Geometry of a methane molecule)} Place four points $P(0,0,0)$, $Q(1,1,0)$, $R(1,0,1)$, $S(0,1,1)$ in $\reals^3$. \begin{enumerate}[label=(\alph*)]
 		\item Compute the distance between any two points of $PQRS$ and show that all $6$ pairs are the same. This means that $PQRS$ forms a regular tetrahedron.
 		\item  Verify that the geometric center of the tetrahedron $O(1/2, 1/2, 1/2)$ is equidistant to all of the vertices of the tetrahedron.
 		\item Compute the angle between two edges of the tetrahedron, rounded to $2$ decimal places. By symmetry, you only have to compute one angle.
 		\item Compute the angle $\angle POQ$, rounded to $2$ decimal places. Does this angle remind you of something from Chemistry?
 	\end{enumerate}
 \end{exerciselist}
-\section{Vector Product}
+\section{Cross Product}
+\definition{Cross Product}{
+Let $\vec{v},\vec{w}\in\reals^3$, we define the \textbf{cross product} of $\vec{v}$ and $\vec{w}$ to be \[
+	\vec{v}\times\vec{w}\defeq \begin{bmatrix}
+		v_2w_3-v_3w_2\\
+		v_3w_1 - v_1w_3\\
+		v_1w_2 - v_2w_1\\
+	\end{bmatrix}.
+\]
+}
+\begin{remark}
+	Later on, we will introduce determinants of a matrix. The cross product can be understood as the determinant of the `matrix'\[
+	\begin{bmatrix}
+		\vec{i} & v_1 & w_1 \\
+		\vec{j} & v_2 & w_2 \\
+		\vec{k} & v_3 & w_3
+	\end{bmatrix}.
+	\]
+\end{remark}
+This definition seems a bit unmotivating, so let us work through some examples.
+\example{
+	Compute the $9$ cross products for each pair of the standard basis vectors in $\reals^3$.
+}
+With some (heavy) computation, we find
+\begin{align*}
+	\vec{i}\times\vec{i}&=\vec{0} \quad& \vec{i}\times\vec{j}&=\vec{k} \quad& \vec{i}\times\vec{k}&=-\vec{j} \\
+	\vec{j}\times\vec{i}&=-\vec{k} \quad& \vec{j}\times\vec{j}&=\vec{0} \quad& \vec{j}\times\vec{k}&=\vec{i}\\
+	\vec{k}\times\vec{i}&=\vec{j} \quad& \vec{k}\times\vec{j}&=-\vec{i} \quad& \vec{k}\times\vec{k}&=\vec{0}
+\end{align*}
+Importantly, the cross product is \textbf{antisymmetric}, meaning $\vec{v}\times\vec{w}=-\vec{w}\times\vec{v}$. You can see special cases with the standard basis from above and confirm the general case in an exercise.
+\example{
+	Compute $\vec{v} \cdot (\vec{v}\times\vec{w})$ and $\vec{w}\cdot (\vec{v}\times\vec{w})$.
+}
+Again with some heavy computation,
+\begin{align*}
+	\vec{v} \cdot (\vec{v}\times\vec{w}) &= \begin{bmatrix}
+		v_1 \\v_2\\v_3
+	\end{bmatrix}\cdot\begin{bmatrix}
+	v_2w_3-v_3w_2\\
+	v_3w_1 - v_1w_3\\
+	v_1w_2 - v_2w_1\\
+	\end{bmatrix} \\
+	&= \color{red}v_1v_2w_3\color{black}-\color{black}v_1v_3w_2\color{black}+\color{blue}v_2v_3w_1\color{black}-\color{red}v_2v_1w_3\color{black}+\color{black}v_3v_1w_2\color{black}-\color{blue}v_3v_2w_1\\
+	&=0,\\
+	\vec{w} \cdot (\vec{v}\times\vec{w}) &= \begin{bmatrix}
+		w_1 \\w_2\\w_3
+	\end{bmatrix}\cdot\begin{bmatrix}
+		v_2w_3-v_3w_2\\
+		v_3w_1 - v_1w_3\\
+		v_1w_2 - v_2w_1\\
+	\end{bmatrix} \\
+	&= \color{red}w_1v_2w_3\color{black}-\color{black}w_1v_3w_2\color{black}+\color{black}w_2v_3w_1\color{black}-\color{blue}w_2v_1w_3\color{black}+\color{blue}w_3v_1w_2\color{black}-\color{red}w_3v_2w_1\\
+	&=0.\\
+\end{align*}
+Which means $\vec{v}\times\vec{w}$ is orthogonal to $\vec{v}$ and $\vec{w}$!
+
+\example{
+	Compute $|\vec{v}\times\vec{w}|^2 + (\vec{v}\cdot\vec{w})^2$.
+}
+We have
+\begin{align*}
+|\vec{v}\times\vec{w}|^2 + (\vec{v}\cdot\vec{w})^2 =&
+(v_2w_3-v_3w_2)^2 +(v_3w_1 - v_1w_3)^2 + (v_1w_2 - v_2w_1)^2 
+\\ &+ 
+(v_1w_1 + v_2w_2 + v_3w_3)^2\\
+=& (v_1w_1)^2+(v_1w_2)^2+(v_1w_3)^2\\&+(v_2w_1)^2+(v_2w_2)^2+(v_2w_3)^2\\&+(v_3w_1)^2+(v_3w_2)^2+(v_3w_3)^2\\
+=&(v_1^2 + v_2^2+v_3^2)(w_1^2+w_2^2+w_3^3)\\
+=&|\vec{v}|^2|\vec{w}|^2.
+\end{align*}
+Now we substitute $\vec{v}\cdot\vec{w}=|\vec{v}||\vec{w}|\cos\theta$, we get \[
+	|\vec{v}\times\vec{w}|=|\vec{v}||\vec{w}|\sqrt{1-\cos^2\theta} = |\vec{v}||\vec{w}|\sin\theta.
+\]
+Where we know $\sin \theta \geq 0$ as $\theta$ is between $0$ and $\pi$.
+
+The value $|\vec{v}||\vec{w}|\sin\theta$ has a nice geometric meaning. It is the area spanned by the vectors $\vec{v}$ and $\vec{w}$.\ \\
+\usetikzlibrary{angles} 
+\begin{figure}%{r}{0.4\textwidth}
+	\centering
+\begin{tikzpicture}
+	\node (X)[draw=none] at (0,0) {};
+	\node (Y)[draw=none] at (5,0) {};
+	\node (XT)[draw=none] at (-2,-2) {};
+	\node (YT)[draw=none] at (3,-2) {};
+	
+	\draw[->,thick] 
+	(0,0)--(5,0)
+	node (a)[midway, above left] {$\vec{w}$};
+	
+	\draw[->,thick] 
+	(0,0)--(-2,-2)
+	node[midway, above left] {$\vec{v}$};
+	
+	\draw[->,dotted] 
+	(5,0)--(3,-2)
+	node[midway, above left] {$\vec{v}$};
+	
+	
+	\draw[->,dotted] 
+	(-2,-2)--(3,-2)
+	node[midway, below left] {$\vec{w}$};
+	\pic [pic text=$\theta$,draw,angle eccentricity=1.5] {angle = XT--X--Y};
+	\draw[dotted]
+	(0,0)--(-2,0) node (O) {}--(-2,-2)
+	node [midway, left]{$|\vec{v}|\sin\theta$};
+	\pic [draw, angle eccentricity=0.5]{right angle=XT--O--X};
+\end{tikzpicture}
+\caption {The area of a parallelogram formed by these vectors is the magnitude of the vector $\vec{v}\times|\vec{w}|$}
+\end{figure} \ \\
+\proposition{
+	The direction of $\vec{v}\times\vec{w}$ is determined by the \textbf{right-hand rule} as follows:
+	\begin{quotation}
+		Using the right hand, align the index finger with the direction $\vec{v}$, and the middle finger with the direction of $\vec{w}$. Extend the thumb so that it is perpendicular to both the index finger and the middle finger. The thumb is pointing in the direction of $\vec{v}\times \vec{w}$.
+	\end{quotation}
+}
+This is a byproduct of the convention we use. In $\reals^3$ we use what is known as a right-handed coordinate system - the vectors $\vec{i}$, $\vec{j}$, and $\vec{k}$ align with the first three fingers of the right hand respectively. If we used a left-handed coordinate system, the rule would be left-handed instead. 
+\begin{figure}
+	\centering
+	\begin{subfigure}[l]{0.4\textwidth}
+		\centering
+		\begin{tikzpicture}
+			
+			\draw[->](0,0,0) -- (xyz cylindrical cs:radius=3);
+			\node at (3.5,0,0){$x_2$};
+			\draw[->] (0,0,0) -- (xyz cylindrical cs:radius=3,angle=90);
+			\node at (0,3.5,0){$x_3$};
+			\draw[->] (0,0,0) -- (xyz cylindrical cs:z=3);
+			\node at (0,0,3.5){$x_1$};
+		\end{tikzpicture}
+		\caption {Right handed coordinate system}
+	\end{subfigure}
+	\begin{subfigure}[r]{0.4\textwidth}
+		\centering
+			\begin{tikzpicture}
+			\draw[->](0,0,0) -- (xyz cylindrical cs:radius=3, angle=180);
+			\node at (-3.5,0,0){$x_2$};
+			\draw[->] (0,0,0) -- (xyz cylindrical cs:radius=3,angle=90);
+			\node at (0,3.5,0){$x_3$};
+			\draw[->] (0,0,0) -- (xyz cylindrical cs:z=3);
+			\node at (0,0,3.5){$x_1$};
+		\end{tikzpicture}
+		\caption {Left handed coordinate system}
+	\end{subfigure}
+\end{figure}
+We now have a few properties about the cross product from our computation, the first you will verify on your own:
+\proposition{
+	Let $\vec{v},\vec{w},\vec{u}\in\reals^n$, then 
+	\begin{itemize}
+		\item latex sucks. I hate using tikz.
+		\item \textit{(distributivity)} $\vec{v}\times(\vec{u}+\vec{w})=\vec{v}\times\vec{u}+\vec{v}\times\vec{w}$ and $(\vec{v}+\vec{u})\times\vec{w}=\vec{v}\times\vec{w}+\vec{v}\times\vec{u}$.
+		\item \textit{(anti-symmetry)} $\vec{v}\times\vec{w}=-\vec{w}\times\vec{v}$.
+		\item $\vec{v}\times\vec{w}$ is orthogonal (perpendicular in 3D space) to $\vec{v}$ and $\vec{w}$.
+		
+		\item The magnitude $|\vec{v}\times\vec{w}|$ is given by $|\vec{v}||\vec{w}|\sin\theta$, with $\theta$ being the angle between $\vec{v}$ and $\vec{w}$, so \begin{enumerate}[label=(\roman*)]
+			\item The magnitude $|\vec{v}\times\vec{w}|$ also corresponds to the area of the parallelogram formed by $\vec{v}$ and $\vec{w}$.
+			\item If $\vec{v}$ and $\vec{w}$ are parallel or antiparallel, $\vec{v}\times\vec{w}=\vec{0}$.
+		\end{enumerate}		
+	\end{itemize}
+}
+\begin{remark}
+	Using distributivity of the cross product, you only need to memorize the cross product of the basis vectors, and write $\vec{v}\times\vec{w}=\sum_{i=1}^{3}\sum_{j=1}^3v_iw_i (\vec{e}_i\times\vec{e}_j)$.
+\end{remark}
+\subsection{Triple products}
+\example{
+	Find the volume of the parallelepiped formed from $\vec{v}=\begin{bmatrix}
+	0\\1\\1
+	\end{bmatrix}$, $\vec{w}=\begin{bmatrix}
+	1\\1\\0
+	\end{bmatrix}$, $\vec{u}=\begin{bmatrix}
+	1\\0\\1
+	\end{bmatrix}$.
+}
+
+%\usetikzlibrary{perspective}
+
+The parallelepiped is a generalization of a parallelogram to higher dimensions. Using combinations of $\vec{v},\vec{w},\vec{u}$, you can make the frame of a 3d solid. As in the figure on the left, edges of the same color correspond to the same vector (and thus parallel). The volume of this solid is still $base \times height$, where the base is a 2D parallelogram formed by two vectors and the height is determined by third vector. We make an arbitrary decision and set the base to be $\vec{v}$ and $\vec{w}$. (setting any two vectors would give the same result in the end!) The area of this base is given by the cross product
+\[
+	\vec{A}=\vec{v}\times\vec{w} = \begin{bmatrix}
+		-1\\1\\-1
+	\end{bmatrix}.
+\]\ \\
+
+Now we can determine the height of the paralellepiped from $\vec{u}$. We want to isolate the component of $\vec{v}$ that is orthogonal to the base. Equivalently, we want to find the component of $\vec{u}$ that is pointing in the direction of $\vec{A}$, a vector that is orthogonal to both $\vec{v}$ and $\vec{u}$!\ \\
+\begin{figure}[h]%{r}{\textwidth}
+	\centering
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\begin{tikzpicture}
+			[z={(10:10mm)},x={(-45:5mm)}]
+			
+			\draw[->](0,0,0) -- (xyz cylindrical cs:radius=3);
+			\node at (3.5,0,0){$x_1$};
+			\draw[->] (0,0,0) -- (xyz cylindrical cs:radius=3,angle=90);
+			\node at (0,3.5,0){$x_2$};
+			\draw[->] (0,0,0) -- (xyz cylindrical cs:z=3);
+			\node at (0,0,3.5){$x_3$};
+			\draw[->,color=red] 
+			(0,0,0)--(0,1,1)
+			node[midway, below] {\color{red}$\vec{v}$};
+			\draw[->,color=blue] 
+			(0,0,0)--(1,0,1)
+			node[midway,below]{\color{blue}$\vec{u}$};
+			\draw[->,color=green] 
+			(0,0,0)--(1,1,0)
+			node[midway, left]{\color{green}$\vec{w}$};
+			
+			\draw[->,color=red] 
+			(1,0,1)--(1,1,2);
+			
+			\draw[->,color=green] 
+			(1,1,2)--(2,2,2);
+			\draw[->,color=red] 
+			(1,1,0)--(1,2,1);
+			\draw[->,color=green] 
+			(1,0,1)--(2,1,1);
+			\draw[->,color=red] (2,1,1)--(2,2,2);
+			\draw[->,color=green] 
+			(0,1,1)--(1,2,1);
+			
+			\draw[->,color=blue] 
+			(1,1,0)--(2,1,1);
+			
+			\draw[->,color=blue] 
+			(1,2,1)--(2,2,2);
+			\draw[->,color=blue]
+			(0,1,1)--(1,1,2);
+		\end{tikzpicture}
+		\caption{The parallelepiped, draw in an optical illusion fashion.}
+	\end{subfigure}
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\begin{tikzpicture}
+			[z={(10:10mm)},x={(-45:5mm)}]
+			
+			\draw[->](0,0,0) -- (xyz cylindrical cs:radius=3);
+			\node at (3.5,0,0){$x_1$};
+			\draw[->] (0,0,0) -- (xyz cylindrical cs:radius=3,angle=90);
+			\node at (0,3.5,0){$x_2$};
+			\draw[->] (0,0,0) -- (xyz cylindrical cs:z=3);
+			\node at (0,0,3.5){$x_3$};
+			\draw[->,color=red] 
+			(0,0,0)--(0,1,1)
+			node[midway, below] {\color{red}$\vec{v}$};
+			\draw[->,color=blue] 
+			(0,0,0)--(1,0,1)
+			node[midway,below]{\color{blue}$\vec{u}$};
+			\draw[->,color=green] 
+			(0,0,0)--(1,1,0)
+			node[midway, left]{\color{green}$\vec{w}$};
+			\draw[->,dotted,thick]
+			(0,0,0)--(-1,1,-1)
+			node[midway,left]{$\vec{A}$};
+			\draw[->,color=red] 
+			(1,1,0)--(1,2,1);
+			\draw[->,color=green] 
+			(0,1,1)--(1,2,1);
+			
+		\end{tikzpicture}
+		\caption{We want to get the projection of $\vec{u}$ on $\vec{A}$.}
+	\end{subfigure}
+\end{figure}\ \\
+The volume is thus \[
+	|\textrm{Proj}_{\vec{A}}(\vec{u})||\vec{v}|=|\frac{\vec{u}\cdot\vec{A}}{|\vec{A}|^2}|\times |\vec{A}| \times|\vec{A}| = |\vec{u}\cdot\vec{A}| = 2.
+\]\ \\
+
+\proposition{
+The volume of the parallelpiped formed from $\vec{v},\vec{w},\vec{u}$ is \[
+|(\vec{v}\times\vec{w})\cdot{\vec{u}}|
+\]
+}\ \\
+
+\begin{remark}
+	This is also the expression of the (absolute value of) determinant of \[
+	\begin{bmatrix}
+		\vec{v}&\vec{w}&\vec{u}
+	\end{bmatrix}
+	\]
+	Using properties of the determinant (later chapters), you can show cycling the three vectors does not change the volume. (i.e. you can calculate using what order of the three vectors you want)
+\end{remark}
+	
+\begin{remark}
+	You may notice that the expression$(\vec{v}\times\vec{w})\cdot{\vec{u}}$ can take on negative volumes. In this case, the three vectors (taken in order) do not follow the right-hand rule. For instance, in the last example, $\vec{u}$ points in the `opposite' direction as $\vec{A}$.
+\end{remark}
+\exercises
+\begin{exerciselist}
+	\item meow
+\end{exerciselist}
+\section{Applications - Geometry of lines and planes}
 \exercises
 \begin{exerciselist}
 	\item computation exercises

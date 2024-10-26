@@ -22,7 +22,7 @@ plt.show()
 	\node (B) at (3,0) {$x^2$};
 	\draw[->,thick]
 	(A)--(B)
-	node[midway,below] {the "graph" object} ;
+	node[midway,below] {the ``graph" object} ;
 	\node(whitehead) at (8,0){
 		\includegraphics[width=0.6\textwidth]{coordinate_geometry/square_graph.png}
 	};
@@ -45,7 +45,7 @@ The following are real numbers:
 \end{enumerate}
 }
 \begin{remark}
-	The set of real numbers is known as a \textbf{complete field}. The definition of a complete field will be swept under the rug, but it guarantees a few things. The most important property: We will not "escape" the set by performing operations, possibly infinitely many.
+	The set of real numbers is known as a \textbf{complete field}. The definition of a complete field will be swept under the rug, but it guarantees a few things. The most important property: We will not ``escape" the set by performing operations, possibly infinitely many.
 \end{remark}
 \definition{N-dimensional space}{
 	Let $n$ be a positive integer. We denote the \textbf{n-dimensional real space} to be $\mathbb{R}^n$, consisting of all the $n$-tuples $(x_1,x_2,x_3,...,x_n)$, where each $x_j$ is a real number. \\
@@ -64,7 +64,7 @@ What would this line look like? To get from $\mathbf{x}$ to $\mathbf{y}$, we hav
  \overrightarrow{\mathbf{xy}}=(y_1-x_1,y_2-x_2,...,y_n-x_n).
 \]
 
-This is very similar to a point as an n-tuple, but this is "spiritually" different to a point. This tuple represents the direction of line. One way to think of the correspondence between $(x_1,...,x_n)$ point and $(x_1,...,x_n)$ line is that $(x_1,...,x_n)$ line is the line connecting $(0,0,...0)$ to $(x_1,...,x_n)$ point. Because of this, we can identify a tuple as both the point and the line, and we call it a "vector" to abstract away from the actual geometric meaning.
+This is very similar to a point as an n-tuple, but this is ``spiritually" different to a point. This tuple represents the direction of line. One way to think of the correspondence between $(x_1,...,x_n)$ point and $(x_1,...,x_n)$ line is that $(x_1,...,x_n)$ line is the line connecting $(0,0,...0)$ to $(x_1,...,x_n)$ point. Because of this, we can identify a tuple as both the point and the line, and we call it a ``vector" to abstract away from the actual geometric meaning.
 \begin{figure}[h]
 	\centering
 	\begin{tikzpicture}[node distance=2cm]
@@ -105,7 +105,7 @@ where $(a_1,...,a_n)+(b_1,...,b_n)\defeq(a_1+b_1,..., a_n+b_n)$.
 \end{proof}
 \
 
-Geometrically, this means if you connect $\mathbf{x}$ to $\mathbf{y}$ to $\mathbf{z}$, the overall "direction of travel" you make is $\mathbf{x}$ to $\mathbf{z}$. This gives us a natural extension for addition of vectors by considering each entry. Similarly for scaling vectors, we just scale the entries along each dimension.
+Geometrically, this means if you connect $\mathbf{x}$ to $\mathbf{y}$ to $\mathbf{z}$, the overall ``direction of travel" you make is $\mathbf{x}$ to $\mathbf{z}$. This gives us a natural extension for addition of vectors by considering each entry. Similarly for scaling vectors, we just scale the entries along each dimension.
 
  \begin{tikzpicture}[node distance=2cm]
  	\node (A)[draw=none,label=left:$\mathbf{x}$] at (0,0) {\textbullet};
@@ -133,7 +133,7 @@ Geometrically, this means if you connect $\mathbf{x}$ to $\mathbf{y}$ to $\mathb
 	\]
 }
 \begin{remark}
-	Here we use the term "vectors", as we can in essence add points and lines together. How does one make sense of adding a line to a point? We can view this as translating the point along the path of the line, for instance, let us translate the point $(1,2)$ $3$ units in the first coordinate and $-1$ units in the second coordinate. This will give us $(4,1)$.
+	Here we use the term ``vectors", as we can in essence add points and lines together. How does one make sense of adding a line to a point? We can view this as translating the point along the path of the line, for instance, let us translate the point $(1,2)$ $3$ units in the first coordinate and $-1$ units in the second coordinate. This will give us $(4,1)$.
 	
 	\begin{figure}[h]
 		\centering

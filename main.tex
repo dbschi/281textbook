@@ -1,11 +1,18 @@
 \documentclass[11pt,openany]{book}
+\usepackage{geometry}
+\geometry{
+	letterpaper
+}
 \usepackage{blindtext}
 \usepackage{tikz,tcolorbox}
+\usepackage{pgfplots}
 \usepackage{xcolor}
 \usepackage{amsfonts}
 \usepackage{hyperref} 
 \usepackage{indentfirst}
 \usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
 \usepackage[normalem]{ulem}
 \usepackage [english]{babel}
 \usepackage [autostyle, english = american]{csquotes}
@@ -23,9 +30,9 @@
 \usepackage{centernot}
 \usepackage{amsthm}
 \usepackage{listings}
-\usepackage{biblatex}
-\addbibresource{bibliograph.bib}
-
+%\usepackage{biblatex}
+%\addbibresource{bibliograph.bib}
+\usepackage{microtype}
 \usepackage{pagenote}
 
 
@@ -59,7 +66,7 @@
 \renewcommand*{\notedivision}{\section*{\notesname}}
 \renewcommand*{\pagenotesubhead}[1]{}
 
-\newcommand*{\exercises}{\section*{\exercisename}}
+%\newcommand*{\exercises}{\section*{\exercisename}}
 %%%%%%%%%%%%% For customising the endnote markers. Comment these out if you don't want them.
 % To prefix each note number with the chapter number
 \renewcommand{\thepagenote}{\thechapter-\arabic{pagenote}}
@@ -69,29 +76,56 @@
 
 % To have a slightly different formatting for the endnote numbers in the notes section. Just the square brackets and sans-serif; normal size.
 \renewcommand\notenuminnotes[1]{{\sffamily[FN-#1] }}
-
 % If you want a different name/heading for the end notes
 \renewcommand{\notesname}{End Notes}
 \newcommand{\exercisename}{Exercises}
-%%%%%%%%%%%%% End customisation
+\newcounter{exercisecounter} % continuity of exercises in a section
+\newenvironment{exerciselist}{
+	\begin{enumerate}
+		\setcounter{enumi}{\value{exercisecounter}}
+	}{
+		\setcounter{exercisecounter}{\value{enumi}}
+	\end{enumerate}
+}
+\newcommand*{\exercises}{\section*{\exercisename}}
 
-\newcommand{\definition}[2]{\begin{tcolorbox}[title=Definition ({#1}),colframe=black]{#2}\end{tcolorbox}
+%%%%%%%%%%%%% End customisation
+\newcommand{\reals}{\mathbb{R}}
+\newcommand\defeq{\mathrel{\stackrel{\makebox[0pt]{\mbox{\normalfont\tiny def}}}{=}}}
+
+\newcounter{thmcounter} % continuity of theorem
+\newcommand{\definition}[2]{\begin{tcolorbox}[title=Definition {\thechapter}.{\arabic{thmcounter}} ({#1}),colframe=black,label={def:\thechapter.\thethmcounter}]
+		{#2}\end{tcolorbox}
+
+\addtocounter{thmcounter}{1}
 }
-\newcommand{\proposition}[1]{\begin{tcolorbox}[title=Proposition,colframe=red!50!blue!20!white,colback=red!35!blue!10!white, coltitle=black]{#1}\end{tcolorbox}
+\newcommand{\proposition}[1]{\begin{tcolorbox}[title=Proposition {\thechapter}.{\arabic{thmcounter}},colframe=red!50!blue!20!white,colback=red!35!blue!10!white, coltitle=black,label={prop:\thechapter.\thethmcounter}]{#1}\end{tcolorbox}
+\addtocounter{thmcounter}{1}
 }
-\newcommand{\theorem}[2]{\begin{tcolorbox}[title=Theorem ({#1}),colframe=red!70!black,colback=red!5!white]{#2}\end{tcolorbox}
+\newcommand{\theorem}[2]{\begin{tcolorbox}[title=Theorem {\thechapter}.{\arabic{thmcounter}} ({#1}),colframe=red!70!black,colback=red!5!white,label={thm:\thechapter.\thethmcounter}]{#2}\end{tcolorbox}
+	
+	\addtocounter{thmcounter}{1}
 }
-\newcommand{\example}[1]{\begin{tcolorbox}[title=Example,colframe=yellow!50!white,colback=yellow!20!white,coltitle=black]{#1}\end{tcolorbox}
+\newcommand{\example}[1]{\begin{tcolorbox}[title=Example {\thechapter}.{\arabic{thmcounter}},colframe=yellow!50!white,colback=yellow!20!white,coltitle=black,label={ex:\thechapter.\thethmcounter}]{#1}\end{tcolorbox}
+
+\addtocounter{thmcounter}{1}
 }
-\newcommand{\corollary}[1]{\begin{tcolorbox}[]{Corollary: {#1}}\end{tcolorbox}
+\newcommand{\corollary}[1]{\begin{tcolorbox}[]{Corollary {\thechapter}.{\arabic{thmcounter}}: {#1}}\end{tcolorbox}
+	
+	\addtocounter{thmcounter}{1}
 }
+\newtheorem*{remark}{Remark}
+\newtheorem*{notation}{Notation}
 %\newcommand{\exercises}{\section*{\exercisename}}
 %% THIS LINE IS MANDATORY
 \makepagenote
 
 \begin{document}
+	\tableofcontents
 	% sample chapter
+	\iffalse
 	\chapter*{Sample chapter}
+	\setcounter{thmcounter}{1}
 	\section*{Section}
 	This is a sample chapter structure.\\
 	\definition{Real numbers}{
@@ -119,5 +153,7 @@
 	\begin{enumerate}
 		\item Show that all the zeros of $\zeta(s)$ lie on the line $\Re (z)=1/2$.
 	\end{enumerate}
+	\fi
+	\input{coordinate_geometry/Chapter 1.tex}
 	
 \end{document}

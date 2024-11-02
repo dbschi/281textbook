@@ -92,7 +92,6 @@
 %%%%%%%%%%%%% End customisation
 \newcommand{\reals}{\mathbb{R}}
 \newcommand\defeq{\mathrel{\stackrel{\makebox[0pt]{\mbox{\normalfont\tiny def}}}{=}}}
-
 \newcounter{thmcounter} % continuity of theorem
 \newcommand{\definition}[2]{\begin{tcolorbox}[title=Definition {\thechapter}.{\arabic{thmcounter}} ({#1}),colframe=black,label={def:\thechapter.\thethmcounter}]
 		{#2}\end{tcolorbox}
@@ -102,11 +101,11 @@
 \newcommand{\proposition}[1]{\begin{tcolorbox}[title=Proposition {\thechapter}.{\arabic{thmcounter}},colframe=red!50!blue!20!white,colback=red!35!blue!10!white, coltitle=black,label={prop:\thechapter.\thethmcounter}]{#1}\end{tcolorbox}
 \addtocounter{thmcounter}{1}
 }
-\newcommand{\theorem}[2]{\begin{tcolorbox}[title=Theorem {\thechapter}.{\arabic{thmcounter}} ({#1}),colframe=red!70!black,colback=red!5!white,label={thm:\thechapter.\thethmcounter}]{#2}\end{tcolorbox}
+\newcommand{\theorem}[2]{\begin{tcolorbox}[title=\color{black}Theorem {\thechapter}.{\arabic{thmcounter}} ({#1}),colframe=red!40,colback=red!5!white,label={thm:\thechapter.\thethmcounter}]{#2}\end{tcolorbox}
 	
 	\addtocounter{thmcounter}{1}
 }
-\newcommand{\example}[1]{\begin{tcolorbox}[title=Example {\thechapter}.{\arabic{thmcounter}},colframe=yellow!50!white,colback=yellow!20!white,coltitle=black,label={ex:\thechapter.\thethmcounter}]{#1}\end{tcolorbox}
+\newcommand{\example}[1]{\begin{tcolorbox}[title=Example {\thechapter}.{\arabic{thmcounter}},colframe=yellow!20!white,colback=yellow!10!white,coltitle=black,label={ex:\thechapter.\thethmcounter}]{#1}\end{tcolorbox}
 
 \addtocounter{thmcounter}{1}
 }

@@ -1,4 +1,8 @@
 \chapter{Linear Algebra Basics}
+
+\setcounter{exercisecounter}{0}
+
+\setcounter{thmcounter}{1}
     The foundational abstraction of linear algebra is the vector space. A \textit{vector space} is essentially a collection of objects that it
 makes sense to take linear combinations of. Two operations must be defined: addition and scalar multiplication. A well defined
 vector space meets all of the vector space axioms, which will be listed shortly. Many consequences can be drawn from these axioms,
@@ -7,35 +11,66 @@ and we can build up linear algebra to solve any linear problem.
 Remark: One has to specify the field of scalars (\textit{field} just means number system) related to the vector space. In most cases
 here, we will be talking about real vector spaces (the field of scalars is $\mathbb{R}$). However, vector spaces can be defined with
 many other fields of scalars. Examples will follow the definition.
-
-\definition{Vector Space Axioms} {
-    A \textit{vector space} $V$ is a set closed under operations of addition ($V + V \rightarrow V$) and scalar multiplication 
-    ($\mathbb{K} \cdot V \rightarrow V$) for field of scalars $mathbb{K}$ that obeys the following 8 axioms: \newline
-    (VS1) $x + y = y + x$  $\forall x, y \in V$ (commutativity of vector addition) \newline
-    (VS2) $x + (y + z) = (x + y) + z$  $\forall x, y, z \in V$ (associativity of vector addition) \newline
-    (VS3) There exists some vector $0_V$ s.t. $x + 0_V = x$  $\forall x \in V$ (additive identity / the zero vector) \newline
-    (VS4) $\forall x \in V$,  $\exists y \in V$ s.t. $x + y = 0_v$ (additive inverse) \newline
-    (VS5) $1 \cdot x = x$  $\forall x \in V$ (multiplicative identity) \newline
-    (VS6) $a \cdot (b \cdot x) = (a \cdot b) \cdot x$  $\forall a, b \in \mathbb{K}, x \in V$ (commutativity of scalar multiplication) \newline
-    (VS7) $a \cdot (x + y) = a \cdot x + a \cdot y$  $\forall a \in \mathbb{K}, x, y \in V$ \newline
-    (distributivity of scalar multiplication over vector addition) \newline
-    (VS8) $(a + b) \cdot x = a \cdot x + b \cdot x$  $\forall a, b \in \mathbb{K}, x \in V$ \newline 
-    (distributivity of scalar multiplication over scalar addition) \newline
+\iffalse
+\subsection*{Where is this going?}
+We have seen vector manipulation in $\reals^n$. This chapter tries to generalize some observations we have about $\reals^n$ to other mathematical objects. 
+\fi
+\definition{Vector Space}{
+	Let $\mathbb{K}$ be a field, and $V$ be a set closed under operations addition $+ : V\times V\to V$ and multiplication $\cdot : \mathbb{K} \times V \to V$. We call $V$ a \textbf{vector space}, or a \textbf{$\mathbb{K}$-vector space} to specify the field if the following axioms hold. \\
+%	For all $\vec{u},\vec{v},\vec{w} \in V$, and $a,b \in \mathbb{K}$. 
+	\begin{enumerate}
+		\item \textit{(Associativity)}$x + (y + z) = (x + y) + z$  $\forall x, y, z \in V$.
+		\item \textit{(Commutativity)} $x + y = y + x$  $\forall x, y \in V$.
+		\item \textit{(Identity)} There exists some vector $0_V$ s.t. $x + 0_V = x$  $\forall x \in V$.
+		\item \textit{(Inverse)} $\forall x \in V$,  $\exists y \in V$ s.t. $x + y = 0_v$.
+		\item \textit{(Scalar multiplication)} $a \cdot (b \cdot x) = (a \cdot b) \cdot x$  $\forall a, b \in \mathbb{K}, x \in V$.
+		\item \textit{(Scalar Identity)} $1 \cdot x = x$  $\forall x \in V$.
+		\item \textit{(Distributivity 1)}  $a \cdot (x + y) = a \cdot x + a \cdot y$  $\forall a \in \mathbb{K}, x, y \in V$.
+		\item \textit{(Distributivity 2)} $(a + b) \cdot x = a \cdot x + b \cdot x$  $\forall a, b \in \mathbb{K}, x \in V$.
+	\end{enumerate}
+} 
+\example{
+The following are examples of vector spaces.
+\begin{itemize}
+	\item $\reals^n$, with addition and multiplication as we have defined so far.
+	\item ${0_V}$, the set containing just the zero vector, is a vector space over any field.
+	\item The set of polynomials with degree $3$ or less. Addition and multiplication are defined as $(f+g)(x)=f(x)+g(x)$ and $cf(x)= c\times f(x)$.
+	\item $\reals$ is a $\mathbb{Q}$-vector space, where $\mathbb{Q}$ is the set of all rationals (fractions).
+\end{itemize}
 }
+\example{
+	The following are non-examples of vector spaces.
+	\begin{itemize}
+		\item $\phi$, the empty set is not a vector space over any field.
+		\item The set of polynomials with degree $3$ or more (using the addition and multiplication rules defined above).
+	\end{itemize}
+}
+More frequently, we make new vector spaces from taking subsets of existing vector spaces. For instance, there might be a subset of $\reals^n$ that also satisfies all the axioms of being a vector space.
 
-$\mathbb{R}^{n}$ is the most intuitive example of a vector space, and it is easy to check that all of the axioms hold for it. Note
-that many other properties also hold for $\mathbb{R}^n$. The reason these properties are not axioms is because they are derivable
-from the axioms (Examples?)
-
-Definition: If $V$ is a vector space and $W \subseteq V$, then $W$ is a \textit{subspace} of $V$ if and only if $W$ is a vector space
-in its own right (it's closed under addition and scalar multiplication). Note that you do not have to recheck the axioms for $W$,
-since you know they hold for $V$ and $W \subseteq V$.
-
-Remark: Returning to the idea of vector spaces over fields other than the real numbers, the best example is $\mathbb{C}$ (the complex numbers).
-It is a vector space over the field of real numbers, where it is isomorphic to $\mathbb{R}^2$, but it is also a vector space over the complex
-numbers (a complex vector space), where is is isomorphic to $\mathbb{R}^1$. Another example is $\mathbb{Q}^1 \subset \mathbb{R}^1$. This is
-not a subspace, since it's not closed under scalar multiplication by real numbers, but it is a vector space  when using the field of rational
-numbers, since it is then closed under scalar multiplication.
-
-Moving forward, it can be assumed that any vector space is over the field of real numbers, unless otherwise noted.
+\definition{Subspace}{
+	Let $V$ be a $\mathbb{K}$ vector space. We call $W\subseteq V$ a \textbf{subspace} of $V$ if $W$ forms a vector space using the inherited operations $+ : W\times W \to W$ and $\cdot : \mathbb{K}\times W \to W$. 
+} 
+\begin{remark}
+	Because the inherited operations will automatically satisfy the axioms of a vector space, it suffices to show that (1) $W$ is nonempty and (2) $W$ is closed under vector addition and scalar multiplication to confirm that $W$ is a subspace.
+\end{remark}
+The condition $W$ is nonempty is required because the identity axiom requires a zero vector, which one obtains by multiplying $0$ to an arbitrary vector in the subset.
+\example{
+\begin{enumerate}
+	\item In $\reals$-vector space $\reals^3$, the set of all vectors in the form of $k\vec{i}$ forms a subspace.
+	\item Take $\reals$ as a $\mathbb{Q}$-vector space. $\mathbb{Q}\subset\mathbb{R}$ is a subspace. 
+	\item Take $\reals$ as a $\mathbb{R}$-vector space. $\mathbb{Q}\subset\mathbb{R}$ is \textbf{not} a subspace because it is not closed under multiplication. 
+\end{enumerate}
+}
+\proposition{
+Let $W,U\subseteq V$ be subspaces. The intersection $W\cap U$ is a subspace of $V$.
+}
+\begin{proof}
+	Both $W$ and $U$ contain $0_V$, so the intersection is non-empty. We also have for $v_1,v_2\in W\cap U$,\[
+		v_1 + v_2 \in U, \quad v_1+v_2\in W,
+	\] so addition is closed in $W\cap U$. Similarly, scalar multiplication closed under $W$ and $U$, so is closed in the intersection.
+\end{proof}
+\exercises
+\begin{exerciselist}
+	\item a
+\end{exerciselist}
 

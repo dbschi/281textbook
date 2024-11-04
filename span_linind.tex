@@ -1,20 +1,24 @@
-\chapter{Span and Linear Independence}
-
-Now that we are practiced with vector spaces, we can begin taking linear combinations of vectors in an arbitrary vector space.
-
-\definition{Span} {
-    For some finite set of vectors $\{v_1, v_2, ... , v_k\}$ in a vector space $V$, the \textit{span} of that set is the set of 
-    all linear combinations of the vectors in the set: \newline 
-    \[span\{v_1, v_2, ... , v_k\} = \{c_1v_1 + c_2v_2 + ... + c_kv_k | c_1, c_2, ... c_k \in \mathbb{R}\}\]
+\section{Span and Linear Independence}
+Throughout this section, let $\mathbb{K}$ be a field. We constrain ourselves to work in $V$, a $\mathbb{K}$-vector space.
+\definition{Span}{
+	Let $k$ be some positive integer. Let  $\{v_1, v_2, ... , v_k\}\subseteq V$. The \textbf{span} of $\{v_1, v_2, ... , v_k\}$ is denoted as \[
+	\textrm{span}(v_1,v_2,...,v_k)
+	\]
+	and is the \textit{smallest} subspace of $V$ containing $\{v_1, v_2, ... , v_k\}$.
 }
-
-Remark: note that the span of an empty set is technically the zero vector: $span\{\empty\} = \{0_V\}$.
-
-\proposition{\textit{The span of any set of vectors in $V$ is always a subspace of $V$}}
-
-\textit{Proof.} The span of a set of vectors includes all linear combinations of them, so taking two linear combinations and 
-making more combinations of them will still live in the span. In other words, the span is by definition closed under scalar
-multiplication and vector addition.
+The \textit{smallest} here means that if another subspace $W$ contains $\{v_1,...,v_k\}$, $W$ cannot be a subset of $\textrm{span}(v_1,...,v_k)$. How do we know such a subspace exists? We can take the intersection of all the subspaces containing $\{v_1,...,v_k\}$ \[
+\textrm{span}(v_1,...,v_k) = \bigcap_{W \textrm{ subspace containing } \{v_1,...,v_k\}} W
+\]
+which is a subspace containing $\{v_1,...,v_k\}$ and is a subset of all other subspaces containing $\{v_1,...,v_k\}$. We know $V\subseteq V$ is a subspace containing $\{v_1,...,v_k\}$, so the intersection between at least one set and is thus well-defined.
+\proposition{
+     The span of $\{v_1, v_2, ... , v_k\}\subseteq V$ is 
+    all linear combinations of the vectors in the set:
+    \[\textrm{span}\{v_1, v_2, ... , v_k\} = \{c_1v_1 + c_2v_2 + ... + c_kv_k | c_1, c_2, ... c_k \in \mathbb{K}\}\]
+}
+\begin{proof}
+	We first show $\textrm{span}\{v_1, v_2, ... , v_k\} \supseteq \{c_1v_1 + c_2v_2 + ... + c_kv_k | c_1, c_2, ... c_k \in \mathbb{K}\}$. That is, for every $W$ subset containing $v_1,...,v_k$, $W$ must also contain $c_1v_1+...+c_kv_k$. \\
+	We now show $\textrm{span}\{v_1, v_2, ... , v_k\} \subseteq \{c_1v_1 + c_2v_2 + ... + c_kv_k | c_1, c_2, ... c_k \in \mathbb{K}\}$. The right side is a set that nonempty, is closed under addition and scalar multiplication, and contains $v_1= 1v_1+0v_2+...+0v_k$,...,$v_k=0v_1+...+0v_{k-1}+1v_k$. Therefore, it is one of the $W$ subspaces whose intersection is used to construct the span.
+\end{proof}
 
 % insert examples including what the span of one, two, etc. vectors is
 

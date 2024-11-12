@@ -11,9 +11,9 @@ The \textit{smallest} here means that if another subspace $W$ contains $\{v_1,..
 \]
 which is a subspace containing $\{v_1,...,v_k\}$ and is a subset of all other subspaces containing $\{v_1,...,v_k\}$. We know $V\subseteq V$ is a subspace containing $\{v_1,...,v_k\}$, so the intersection between at least one set and is thus well-defined.
 \proposition{
-     The span of $\{v_1, v_2, ... , v_k\}\subseteq V$ is 
+     The span of $\{v_1, v_2,\ ... , v_k\}\subseteq V$ is 
     all linear combinations of the vectors in the set:
-    \[\textrm{span}\{v_1, v_2, ... , v_k\} = \{c_1v_1 + c_2v_2 + ... + c_kv_k | c_1, c_2, ... c_k \in \mathbb{K}\}\]
+    \[\textrm{span}\{v_1, v_2,\ ... , v_k\} = \{c_1v_1 + c_2v_2 + ... + c_kv_k | c_1, c_2, ... c_k \in \mathbb{K}\}\]
 }
 \begin{proof}
 	We first show $\textrm{span}\{v_1, v_2, ... , v_k\} \supseteq \{c_1v_1 + c_2v_2 + ... + c_kv_k | c_1, c_2, ... c_k \in \mathbb{K}\}$. That is, for every $W$ subset containing $v_1,...,v_k$, $W$ must also contain $c_1v_1+...+c_kv_k$. \\
@@ -25,13 +25,91 @@ which is a subspace containing $\{v_1,...,v_k\}$ and is a subset of all other su
 It can be difficult to how to think about what the span of a set of vectors looks like, though it is also important to develop
 an intuition for it as more complex techniques are developed. It is also important to consider what vectors span a given subspace.
 
-\example{For example, the vector space of $\mathbb{R}^3$ is spanned by the set of unit vectors $\{i, j, k\}$.}
+\example{
+	Sketch, in $\reals^3$, the following spans: span$(\{\vec{i}\})$, span$(\{\vec{i},\vec{j}\})$, span$(\{\vec{i},\vec{j},\vec{k}\})$.
+}
+\todo write something here\\
+Thinking geometrically in the previous example, the span of one vector is one-dimensional (a line), the span of two vectors is two-dimensional (a plane),
+and the span of three vectors is three-dimensional (the whole 3D space). Specifically,
+we can give a correspondence between the linear combination of $k$ vectors $\{c_1{v}_1,...,c_k{v}_k\}$and a point in $\reals^k$ as \[
+	c_1{v}_1+c_2{v}_2+...+c_k{v}_k \sim \begin{bmatrix}
+		c_1 \\ c_2\\ ...\\ c_k
+	\end{bmatrix}
+\]
+Assuming this correspondence works, the geomtry of the span should resemble $\reals^k$.
+Unfortunately, this is not always true, for instance, consider the following counterexample:
+\example{
+	Sketch, in $\reals^3$, $\textrm{span}(\vec{i},\vec{k},\vec{i}+2\vec{k})$.
+}
+\todo
 
-Vector spaces' sizes can be compared by the minimum number of vectors required to span them. This "dimensionality" will be used more
-later, but for now it is important that vector spaces can be either finite or infinite dimensional.
+What went wrong here is that the third vector $\vec{i}+2\vec{k}$ is already a linear combination of the first two, and so this vector is `redundant' in the set.
+More precisely, $(1,2,0)$ and $(0,0,1)$ give the same linear combination of the three vectors, so the correspondence fails. We thus want to answer the following question:
+\begin{quotation}
+	Given a set of $k$ vectors $\{{v}_1,...,{v}_k\}$, when do these vectors span the full $k$-dimensions?
+	If they do not span the full $k$ dimensions, how many dimensions do they span?  
+\end{quotation}
 
-\example{Vector spaces like $\mathbb{R}^n$ can be spanned by $n$ vectors and thus are finite dimensional. Vector
-spaces that are composed of less linear objects, like the set of all functions $\mathbb{R} \rightarrow \mathbb{R}$, are often
-infinite dimensional. In this case, note that there's no finite list of functions such that all other functions from $\mathbb{R}
-\rightarrow \mathbb{R}$ are linear combinations of them.}
+We already have one candidate criterion for spanning the full dimensions.
+\definition{Linear Independence}{
+	Let ${{v}_1,...,v_k}\subset V$. We say that $v_1,...,v_k$ are \textbf{linearly independent} if every linear combination of $v_1,...,v_k$ is unique. Precisely, if there are $c_1,...,c_k, d_1,...,d_k\in\mathbb{K}$ such that \[
+	c_1v_1+c_2v_2+...+c_kv_k = d_1v_1+d_2v_2+...+d_kv_k,
+	\]
+	then \[c_1=d_1, c_2=d_2,...,c_k=d_k.\]
+	If $\{v_1,...,v_k\}$ is not linearly independent, we say that it is \textbf{linearly dependent}.
+}
+This might be very tricky to verify, so we would like some simplier definitions for linear independence.
+\proposition{
+	%\iffalse
+	The following are equivalent definitions for linear independence:
+	\begin{itemize}
+		\item (*) There is only one way to make $0_V$. i.e. If $c_1v_1+...+c_kv_k=0_V$, then $c_1=c_2=...=c_k=0$.
+		\item (**) If $k\geq2$, there is no way to express one vector as a linear combination as the others. i.e. For all $1\leq j\leq k$, $v_j\notin \textrm{span}(v_1,...,v_{j-1},v_{j+1},...,v_k)$.
+	\end{itemize}
+	%\fi
+}
+\begin{proof}%[ Linear independent  $\iff$ (*)]
+	We first show the original definition of linear independence implies (*).
+	We already have one way to create the zero vector as a linear combination of the set, namely\[
+	0v_1+0v_2+...+0v_k=0_V.
+	\] By definition of linear independence, this is the only way to create the zero vector.
+	\\
+	We now show (*) implies the original definition of linear independence. Let (*) hold. Then if \[
+	c_1v_1+...+c_kv_k=d_1v_1+...+d_kv_k,
+	\] then rearranging the terms we will get \[
+		(c_1-d_1)v_1+...+(c_k-d_k)v_k = 0_V.
+	\]
+	Since there is only one way to make $0_V$, it must be that $c_1-d_1=c_2-d_2=...=c_k-d_k=0$, or $c_1=d_1,...c_k=d_k$. This matches our original definition of linear independence.
+\\
+	Now we set $k\geq 2$ and show the equivelence of (*) and (**).
+	We now show (*) implies (**).  
+	Let (*) hold, and $v\in\textrm{span}(v_1,...,v_{j-1},v_{j+1},...,v_{k})$.
+	Then $v-v_j$ is a linear combination of $v_1,...,v_k$ that is not $0v_1+...+0v_k$ as the coefficient before $v_j$ is $-1$. So that \[
+		v-v_j\neq 0_V \implies v\neq v_j.
+	\]
+	What we have shown is that everything in $\textrm{span}(v_1,...,v_{j-1},v_{j+1},...,v_{k})$ is not $v_j$. Which means $v_j\notin \textrm{span}(v_1,...,v_{j-1},v_{j+1},...,v_k)$.
+	\\
+	One end of chapter exercise will guide you through the direction (**) implies (*).
+\end{proof}
+\todo introduce contraposition and contradiction?
+
+We now have an informal statement: \textit{If the set is not linearly independent, then the dimension of the span must be less than k}.
+This is because from (**), at least one of the vectors is redundant, so that we can remove that vector and still produce the same span with $k-1$ vectors.
+\exercises
+\begin{exerciselist}
+	\item Determine if the following sets of vectors are linearly dependent or independent. \begin{enumerate}[label=(\alph*)]
+		\item 
+	\end{enumerate}
+	\item Let $\{v_1,...,v_k\}\subset V$. Show that exactly one of the following statements hold: \begin{enumerate}[label=(\alph*)]
+		\item For every $v\in \textrm{span}(\{v_1,...,v_k\})$, there is exactly one way to write $v$ as a linear combination of $v_1,...,v_k$.
+		\item For every $v\in \textrm{span}(\{v_1,...,v_k\})$, there is more than one way to write $v$ as a linear combination of $v_1,...,v_k$.
+	\end{enumerate}
+\end{exerciselist}
+\section{Linear Combinations in $\reals^n$}
+As we alluded to earlier, many types of vector spaces are in some way very similar to $\reals^n$. For instance, the span of a set of $k$ linearly independent real-vectors has a natural correspondence to $\reals^k$.
+With the blind faith that everything here can generalize nicely back to abstract vector spaces, we limit ourselves again back to talking about $\reals^n$.
+
+\definition{Matrix Representation of $\reals^n$ vectors}{
+	
+}
 

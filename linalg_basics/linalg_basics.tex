@@ -11,10 +11,16 @@ and we can build up linear algebra to solve any linear problem.
 Remark: One has to specify the field of scalars (\textit{field} just means number system) related to the vector space. In most cases
 here, we will be talking about real vector spaces (the field of scalars is $\mathbb{R}$). However, vector spaces can be defined with
 many other fields of scalars. Examples will follow the definition.
-\iffalse
+%\iffalse
 \subsection*{Where is this going?}
-We have seen vector manipulation in $\reals^n$. This chapter tries to generalize some observations we have about $\reals^n$ to other mathematical objects. 
-\fi
+In the previous chapter, we have seen vector manipulation in $\reals^n$. This chapter tries to generalize some observations we have about $\reals^n$ to other mathematical objects.
+For now, we call these sets that have `$\reals^n$'-vector-like properties \textbf{vector spaces}. This notion is a bit abstract, and we usually default to $\real^n$
+to gain intuition about vector spaces and motivate new definitions and techniques. It just so happens that \textit{every finite dimensional real vector space is `almost the same' as $\reals^n$},
+so many conclusions we get from $\reals^n$ naturally extend to other vector spaces.
+%\fi
+
+In the previous chapter, \href{prop:1.7}{one proposition} lists $8$ characteristics of $\reals^n$. Let us extract all these $8$
+statements, and define a vector space to be a set that satisfies these properties.
 \definition{Vector Space}{
 	Let $\mathbb{K}$ be a field, and $V$ be a set closed under operations addition $+ : V\times V\to V$ and multiplication $\cdot : \mathbb{K} \times V \to V$. We call $V$ a \textbf{vector space}, or a \textbf{$\mathbb{K}$-vector space} to specify the field if the following axioms hold. \\
 %	For all $\vec{u},\vec{v},\vec{w} \in V$, and $a,b \in \mathbb{K}$. 
@@ -33,7 +39,7 @@ We have seen vector manipulation in $\reals^n$. This chapter tries to generalize
 The following are examples of vector spaces.
 \begin{itemize}
 	\item $\reals^n$, with addition and multiplication as we have defined so far.
-	\item ${0_V}$, the set containing just the zero vector, is a vector space over any field.
+	\item $\{0_V\}$, the set containing just the zero vector, is a vector space over any field.
 	\item The set of polynomials with degree $3$ or less. Addition and multiplication are defined as $(f+g)(x)=f(x)+g(x)$ and $cf(x)= c\times f(x)$.
 	\item $\reals$ is a $\mathbb{Q}$-vector space, where $\mathbb{Q}$ is the set of all rationals (fractions).
 \end{itemize}
@@ -41,7 +47,7 @@ The following are examples of vector spaces.
 \example{
 	The following are non-examples of vector spaces.
 	\begin{itemize}
-		\item $\phi$, the empty set is not a vector space over any field.
+		\item $\phi$, the empty set is not a vector space over any field as it does not have a zero vector.
 		\item The set of polynomials with degree $3$ or more (using the addition and multiplication rules defined above).
 	\end{itemize}
 }
@@ -69,6 +75,7 @@ Let $W,U\subseteq V$ be subspaces. The intersection $W\cap U$ is a subspace of $
 		v_1 + v_2 \in U, \quad v_1+v_2\in W,
 	\] so addition is closed in $W\cap U$. Similarly, scalar multiplication closed under $W$ and $U$, so is closed in the intersection.
 \end{proof}
+\todo 
 \exercises
 \begin{exerciselist}
 	\item a

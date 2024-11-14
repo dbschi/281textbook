@@ -34,7 +34,7 @@
 %\addbibresource{bibliograph.bib}
 \usepackage{microtype}
 \usepackage{pagenote}
-
+\usepackage{array}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -93,6 +93,12 @@
 %%%%%%%%%%%%% End customisation
 \newcommand{\reals}{\mathbb{R}}
 \newcommand\defeq{\mathrel{\stackrel{\makebox[0pt]{\mbox{\normalfont\tiny def}}}{=}}}
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
 
 \newcounter{thmcounter} % continuity of theorem
 \newcommand{\definition}[2]{\begin{tcolorbox}[title=Definition {\thechapter}.{\arabic{thmcounter}} ({#1}),colframe=black,label={def:\thechapter.\thethmcounter}]

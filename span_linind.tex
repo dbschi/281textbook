@@ -1,4 +1,5 @@
-\section{Span and Linear Independence}
+\section{Span, Linear Independence}
+\subsection{Span}
 Throughout this section, let $\mathbb{K}$ be a field. We constrain ourselves to work in $V$, a $\mathbb{K}$-vector space.
 \definition{Span}{
 	Let $k$ be some positive integer. Let  $\{v_1, v_2, ... , v_k\}\subseteq V$. The \textbf{span} of $\{v_1, v_2, ... , v_k\}$ is denoted as \[
@@ -29,6 +30,7 @@ an intuition for it as more complex techniques are developed. It is also importa
 	Sketch, in $\reals^3$, the following spans: span$(\{\vec{i}\})$, span$(\{\vec{i},\vec{j}\})$, span$(\{\vec{i},\vec{j},\vec{k}\})$.
 }
 \todo write something here\\
+\subsection{Linear Independence}
 Thinking geometrically in the previous example, the span of one vector is one-dimensional (a line), the span of two vectors is two-dimensional (a plane),
 and the span of three vectors is three-dimensional (the whole 3D space). Specifically,
 we can give a correspondence between the linear combination of $k$ vectors $\{c_1{v}_1,...,c_k{v}_k\}$and a point in $\reals^k$ as \[
@@ -95,6 +97,259 @@ This might be very tricky to verify, so we would like some simplier definitions 
 
 We now have an informal statement: \textit{If the set is not linearly independent, then the dimension of the span must be less than k}.
 This is because from (**), at least one of the vectors is redundant, so that we can remove that vector and still produce the same span with $k-1$ vectors.
+\section{Systems of Linear Equations}
+As we alluded to earlier, many types of vector spaces are in some way very similar to $\reals^n$. For instance, the span of a set of $k$ linearly independent real-vectors has a natural correspondence to $\reals^k$.
+With the blind faith that everything here can generalize nicely back to abstract vector spaces, we limit ourselves again back to talking about $\reals^n$.\\
+Here, we introduce a new notation to write linear combiantions, as $c_1v_1+...+c_kv_k$ is very cumbersome.
+\definition{Matrix}{
+	Let $m$ and $n$ be positive integers. An $m\times n$ \textbf{matrix} is a rectangular array of $m$ rows and $n$ columns in the form \[
+		\begin{bmatrix}
+			c_{1,1} & c_{1,2} & \ldots & c_{1,n} \\
+			c_{2,1} & c_{2,2} & \ldots & c_{2,n} \\
+			\vdots & & \ddots  \\
+			c_{m,1} & c_{m,2} &\ldots & c_{m,n} 
+		\end{bmatrix}\]
+	where each $c_{i,j}$ is an \textbf{entry} of the matrix.
+	We denote the set of all $m\times n$ matrices with real entries $M_{m\times n}(\reals)$. In general, we have $M_{m\times n} (\mathbb{K})$ for entries in the field $\mathbb{K}$.
+}
+\begin{notation}
+	Suggestively, we can write an $m\times n$ matrix as \[
+	\begin{bmatrix}
+		\vec{v}_1 & \vec{v}_2 & ... & \vec{v}_n
+	\end{bmatrix}
+	\]
+	where each $\vec{v}_j\in\reals^m$ is written as a column vector\[
+	\begin{bmatrix}
+		c_{j,1} \\ c_{j,2}\\ \vdots \\ c_{j,m}
+	\end{bmatrix}.
+	\]
+\end{notation}
+\definition{Matrix-vector Product}{
+	Let \[
+	A =\begin{bmatrix}
+			\vec{v}_1 & \vec{v}_2 & ... & \vec{v}_n
+		\end{bmatrix}
+	\] be an $m\times n$ matrix, and \[
+	\vec{b}=\begin{bmatrix}
+		b_1 \\ b_2 \\ \vdots\\b_n
+	\end{bmatrix} \in \reals^n.
+	\]
+	The product of $A$ and $\vec{b}$ is evaluated as \[
+		A\vec{b} = b_1\vec{v}_1+ b_2\vec{v}_2 + ...+ b_n\vec{v}_n.
+	\]
+}\example{
+	Determine if the vectors \[
+	\vec{v}_1=\begin{bmatrix}
+		1\\0\\1
+	\end{bmatrix}
+	,\vec{v}_2=\begin{bmatrix}
+		1\\1\\0
+	\end{bmatrix},
+	\vec{v}_3=\begin{bmatrix}
+	0\\1\\1
+	\end{bmatrix}
+	\] are linearly independent.
+}
+Recalling the definition for linear independence, we solve for 
+\[
+\begin{bmatrix}
+	1&1&0\\
+	0& 1 & 1\\
+	1& 0 & 1
+\end{bmatrix} \begin{bmatrix}
+	c_1 \\ c_2\\c_3
+\end{bmatrix} = \begin{bmatrix}
+	0\\0\\0
+\end{bmatrix}.
+\]
+This is a compact way to express the system
+\begin{align*}
+	c_1 + c_2 + 0 &= 0 \\
+	 0+  c_2 +  c_3 &= 0\\
+	c_1+ 0+c_3 &= 0
+\end{align*}
+There is a very slick way to find the solution (which involves adding all three equations together), but let us solve this methodically. This method is known as elimination, which involves isolating variables, and thus reducing the complexity of the system one by one.
+\\
+First, we look at the first equation and isolate $c_1=-c_2$. Now we can look replace all instances of $c_1$ in the second and third equation with $-c_2$, giving us \begin{align*}
+	c_1 + c_2 + 0 &= 0 \\
+	0 +  c_2 +  c_3 &= 0\\
+	0 - c_2 +c_3 &= 0
+\end{align*}
+If we look at just the second and third equations, these only have two variables, so we have effectively decreased the complexity of the system by 1. Whatever we get from the second and third equations, we can substitute back into the first to get $c_1$.
+Now, we repeat for the second equation, $c_2=-c_3$, and replacing all instances of $c_2$ we have \begin{align*}
+	c_1 + 0 - c_3 &= 0 \\
+	0 +  c_2 +  c_3 &= 0\\
+	0 + 0 + 2c_3 &= 0
+\end{align*}
+The third equation now is just an equation in one variable, so we can go ahead and solve \begin{align*}
+	c_1 + 0 - c_3 &= 0 \\
+	0 +  c_2 +  c_3 &= 0\\
+	0 + 0 + c_3 &= 0
+\end{align*}
+and replace all instances of $c_3$ with $0$ to get 
+\begin{align*}
+	c_1 + 0 + 0 &= 0 \\
+	0 +  c_2+  0 &= 0\\
+	0 + 0 + c_3 &= 0
+\end{align*}
+or $c_1=c_2=c_3=0$. This is indeed a solution to the system, so we can now conclude that these vectors are indeed linearly independent.
+If we condense the systems back to matrices (concatenating the $3\times 3$ matrix and the vector on the right)  we get 
+\begin{align*}
+	\left[
+	\begin{array}{ccc|c}
+		1&1&0&0\\
+		0&1&1&0\\
+		1&0&1&0
+	\end{array} \right] \rightarrow
+	\left[\begin{array}{ccc|c}
+		1&1&0&0\\
+		0&1&1&0\\
+		0&-1&1&0
+	\end{array}\right] \rightarrow
+	\left[\begin{array}{ccc|c}
+		1&0&-1&0\\
+		0&1&1&0\\
+		0&0&2&0
+	\end{array}\right]
+	\rightarrow
+	\left[\begin{array}{ccc|c}
+		1&0&0&0\\
+		0&1&0&0\\
+		0&0&1&0
+	\end{array}\right]
+\end{align*}
+\example{
+	Determine the solutions to the system of equations \begin{align*}
+		0 + 2x_2-x_3 &= 1\\
+		x_1 - x_2 + x_3 &= 0 \\
+		x_1 + x_2 + 2x_3 & = 1
+	\end{align*}
+}
+The first equation here does not let us isolate $x_1$, but we can simply exchange the first two equations to get \[
+\begin{bmatrix}[ccc|c]
+	1 & -1 & 1 & 0\\
+	0&2&-1&1\\
+	1& 1 & 2 & 1\\
+\end{bmatrix}
+\]
+We want to remove any dependence of $x_1$ for the other two equations, so we can subtract the first equation from the third to get \[
+	\begin{bmatrix}[ccc|c]
+		1 & -1 & 1 & 0\\
+		0&2&-1&1\\
+		0& 2 & 1 & 1\\
+	\end{bmatrix}
+\]
+We divide the second equation by $2$, add this equation to the first, and subtract from the third.
+\[
+	\begin{bmatrix}[ccc|c]
+		1 & -1 & 1 & 0\\
+		0&1&\frac{-1}{2}&\frac{1}{2}\\
+		0& 2 & 1 & 1\\
+	\end{bmatrix} \sim
+	\begin{bmatrix}[ccc|c]
+		1 & 0 & \frac{1}{2} & \frac{1}{2}\\
+		0&1&\frac{-1}{2}&\frac{1}{2}\\
+		0& 2 & 1 & 1\\
+	\end{bmatrix}
+	\sim
+	\begin{bmatrix}[ccc|c]
+		1 & 0 & \frac{1}{2} & \frac{1}{2}\\
+		0&1&\frac{-1}{2}&\frac{1}{2}\\
+		0& 0 & 2 & 0\\
+	\end{bmatrix}
+\]
+Finally, we divide the third equation by $2$, and remove all other entries of the third column.
+\[
+	\begin{bmatrix}[ccc|c]
+		1 & 0 & 0& \frac{1}{2}\\
+		0&1&0&\frac{1}{2}\\
+		0& 0 & 1 & 0\\
+	\end{bmatrix}
+\]
+So the solution is $x_1=1/2, x_2=1/2, x_3=0$.
+\subsection{Elementary Row Operations and Row Echelon Form}
+By how we manipulated the equations in the previous examples, we motivate these operations on matrices.
+
+\definition{Elementary Row Operations and row equivalence}{
+	The following operations on a matrix $A\in M_{m\times n}$ are known as \textbf{elementary row operations}:\begin{enumerate}
+		\item \textit{(Row Swap)} Exchange any two rows.
+		\item \textit{(Scaling)} Multiply a row by a \textbf{non-zero} constant.
+		\item \textit{(Sum)} Add a multiple of a row to another row.
+	\end{enumerate}
+	Let $B\in M_{m\times n}$. We say that $A$ is \textbf{row equivalent} to $B$ if $A$ can be transformed into $B$ By
+	applying a sequence elementary row operations. We denote this equivalence by $A\sim B$.
+}
+\begin{remark}
+	We can group the big set of $M_{m\times n}(\reals^n)$ into classes, where each class contains matrices that are row equivalent to each other.
+\end{remark}
+\proposition{
+	Elementary row operations are invertible. That is, if $A\sim A'$ after applying an elementary row operation,
+	$A'\sim A$ through applying a (possibly different) row operation.
+}
+\proposition{
+	An $m\times n$ matrix can be viewed as a system of $m$ equations in $n-1$ variables using the representation in the previous two examples.
+	In this representation, row equivalent matrices have the same solution sets.
+}
+The proof is not very enlightening. It boils down to checking that each of the three elementary row operations do not change the solution set of the corresponding linear system, so a sequence of them will not change the solution sets.
+The key takeaway from this is that we can reduce the complexity of the matrix through elementary row operations. Let us define the `simple'
+forms of a matrix you can get through row operations.
+
+\definition{Row Echelon Form and Pivots}{
+	A matrix is in \textbf{row echelon form} if \begin{itemize}
+		\item Rows with all zero entries are on the bottom.
+		\item For each row having non-zero entries, the first non-zero entry is on the right of the first non-zero entry of the row above.
+	\end{itemize}
+	In row echelon form, the first non-zero entry of a row is called a \textbf{pivot}.
+	Colloquially, the non-zero entries form a ``staircase'' like shape.
+}
+\example{
+	The following matrix is in row echelon form:\[
+	\begin{bmatrix}
+		1 & * & * & * & * \\
+		0 & 0 & 2 & * & * \\
+		0 & 0 & 0 & 1 & * \\
+		0 & 0 & 0 & 0 & 0
+	\end{bmatrix}
+	\]
+	The pivots of this matrix, from the first row, are $1$, $2$ and $1$.
+}
+In most cases, reducing a matrix into the row echelon form is ``good enough'' to find solutions. Start from the bottom row, and substitute variables go up.
+However, one problem with working with row echelon form is that a matrix is row equivalent to many matrices in row echelon form, so we want some `super' row echelon form
+that is unique to each matrix.
+\definition{Reduced Row Echelon Form}{
+	A matrix is in \textbf{Reduced Row Echelon Form} if \begin{itemize}
+		\item It is in row echelon form.
+		\item All pivots are equal to $1$.
+		\item Every pivot is the only non-zero entry in its column.
+	\end{itemize}
+}
+\example{
+	The following matrix is in reduced row echelon form:\[
+	\begin{bmatrix}
+		1 & * & 0 & 0 & * \\
+		0 & 0 & 1 & 0 & * \\
+		0 & 0 & 0 & 1 & * \\
+		0 & 0 & 0 & 0 & 0
+	\end{bmatrix}
+	\]
+}
+By how we defined the reduced row echelon form, we cannot find two distinct matrices in reduced row echelon form that are also row equivalent. This guarantees
+that a matrix is row equivalent to at most one reduced row echelon form matrix.
+\theorem{Existence and Uniqueness of Reduced Row Echelon Form}{
+	Let $A \in M_{m\times n}(\reals)$. Then there exists a unique $A'\in M_{m\times n}(\reals)$ such that $A'$ is in reduced
+	row echelon form and $A \sim A'$. We define $A'$ to be the \textbf{reduced row echelon form} of $A$, and denote
+	\[
+		A' = \textrm{rref}(A).
+	\]
+}
+
+\begin{proof}
+	\todo Gaussian-Jordan Reduction
+\end{proof}
+
+\subsection{Recovering solutions from rref}
+
+
 \exercises
 \begin{exerciselist}
 	\item Determine if the following sets of vectors are linearly dependent or independent. \begin{enumerate}[label=(\alph*)]
@@ -105,11 +360,3 @@ This is because from (**), at least one of the vectors is redundant, so that we 
 		\item For every $v\in \textrm{span}(\{v_1,...,v_k\})$, there is more than one way to write $v$ as a linear combination of $v_1,...,v_k$.
 	\end{enumerate}
 \end{exerciselist}
-\section{Linear Combinations in $\reals^n$}
-As we alluded to earlier, many types of vector spaces are in some way very similar to $\reals^n$. For instance, the span of a set of $k$ linearly independent real-vectors has a natural correspondence to $\reals^k$.
-With the blind faith that everything here can generalize nicely back to abstract vector spaces, we limit ourselves again back to talking about $\reals^n$.
-
-\definition{Matrix Representation of $\reals^n$ vectors}{
-	
-}
-

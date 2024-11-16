@@ -144,7 +144,17 @@ Here, we introduce a new notation to write linear combiantions, as $c_1v_1+...+c
 	The product of $A$ and $\vec{b}$ is evaluated as \[
 		A\vec{b} = b_1\vec{v}_1+ b_2\vec{v}_2 + ...+ b_n\vec{v}_n.
 	\]
-}\example{
+}
+\proposition{
+	The matrix-vector product satisfies the following properties. Let $c\in\reals,\vec{x}_1,\vec{x}_2\in\reals^n, A\in M_{m\times n}(\reals)$, then \begin{itemize}
+		\item $A(\vec{x}_1+\vec{x}_2)=A\vec{x}_1+A\vec{x}_2$,
+		\item $A(c\vec{x}_1)= c(A\vec{x}_1)$.
+	\end{itemize}
+}
+This means that the matrix-vector product preserves linear combinations.
+$A(c_1\vec{x}_1+...+c_k\vec{v}_k)=c_1A\vec{x}_1+...+c_kA\vec{x_k}$.
+
+\example{
 	Determine if the vectors \[
 	\vec{v}_1=\begin{bmatrix}
 		1\\0\\1
@@ -459,7 +469,7 @@ Our solution vector $(x_1,x_2,x_3,x_4,x_5)$ thus has the form \[
 	-1 \\ -1 \\ 1 \\0 \\0
 \end{bmatrix}
 \]
-This is describes exactly the span of the vectors \[
+This describes exactly the span of the vectors \[
 	\begin{bmatrix}
 		3 \\ -4 \\ 0 \\ 2 \\ 1
 	\end{bmatrix} ,
@@ -473,15 +483,15 @@ From this example, we have an algorithm to solve for the nullspace as a span of 
 \begin{algorithm}
 \caption{Generating the Nullspace of Matrix $A$}
 
-	$A\gets \textrm{rref}(A)$
-	 $S\gets$ empty set
+	$A\gets \textrm{rref}(A)$\\
+	 $S\gets$ empty set\\
 	\For{each column $j$ without a pivot} {
-		 $\vec{v} \gets \vec{e}_j$
+		 $\vec{v} \gets \vec{e}_j$\\
 		\For{each row $i$ with a pivot}{
-			 Locate pivot of row $i$ in column $k$
-			 $\vec{v} \gets \vec{v} - a_{i,j} \vec{e}_k$
+			 Locate pivot of row $i$ in column $k$\\
+			 $\vec{v} \gets \vec{v} - a_{i,j} \vec{e}_k$\\
 		}
-		Add $\vec{v}$ to S
+		Add $\vec{v}$ to S\\
 	 }
 	\Return span$(S)$
 \end{algorithm}
@@ -489,6 +499,54 @@ From this example, we have an algorithm to solve for the nullspace as a span of 
 This is what we did in the previous example, except written in pseudocode.
 The idea is that each column without a pivot denotes a free variable, while each column with a pivot is a fixed by the free variables.
 This is what we do in lines $5$ to $8$, after fixing our free variable to be $1$, we subtract from the fixed variables. 
+
+Now we return back to solving $A\vec{x}=\vec{b}$. We showed that the solutions do not form a subspace. However, these solutions are related to the nullspace.
+
+\example{
+	Find the solutions to the system represented by 
+
+	\[
+		\begin{bmatrix}[c c c c c | c]
+			1& 0& 1& 0 & -3 & 1\\
+			0& 1& 1& 0 & 4 & 2\\
+			0& 0& 0& 1 & -2 & 3
+		\end{bmatrix}.
+	\]
+}
+Similar to computing nullspace, let us start with the last variable $x_5$ and work our way towards $x_1$.
+There is no equation that fixes $x_5$, so let $x_5 = s$ for some $s\in\reals$.
+\textcolor{red}{Then the last equations fixes $x_4 = 3+2s$}. 
+
+Again, we do not have an equation that fixes $x_3$, so let $x_3=t$ for some $t\in\reals$.
+This will force (from the second equation) \textcolor{red}{$x_2= 2-t-4s$} and (from the first equation) \textcolor{red}{$x_1 = 1-t+3s$}.
+
+Our solution vector $(x_1,x_2,x_3,x_4,x_5)$ thus has the form \[
+\begin{bmatrix}
+	1-t+3s\\ 2-t-4s\\ t\\ 3+2s\\ s
+\end{bmatrix}= \begin{bmatrix}
+	1\\2\\0\\3\\0
+\end{bmatrix}+s\begin{bmatrix}
+	3 \\ -4 \\ 0 \\ 2 \\ 1
+\end{bmatrix} + t \begin{bmatrix}
+	-1 \\ -1 \\ 1 \\0 \\0
+\end{bmatrix}
+\]
+This is the nullspace, but shifted by the vector $(1,2,0,3,0)$.
+\proposition{
+	Let $\vec{x}_1,\vec{x}_2\in\reals^n$ be solutions to $A\vec{x}=\vec{b}$.Then\[
+		(\vec{x}_1-\vec{x}_2)\in N(A).
+	\] 
+}
+\begin{proof}
+	We compute directly that $A(\vec{x}_1-\vec{x}_2)=\vec{b}-\vec{b}=\vec{0}$.
+\end{proof}
+\corollary{
+	Let $\vec{v}$ be \textit{one} solution to $A\vec{x}=\vec{b}$. Then all the solutions of $A\vec{x}=\vec{b}$ is exactly\[
+	\{\vec{v}+\vec{n}|\vec{n}\in N(A)
+		\}.\]
+}
+This means we only need one solution (particular solution), and the nullspace (homogeneous) solution to solve any matrix.
+This one solution can be obtained by setting all the `free variables' in the solution to zero, and solving for all the pivots.
 
 \exercises
 \begin{exerciselist}
@@ -500,3 +558,153 @@ This is what we do in lines $5$ to $8$, after fixing our free variable to be $1$
 		\item For every $v\in \textrm{span}(\{v_1,...,v_k\})$, there is more than one way to write $v$ as a linear combination of $v_1,...,v_k$.
 	\end{enumerate}
 \end{exerciselist}
+
+\section{Linear Transformations}
+Matrix-vector multiplication preserve linear combinations. Let us name this property.
+\definition{Linear Transformation}{
+	Let $V$ and $W$ be $\mathbb{K}$-vector spaces. A function $f: V\to W$ is a \textbf{linear transformation} if it preserves
+	linear combinations. Namely, for every $c\in\mathbb{K}, \vec{v}_1,\vec{v}_2\in V$,\begin{itemize}
+		\item $f(\vec{v}_1+\vec{v}_2)=f(\vec{v}_1)+f(\vec{v}_2)$,
+		\item $f(c\vec{v}_1)=cf(\vec{v}_1)$.
+	\end{itemize}
+}
+Many functions in the wild are linear transformations. This includes the functions we have introduced so far.
+\example{
+	The following are examples linear transformations:
+	\begin{enumerate}
+		\item A matrix $A\in M_{m\times n}(\reals)$ admits a linear transformation $F:\reals^n\to \reals^m$ by \[
+			F(\vec{x})=A\vec{x}.
+		\]
+		\item Let $\vec{v}\in\reals^n$. $f(\vec{x})=\vec{v}\cdot\vec{x}$ is a linear transformation from $\reals^n\to\reals$. The projection Proj$_{\vec{v}}$ is a linear transformation from $\reals^n\to\reals^n$.
+		\item Let $\vec{v}\in\reals^3$. $f(\vec{x})=\vec{v}\times\vec{x}$ is a linear transformation from $\reals^3\to \reals^3$.
+		\item Recall that the set of polynomials $f(x)$ is a real vector space. The differentiation operator $\frac{d}{dx}$ is a linear transformation from the set of polyomials to itself.
+		\item Integration over a bounded interval $\int_{a}^{b}$ is a linear transformation from the space of integrable functions to $\reals$.
+	\end{enumerate}
+}
+
+\proposition{
+	Let $U,V,W$ be $\mathbb{K}$-vector spaces, and $T_1:U\to V, T_2:U\to V, T_3:V\to W$ be linear transformations, then the following are also linear transformations: \begin{itemize}
+		\item $f_1:U\to V$, $f_1(\vec{x}) = T_1(\vec{x})+T_2(\vec{x})$
+		\item $f_2:U\to V$, $f_2(\vec{x})=c T_1(\vec{x})$ for any $c\in\mathbb{K}$
+		\item $f_3:U\to W$, $f_3(\vec{x})= T_3(T_1(\vec{x}))$.
+	\end{itemize}
+}
+The first example of linear transformation given $A\vec{x}$ is a very general type of linear transformation.
+The punchline is that it is \textbf{the} example of a linear transformation.
+\theorem{Matrix Representation of Linear Transformation}{
+	Let $T:\reals^n \to \reals^m$ be a linear transformation. Then there is a matrix $A\in M_{m\times n}$ such that for all $\vec{x}\in\reals^n$,
+	\[
+		T(\vec{x})=A\vec{x}.
+	\]
+	We denote this matrix the \textbf{matrix representation} of $T$.
+}
+\begin{remark}
+	Importantly, this theorem is only applicable for $\reals^n\to\reals^m$, both are \textbf{finite dimensional}.
+	Some linear functions work with infinite dimensional (we will give a definition later) vector spaces. Intuitively, this means the analogous
+	`standard basis vectors' is an infinite set $\{\vec{e}_1,\vec{e}_2,\ldots\}$. 
+\end{remark}
+Before we head to the details of the proof, here is the idea behind our constuction.
+Let us suppose that this matrix exists; how do we compute each entry of the matrix?
+The trick is to think of the matrix as $\begin{bmatrix}
+	\vec{w}_1 & \vec{w}_2 & ... & \vec{w}_n
+\end{bmatrix}$.
+We can get a linear combination of these to equal any of the $\vec{w}_j$'s. Namely, using the standard basis vectors,
+$A\vec{e}_j=\vec{w}_j$. Since $A\vec{e}_j=T(\vec{e}_j)$That means our matrix must be in the form \[
+	\begin{bmatrix}
+		T(\vec{e}_1) \ T(\vec{e}_2) \ \ldots \ T(\vec{e}_n)
+	\end{bmatrix} .
+\]
+Now all we need to do check that this matrix works.
+\begin{proof}
+	We claim that the matrix $A=\begin{bmatrix}
+		T(\vec{e}_1) \ T(\vec{e}_2) \ \ldots \ T(\vec{e}_n)
+	\end{bmatrix}$ satisfies $T(\vec{x})=A\vec{x}$.
+	Let $\vec{x}\in \reals^n$. Then $\vec{x}=\sum_{i=1}^{n} x_i\vec{e}_i$.
+	So that by linearity, \[
+	T(\vec{x}) = \sum_{i=1}^{n} x_i T(\vec{e}_i) = A \begin{bmatrix}
+		x_1 \\ x_2 \\ \vdots \\ x_n
+	\end{bmatrix} = A\vec{x}.
+	\]
+\end{proof}	
+
+\example{
+	Express the linear transformations of the dot product, cross product, and projection as matrix-vector multiplications.
+}
+\textbf{Dot Product: }Let $\vec{v}=(v_1,\ldots,v_n)\in\reals^n$. Then $\vec{v}\cdot\vec{e}_j=v_j$. So \[\vec{v}\cdot\vec{x} = \begin{bmatrix}
+	v_1 & v_2 &  \ldots & v_n
+\end{bmatrix}\vec{x}\].
+
+\textbf{Cross Product} Let $\vec{v}=(v_1,v_2,v_3)\in\reals^n$. Then \[
+	\vec{v}\times\vec{x} = \begin{bmatrix}
+		0 & -v_3 & v_2\\
+		v_3 & 0 & -v_1\\
+		-v_2 & v_1 & 0
+	\end{bmatrix}\vec{x}
+\]
+
+\textbf{Projection} Let $\vec{v}=(v_1,\ldots,v_n)\in\reals^n$. Then \[
+	\textrm{Proj}_{\vec{v}}(\vec{x})=\frac{1}{|\vec{v}|^2}\begin{bmatrix}
+		v_1 v_1 & v_1 v_2 & \ldots & v_1 v_n \\
+		v_2 v_1 & v_2 v_2 & \ldots & v_2 v_n \\
+		\vdots & & \ddots & \\
+		v_n v_1 & v_n v-2 & \ldots & v_n v_n
+	\end{bmatrix}\vec{x}
+\]
+where multiplication of matrix by scalar is entry wise.
+\example{
+	Let $T:\reals^m\to\reals^n$, $S:\reals^n\to\reals^p$. Let $A\in M_{m\times n}, B\in M_{n\times p}$ be the matrix representations of $S$ and $T$ respectively.
+	We know that the function $F:\reals^m \to \reals^p$ by $F(\vec{x})=S(T(\vec{x}))$ has a matrix representation. Compute this matrix.
+}
+The computation is not very interesting. However, you will do this until the day you drop ISP.
+If we write $A=\begin{bmatrix}
+	\vec{x}_1 & \ldots & \vec{x}_m
+\end{bmatrix}, \vec{b}_j\in\reals^n$, then for each $\vec{e}_j\in\reals^m$ we have $A\vec{e}_j=\vec{x}_j$.
+So that \[
+S(T(\vec{e}_j))= S(A\vec{e}_j) = S(\vec{x}_j) = B(\vec{x}_j).
+\]
+The matrix is \[
+\begin{bmatrix}
+	B\vec{x}_1 & B\vec{x}_2 & \ldots & B\vec{x}_m
+\end{bmatrix}.
+\]
+Now, if we forcefully write the linear transformations in matrices, we get $S(T(\vec{x}))= BA\vec{x}$. This allows us
+to define the product of matrices.
+\definition{Matrix Operations}{
+	Let $\alpha \in\reals$, $A=\{a_{i,j}\},B=\{b_i,j\}\in M_{m\times n}(\reals)$, $C={c_{i,j}}\in M_{n\times p}(\reals)$.
+	We define the addition of matrices \[
+	A+B=\{a_{i,j}+b_{i,j}\},
+	\]
+	the pointwise addition of each entry. We define the scaling of a matrix \[
+	\alpha A = \{\alpha a_{i,j}\},
+	\]
+	the pointise scaling of each entry. We also define the product of matrices\[
+	AC = \left\{\sum_{k=1}^{n}a_{i,k}b_{k_j}\right\}.
+	\]
+}
+\begin{remark}
+	The definition of matrix product is equivalent to what we got from getting the matrix from the composition of functions.
+	The only difference is that we are composing a function the other way from $\reals^p\to\reals^n\to\reals^m$.
+\end{remark}
+\begin{remark}
+	There is a mnenomic to memorize the formula for matrix product $AB$. It involves putting $A$ on the bottom left and $B$ on the top right, like so:
+
+	\[
+	\begin{array}{cc}
+		&\begin{bmatrix}
+			b_{1,1} & \ldots & b_{1,p}\\
+			\vdots & \ddots&\\
+			b_{n,1} & \ldots & b_{n,p}
+		\end{bmatrix}\\
+		\begin{bmatrix}
+			a_{1,1} & \ldots & a_{1,n}\\
+			\vdots & \ddots&\\
+			a_{m,1} & \ldots & a_{m,n}
+		\end{bmatrix}	& \begin{bmatrix}\\
+			\textrm{product goes here}\\
+			\\
+		\end{bmatrix}
+	\end{array}
+	\]
+	The product of an $m\times n$ and an $n\times p$ matrix is an $m\times p$ matrix. To find the $i,j$'th entry of the product,
+	locate the $i$-th row on matrix $A$ (left) and the $j$-th column on matrix $B$ (top). Treating the row and column as vectors with $n$ entries, the dot product is the $i,j$-th entry of the product.
+\end{remark}

@@ -808,7 +808,7 @@ The parallelepiped is a generalization of a parallelogram to higher dimensions. 
 	\end{bmatrix}.
 \]\ \\
 
-Now we can determine the height of the paralellepiped from $\vec{u}$. We want to isolate the component of $\vec{v}$ that is orthogonal to the base. Equivalently, we want to find the component of $\vec{u}$ that is pointing in the direction of $\vec{A}$, a vector that is orthogonal to both $\vec{v}$ and $\vec{u}$!\ \\
+Now we can determine the height of the paralellepiped from $\vec{u}$. We want to isolate the component of $\vec{u}$ that is orthogonal to the base. Equivalently, we want to find the component of $\vec{u}$ that is pointing in the direction of $\vec{A}$, a vector that is orthogonal to both $\vec{v}$ and $\vec{w}$!\ \\
 \begin{figure}[h]%{r}{\textwidth}
 	\centering
 	\begin{subfigure}{0.4\textwidth}
@@ -888,7 +888,7 @@ Now we can determine the height of the paralellepiped from $\vec{u}$. We want to
 	\end{subfigure}
 \end{figure}\ \\
 The volume is thus \[
-	|\textrm{Proj}_{\vec{A}}(\vec{u})||\vec{v}|=|\frac{\vec{u}\cdot\vec{A}}{|\vec{A}|^2}|\times |\vec{A}| \times|\vec{A}| = |\vec{u}\cdot\vec{A}| = 2.
+	|\textrm{Proj}_{\vec{A}}(\vec{u})||\vec{v}|=\left|\frac{\vec{u}\cdot\vec{A}}{|\vec{A}|^2}\right|\times |\vec{A}| \times|\vec{A}| = |\vec{u}\cdot\vec{A}| = 2.
 \]\ \\
 
 \proposition{
@@ -908,7 +908,7 @@ The volume of the parallelpiped formed from $\vec{v},\vec{w},\vec{u}$ is \[
 \end{remark}
 	
 \begin{remark}
-	You may notice that the expression$(\vec{v}\times\vec{w})\cdot{\vec{u}}$ can take on negative volumes. In this case, the three vectors (taken in order) do not follow the right-hand rule. For instance, in the last example, $\vec{u}$ points in the `opposite' direction as $\vec{A}$.
+	You may notice that the expression $(\vec{v}\times\vec{w})\cdot{\vec{u}}$ can take on negative volumes. In this case, the three vectors (taken in order) do not follow the right-hand rule. For instance, in the last example, $\vec{u}$ points in the `opposite' direction as $\vec{A}$.
 \end{remark}
 \exercises
 \begin{exerciselist}

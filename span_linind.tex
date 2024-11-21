@@ -467,23 +467,38 @@ that a matrix is row equivalent to at most one reduced row echelon form matrix.
 \subsection{Recovering solutions from rref}
 %\subsubsection*{No solutions}
 %There are no solutions when the system of equations is inconsistent. In rref, this corresponds to creating a row that says $0=1$.
+
+\subsubsection*{Producing one solution}
+Let us consider a general matrix in rref:\[
+	\begin{bmatrix}[c c c c c|c]
+		1& *& * &* &*& a\\
+		0& 0 & 1 &* &*& b\\
+		0& 0 & 0 &0 &1& c\\
+		0& 0& 0 & 0 &0& d\\
+	\end{bmatrix}
+\]
+If $d\neq0$, the rref form will imply $d$ is a pivot and thus equal to $1$.
+So the last equation requires $0=1$, which means it has no solutions!
+
+Now we set $d=0$, so $a,b,c$ can be anything.
+Regardless of the * entries, we can set for the columns with pivots, $x_1=a, x_3=b, x_5=c$, 
+and for the columns corresponding to non-pivots, $x_2=x_4=0$. We thus have
 \theorem{Solutions to linear systems}{
 	Let $A\in M_{m\times n}(\reals), \vec{b}\in\reals^m$, the system of equations described by
 	$A\vec{x}=\vec{b}$ has\[
 	\begin{cases}
 		\textrm{No solutions, if rref}\left(\left[A | \vec{b}\right]\right)\textrm{ has a pivot in the last column,}\\
-		\textrm{One solution, if all columns but the last has a pivot,} \\
-		\textrm{Infinitely many solutions, else.}
+		\textrm{At least one solution, if the last column does not have a pivot}
 	\end{cases}
 	\]
-
+	Moreover, if the latter case holds, one solution (a particular solution) can be constructed
+	from the rref by just solving the columns of rref$\left(\left[A | \vec{b}\right]\right)$
+	with pivots, and setting the variables corresponding to non-pivot columns to $0$.
 }
-\todo proof?
-\todo rank 
-\todo no solutions and one solutions
 
-\subsubsection*{Producing infinitely many solutions}
-Now, suppose $A\vec{x}=\vec{b}$ has infinitely many solutions. We want to describe this set of solutions without actually
+
+\subsubsection*{Producing all solutions}
+Now, suppose $A\vec{x}=\vec{b}$ has at least one solution. It can have infinitely many solutions! We want to describe this set of solutions without actually
 writing infinitely many vectors. One starting point is to see what properties this set satisfies. One starting point 
 would be to guess that the set $\{\vec{x}\in\reals^n | A\vec{x}=\vec{b}\}$ is a subspace of $\reals^n$.
 This is generally not true, as every subspace contains $\vec{0}_{\reals^n}$, and since $A\vec{0}_{\reals^n}=\vec{0}_{\reals^m}$,
@@ -571,7 +586,7 @@ From this example, we have an algorithm to solve for the nullspace as a span of 
 This is what we did in the previous example, except written in pseudocode.
 The idea is that each column without a pivot denotes a free variable, while each column with a pivot is a fixed by the free variables.
 This is what we do in lines $5$ to $8$, after fixing our free variable to be $1$, we subtract from the fixed variables. 
-
+In particular,\textit{ there is at most one solution if every column has a pivot}.
 Now we return back to solving $A\vec{x}=\vec{b}$. We showed that the solutions do not form a subspace. However, these solutions are related to the nullspace.
 
 \example{
@@ -620,6 +635,82 @@ This is the nullspace, but shifted by the vector $(1,2,0,3,0)$.
 This means we only need one solution (particular solution), and the nullspace (homogeneous) solution to solve any matrix.
 This one solution can be obtained by setting all the `free variables' in the solution to zero, and solving for all the pivots.
 
+When producing solutions, the number of pivots of rref$(A)$ is important. Let us define the number of pivots to be the rank of $A$. 
+\definition{Rank}{
+	Let $A\in M_{m\times n }(\reals)$. We define the \textbf{rank} of $A$\[
+		\textrm{rank}(A) = \textrm{the number of pivots in rref}(A).
+	\]
+}
+We can thus formulate having zero, one or infinitely many solutions in terms of the number of pivots.
+\proposition{
+	Let $A\in M_{m\times n}(\reals), \vec{b}\in\reals^m$, the system of equations described by
+	$A\vec{x}=\vec{b}$ has\[
+	\begin{cases}
+		\textrm{At least one solution, if rank}\left(\left[A | \vec{b}\right]\right) = \textrm{rank}(A)\\
+		\textrm{At most one solution, if rank} (A)=n.
+	\end{cases}
+	\]
+}
+Going back to why we started solving linear systems, we want to find a test to see if the vectors are linearly independent, or if some vector is in the span of a set of vectors.
+Writing $A=[\vec{v}_1 \ \ldots \ \vec{v}_n]$, $A\vec{x}=\vec{b}$ having at least one solution means $\vec{b}\in\textrm{span}(\vec{v}_1,\ldots,\vec{v}_n)$,
+and if $A\vec{x}=\vec{0}$ has exactly one solution, the $\vec{v}_j$'s are linearly independent.
+\theorem{Rank and span/linear independence correspondence}{
+	Let $A=[\vec{v}_1 \ \ldots \ \vec{v}_n]\in M_{m\times n}(\reals)$, $\vec{b}\in\reals^m$.
+	Then \begin{itemize}
+		\item  rank$\left(\left[A | \vec{b}\right]\right) = \textrm{rank}(A) \iff$ $\vec{b}\in\textrm{span}(\vec{v}_1,\ldots,\vec{v}_n)$. 
+		\item rank$(A)=m\iff\textrm{span}(\vec{v}_1,\ldots,\vec{v}_n)=\reals^m$.
+		\item rank$(A)=n\iff\{\vec{v}_1,\ldots,\vec{v}_n\}$ is linearly independent. 
+	\end{itemize}
+}
+\begin{remark}
+	This is the first time we used the $\iff$ symbol. This means `if and only if', or `iff' for short.
+	`$A\iff B$' means that if A holds, then B holds. And if B holds, A holds. 
+	For instance, `more than 99\% guarantees an A' means \begin{quotation}
+		You have more than 99\% in this course $\implies$ you get an A
+	\end{quotation}
+	But you can still get an A without reaching this score, for instance a 95\% could get an A too.
+	An if and only if statement (for a strict grading class) would look more like \begin{quotation}
+		The threshold for A in this class is a 90\%.
+	\end{quotation}
+	so \{You get A\} $\iff$ \{You get 90+\%\}.
+\end{remark}
+\begin{proof}
+	The first and third statements are evident from the definitions of span and linear independence.
+
+	To show the second statement, we first prove the $\implies$ direction.
+	Let $\vec{b}\in\reals^m$, then reducing $[A|\vec{b}]$ would give $m$ pivots in the first $n$ columns, so there cannot be a pivot in the final column.
+		(or else, we would have $m+1$ pivots in a matrix with only $m$ rows). Therefore, the system has a solution.
+
+	For the $\impliedby$ direction, we can reverse all the elementary operations from $A$ to $\textrm{rref}(A)$ to get from
+	$[\textrm{rref}(A)|\vec{e}_m]$ to $[A|\vec{w}]$ for some $\vec{w}\in\reals^m$. This system of equations has no solution.
+\end{proof}
+
+Something amazing also happens when the vectors are a basis (recall it means both linearly independent and spans $\reals^m$).
+
+The second and third statements forces $m=\textrm{rank}(A)=n$, so $A$ is a square matrix. The vectors span $\reals^m$ iff they are linearly independent.
+\theorem{This One/ That One}{
+	Let $A\in M_{n\times n}(\reals)$, and write $A=[\vec{v}_1\ldots\vec{v}_n]$.
+	Then the following are equivalent.
+	\begin{thatonethmlist}
+		\item $\{\vec{v}_n,\ldots,\vec{v}_n\}$ form a basis.
+		\item $\{\vec{v}_n,\ldots,\vec{v}_n\}$ are linearly independent.
+		\item $\{\vec{v}_n,\ldots,\vec{v}_n\}$ span $\reals^n$.
+		\item The system of equations $A\vec{x}=\vec{b}$ has exactly one solution for each $\vec{b}\in\reals^n$.
+		\item The system of equations $A\vec{x}=\vec{b}$ has at least one solution for each $\vec{b}\in\reals^n$.
+		\item The system of equations $A\vec{x}=\vec{b}$ has at most one solution for each $\vec{b}\in\reals^n$.
+		\item Rank$(A)=n$.
+		\item rref$(A)$ has a pivot in every column.
+		\item rref$(A)$ has a pivot in every row.
+		\item $N(A)=\{\vec{0}\}$.
+	\end{thatonethmlist}
+}\begin{remark}
+	This One Theorem goes by many names: Invertibility Theorem, Inverse Matrix Theorem, Inverse Function Theorem, and (my favorite) Amazingly Awesome Theorem by Prof. Ca\~nez.
+	Despite the lack of standardization, it is covered in every linera algebra course in some form or another.
+	I'm putting it as `That One Theorem', so when you quote `this follows from That One Theorem' everyone will understand which one you are talking about. 
+\end{remark}
+\begin{remark}
+	This One Theorem is still incomplete. We will build towards more equivalences.
+\end{remark}
 \exercises
 \begin{exerciselist}
 	\item Determine if the following sets of vectors are linearly dependent or independent. \begin{enumerate}[label=(\alph*)]
@@ -882,31 +973,20 @@ for each $\vec{b}\in\reals^m$.
 		\item The columns of $A$ are linearly independent.
 	\end{enumerate}
 }
-
-Something interesting happens when we set $T:\reals^n\to\reals^m$ to be bijective.
-Namely, the rref has a pivot in every row and every column. This forces the dimensions of the matrix to be square i.e. $m=n$.
-\theorem{This One\ That One}{
-	Let $T:\reals^n\to\reals^m$, $A\in M_{n\times n}(\reals)$, and $T(\vec{x})=A\vec{x}$ for all $\vec{x}\in\reals^n$.
+Again, something interesting happens when $T:\reals^n\to\reals^m$ is bijective.
+This forces the matrix to be square, giving even more equivalences for That One Theorem.
+\theorem{This One/ That One (Linear transformation cont.)}{
+	Let $A=[\vec{v}_1\ldots \vec{v}_n]\in M_{n\times n}(\reals)$, and $T:\reals^n\to\reals^n$ be the unique linear transformation satisfying $T(\vec{x})=A\vec{x}$ for all $\vec{x}\in\reals^n$.
 	Then the following are equivalent.
+	\begin{enumerate}
+		\item $\{\vec{v}_1,\ldots,\vec{v}_n\}$ for a basis.
+		\\ $\vdots$
+	\end{enumerate}
+	
 	\begin{thatonethmlist}
 		\item $T$ is bijective.
-		\item $A(\vec{x})=\vec{b}$ is exactly one solution in $\vec{x}$ for each $\vec{b}\in \reals^n$.
 		\item $T$ is surjective.
-		\item $A(\vec{x})=\vec{b}$ is at least one solution in $\vec{x}$ for each $\vec{b}\in \reals^n$
-		\item rref$(A)$ has a pivot in every row.
-		\item The columns of $A$ span $\reals^m$.
 		\item $T$ is injective.
-		\item $A(\vec{x})=\vec{b}$ is at most one solution in $\vec{x}$ for each $\vec{b}\in \reals^n$.
-		\item rref$(A)$ has a pivot in every column.
-		\item The columns of $A$ are linearly independent.
-		\item $N(A)$=$\{\vec{0}\}$.
-		\item rank$(A)=n$.
 	\end{thatonethmlist}
-}\begin{remark}
-	This One Theorem goes by many names: Invertibility Theorem, Inverse Matrix Theorem, Inverse Function Theorem, and (my favorite) Amazingly Awesome Theorem by Prof. Ca\~nez.
-	Despite the lack of standardization, it is covered in every linera algebra course in some form or another.
-	I'm putting it as `That One Theorem', so when you quote `this follows from That One Theorem' everyone will understand which one you are talking about. 
-\end{remark}
-\begin{remark}
-	This One Theorem is still incomplete. We will build towards more equivalence for $T$ being a bijection.
-\end{remark}
+}
+\exercises

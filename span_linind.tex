@@ -444,9 +444,9 @@ that a matrix is row equivalent to at most one reduced row echelon form matrix.
 					\Comment*[l]{Find a row with non-zero entry in that column}
 					\If {$a_{k,j}\neq 0$}{
 						 swap(row $i$, row $k$) \Comment*[r]{Move row $k$ to the top row}
-						 row $i \gets 1/a{i,j}$ row $i$ \Comment*[r]{Normalize pivot to $1$}
+						 row $i \gets 1/a_{i,j} \times $ row $i$ \Comment*[r]{Normalize pivot to $1$}
 						\For {$l$ in $1\ldots m$, $l\neq i$}{
-							 row $l \gets$ row $l$ - $a_{l,j}$ row $i$ \Comment*[r]{all other entries in the same column $=0$}
+							 row $l \gets$ row $l$ - $(a_{l,j}\times$ row $i)$ \Comment*[r]{all other entries in the same column $=0$}
 						}
 						$i\gets i+1$ \Comment*[r]{Next row with pivot goes to the row below}
 						Break
@@ -979,7 +979,7 @@ This forces the matrix to be square, giving even more equivalences for That One 
 	Let $A=[\vec{v}_1\ldots \vec{v}_n]\in M_{n\times n}(\reals)$, and $T:\reals^n\to\reals^n$ be the unique linear transformation satisfying $T(\vec{x})=A\vec{x}$ for all $\vec{x}\in\reals^n$.
 	Then the following are equivalent.
 	\begin{enumerate}
-		\item $\{\vec{v}_1,\ldots,\vec{v}_n\}$ for a basis.
+		\item $\{\vec{v}_1,\ldots,\vec{v}_n\}$ form a basis.
 		\\ $\vdots$
 	\end{enumerate}
 	

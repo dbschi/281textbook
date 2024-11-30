@@ -250,7 +250,7 @@ This will be a segment of the line from the previous example, so the answer woul
 		\hline
 		c & very negative & $c=0$ & $c=1/2$& $c=1$ & very positive \\ 
 		\hline
-		f(c) & very off the segment & $P$ & midpoint of $\overline{PQ}$& $Q$ & very off the line \\ 
+		f(c) & very off the segment & $P$ & midpoint of $\overline{PQ}$& $Q$ & very off the segment \\ 
 		\hline
 	\end{tabular}
 \end{center}
@@ -279,7 +279,11 @@ Finally, the nice algebraic properties for adding and scaling vectors gives us a
 		\item $\vec{v}=-2\vec{e}_3+4\vec{e}_5$, $\vec{w}=\vec{e}_1 -4\vec{e}_5$
 		\item $\vec{v}=(\cos t, \sin t)$, $\vec{w}=(\cos t)\vec{e}_2 - (\sin t) \vec{e}_1$
 	\end{enumerate}
-	\item Find the vector $\overrightarrow{PQ}$ connecting $P(7,2,9)$ to $Q(-2,1,4)$. Put your answer in the form $a\vec{i}+b\vec{j}+c\vec{k}$. Give a parametric representation for the line $\overline{QP}$ in the form `$f(t)=\bold{a}+t\bold{b}$ for $t\in[c,d]$' this time the image moves from $Q$ to $P$ as the variable $t$ increases.
+	
+	\item Find parametric equations that describe the line that \begin{enumerate}[label=(\alph*)]
+		\item passes through $(1,2,3)$ and $(4,-1,2)$
+		\item passes through $(0,-2,3)$ and $(1,2,3)$
+	\end{enumerate}
 \end{exerciselist}
 \section{Length, angles and projections}
 \definition{Magnitude}{
@@ -377,6 +381,21 @@ The magnitude of this vector is $\sqrt{3^2+4^2}=5$. If this sounds very familiar
 	|a\vec{v}| = |a||\vec{v}|.
 	\]
 }\ \\
+\definition{Unit vector}{
+	Let $\vec{v}\in\reals^n$. We call $\vec{v}$ a \textbf{unit vector} if $|\vec{v}|=1$.
+}
+\proposition{
+	Let $\vec{v}\in\reals^n$ be non-zero. Then there is a unique unit vector $|\vec{w}|=1$ such that $\vec{v}$ is parallel to $\vec{w}$.
+}
+\begin{proof}
+	If $|\vec{w}|=1, c>0$ and $c\vec{w}=\vec{v}$, it must be that \[
+		c = |c||\vec{w}| = |c\vec{w}| = |\vec{v}|,
+	\]
+	and \[
+		\vec{w} = \frac{1}{c}(c\vec{w}) = \frac{1}{|vec{v}|}\vec{v}.
+	\] This shows uniqueness - there is no other possible candidate except for this vector. Now we can confirm the vector $\frac{1}{|\vec{v}|}\vec{v}$ is a unit vector and is parallel to $\vec{v}$, so there exists a unique unit vector that satisfies the properties.
+	\\
+\end{proof}
 We have now transported the notions of length and scaling into the coordinate system, and this allows us to make ``measurements'' such as angles and area.
 
 \subsection{The Dot Product}
@@ -440,6 +459,9 @@ so \[
 	\]
 }
 \proposition{
+Let $\vec{v}\in\reals^n$, then $|\vec{v}|^2 = \vec{v}\cdot\vec{v}$.
+}
+\proposition{
 	Let $\vec{u},\vec{v},\vec{w}\in\reals^n$, $c\in\reals$. The dot product satisfies the following properties:
 	\begin{itemize}
 		\item \textit{(Symmetry)} $\vec{v}\cdot\vec{w}=\vec{w}\cdot\vec{v}$.
@@ -449,22 +471,30 @@ so \[
 	\end{itemize}
 }
 \begin{proof}
-	\textbf{TODO: write the proof, or put it as an exercise.}
+	Here is the proof for the last property. The rest are left as an exercise We have $\vec{v}\cdot\vec{v} = |\vec{v}|^2\geq=0$, and if $\vec{v}\cdot\vec{v}=0$, for all $1\leq\j\leq n$, $v_j^2 \leq \sum_{i=1}^{n} v_i^2 = \vec{v}\cdot\vec{v}\leq0$, so $v_j=0$. This means $\vec{v}=\vec{0}$.
 \end{proof}
 \corollary{
+	\label{dotproductcor}
 	
 	\begin{enumerate}
 		\item $
 		|\vec{v}-\vec{w}|^2 = |\vec{v}|^2 + |\vec{w}|^2 - 2 \vec{v}\cdot\vec{w}.
 		$
-		\item If $\vec{v},\vec{w}\neq \vec{0}$, the angle between $\vec{v}$ and $\vec{w}$ is\[
+		\item In lower dimensions $\reals^2, \reals^3$ If $\vec{v},\vec{w}\neq \vec{0}$, the angle between $\vec{v}$ and $\vec{w}$ is\[
 		\cos^{-1}\left(\frac{\vec{v}\cdot\vec{w}}{|\vec{v}||\vec{w}|}\right).
 		\]
 		In particular, the angle is $\pi/2$ when $\vec{v}\cdot\vec{w}=0$. 
 		\item $|\vec{v}\cdot\vec{w}|\leq |\vec{v}||\vec{w}|.$
 	\end{enumerate}
-}\label{dotproductcor}
-Since we can make sense of ``angles'' in higher dimensions, it is natural to generalize the notion of two vectors ``perpendicular'' to each other.
+}
+
+\theorem{Cauchy-Schwarz inequality}{
+Let $\vec{v},\vec{u}\in\reals^n$. Then \[
+	|\vec{v}\cdot\vec{u}|\leq |\vec{u}||\vec{v}|.
+\]
+}
+The proof is in one of the exercises at the end of this chapter. \\
+The dot product allows us to make sense of ``angles'' in higher dimensions, so we can generalize the notion of two vectors ``perpendicular'' to each other.
 \definition{Orthogonality}{
 Let $\vec{v},\vec{w}\in\reals^n$. We say $\vec{v}$ and $\vec{w}$ are \textbf{orthogonal} to each other if $\vec{v}\cdot\vec{w}=0$.
 }
@@ -593,7 +623,7 @@ We also see from this geometric construction that 1) the projection $c\vec{v}$ i
 
 \proposition{
 The projection is unique and is given by \[
-	\textrm{Proj}_{\vec{v}}(\vec{w}) = \frac{\cos \theta |\vec{w}|}{|\vec{v}|} = \frac{\vec{v}\cdot\vec{w}}{|\vec{v}|^2} = (\frac{\vec{v}\cdot\vec{w}}{\vec{v}\cdot\vec{v}})\vec{v}.
+	\textrm{Proj}_{\vec{v}}(\vec{w}) = \frac{\cos \theta |\vec{w}|}{|\vec{v}|} = \frac{\vec{v}\cdot\vec{w}}{|\vec{v}|^2} = \left(\frac{\vec{v}\cdot\vec{w}}{\vec{v}\cdot\vec{v}}\right)\vec{v}.
 \]
 
 }
@@ -602,7 +632,7 @@ This is the first time we show that something is unique. The standard argument g
 So what happens if we pick two points $P$, $P'$ on $\vec{v}$ such that both make a right angle when connected to $\vec{w}$? We would have constructed a triangle $\triangle PP'\vec{w}$ with two right angles!
 \begin{proof}
 	Let $c, c'\in\reals$ such that $\vec{p}_1=c\vec{v}$ and $\vec{p}_2=c'\vec{v}$ are both satisfy the definition of $\textrm{Proj}_{\vec{v}}({\vec{w}})$. We want to show that $c=c'$, so we consider $\vec{u}=(c-c')\vec{v}$, the line between the two projections.\\
-	By a corollary in \ref{dotproductcor}, we have two equations \begin{align*}
+	By \hyperref[dotproductcor]{corollary 1.23}, we have two equations \begin{align*}
 	|\vec{w}-\vec{p}_1|^2&=|\vec{w}-\vec{p}_2|^2+|\vec{u}|^2 \\	
 	|\vec{w}-\vec{p}_2|^2&=|\vec{w}-\vec{p}_1|^2+|\vec{u}|^2 
 	\end{align*}
@@ -619,7 +649,7 @@ So what happens if we pick two points $P$, $P'$ on $\vec{v}$ such that both make
 		\item $3\vec{i}-2\vec{j}$, $-2\vec{i}-4\vec{k}$
 		\item $\vec{e}_1 + 3\vec{e}_3 + 5\vec{e}_5+ ...+(2k-1)\vec{e}_{2k-1}$, $2\vec{e}_2+4\vec{e}_4+...+(2k)\vec{e}_{2k}$
 	\end{enumerate}
-	\item Refer to the plane in the example in the previous section \ref{dotproductcor}. Show that $\textrm{Proj}_{-3\vec{i}+2\vec{j}+6\vec{k}}(\vec{v})$ is the same for any vector $\vec{v}$ such that $\vec{v}\cdot(-3\vec{i}+2\vec{j}+6\vec{k}) =49$, and compute this projection.
+	\item Refer to the plane in \hyperref[ex:1.26]{Example 1.26}. Show that $\textrm{Proj}_{-3\vec{i}+2\vec{j}+6\vec{k}}(\vec{v})$ is the same for any vector $\vec{v}$ such that $\vec{v}\cdot(-3\vec{i}+2\vec{j}+6\vec{k}) =49$, and compute this projection.
 	\item \textit{(Geometry of a methane molecule)} Place four points $P(0,0,0)$, $Q(1,1,0)$, $R(1,0,1)$, $S(0,1,1)$ in $\reals^3$. \begin{enumerate}[label=(\alph*)]
 		\item Compute the distance between any two points of $PQRS$ and show that all $6$ pairs are the same. This means that $PQRS$ forms a regular tetrahedron.
 		\item  Verify that the geometric center of the tetrahedron $O(1/2, 1/2, 1/2)$ is equidistant to all of the vertices of the tetrahedron.
@@ -774,7 +804,6 @@ We now have a few properties about the cross product from our computation, the f
 \proposition{
 	Let $\vec{v},\vec{w},\vec{u}\in\reals^n$, then 
 	\begin{itemize}
-		\item latex sucks. I hate using tikz.
 		\item \textit{(distributivity)} $\vec{v}\times(\vec{u}+\vec{w})=\vec{v}\times\vec{u}+\vec{v}\times\vec{w}$ and $(\vec{v}+\vec{u})\times\vec{w}=\vec{v}\times\vec{w}+\vec{v}\times\vec{u}$.
 		\item \textit{(anti-symmetry)} $\vec{v}\times\vec{w}=-\vec{w}\times\vec{v}$.
 		\item $\vec{v}\times\vec{w}$ is orthogonal (perpendicular in 3D space) to $\vec{v}$ and $\vec{w}$.
@@ -1002,7 +1031,7 @@ With the machinery we have built up, there are multiple ways to check if $P,Q,R$
 	\end{itemize}
 }
 \begin{remark}
-	The third characterization is the hardest to visualize at first, but is also the easiest to describe with the analytical tools we have built towards. We can refer to example 1.22 in \ref{ex:1.22}. The plane sketched is the unique plane that contains $(-3,2,6)$, such that each vector in the plane is orthogonal to $(-3,2,6)$, so the line parametrized by $l(t)=t(-3,2,6)$ is perpendicular to the plane at the point of intersection $(-3,2,6)$.
+	The third characterization is the hardest to visualize at first, but is also the easiest to describe with the analytical tools we have built towards. We can refer to \hyperref[ex:1.26]{Example 1.26}. The plane sketched is the unique plane that contains $(-3,2,6)$, such that each vector in the plane is orthogonal to $(-3,2,6)$, so the line parametrized by $l(t)=t(-3,2,6)$ is perpendicular to the plane at the point of intersection $(-3,2,6)$.
 \end{remark}
 
 \example{
@@ -1027,7 +1056,11 @@ is called a \textbf{normal form} of the equation of a plane.
 \theorem{Normal vectors of planes}{
 When written in normal form, the plane is perpendicular to the vector $\vec{N}=(a,b,c)$. We call this vector $\vec{N}$ the \textbf{normal vector}.
 }
-A problem in the exercise will guide you through the proof of this. The intuition behind the proof is the reverse direction of the equation $\overrightarrow{PP_0}\cdot\vec{N}=0$ we derived from the last example.\\
+We thus have a definition for two planes to be parallel.
+\definition{Parallel planes}{
+Two planes are \textbf{parallel} if the normal vectors are parallel.
+}
+A problem in the exercise will guide you through the proof of \hyperref[thm:1.42]{Theorem 1.42}. The intuition behind the proof is the reverse direction of the equation $\overrightarrow{PP_0}\cdot\vec{N}=0$ we derived from the last example.\\
 We will now apply this theorem in a few examples.
 \example{
 Find the equation of the plane that passes through the points $P(1,0,0),Q(0,1,0),R(0,0,1)$.
@@ -1074,9 +1107,7 @@ Find the intersection of the planes given by \begin{align*}
 	\textrm{and } x-2y+3z&=5.
 \end{align*}
 }
-\textbf{Method 1:} We can solve the system of equations to find the line of intersection, and arrive at the set of symmetric equations. A similar method would be to solve for two points on the line of intersection, then get the parametric equation. \textbf{TODO, only if i feel like it}\\
-
-\textbf{Method 2:} The line lies on the first plane, so is perpendicular to its normal vector $(6,-2,-1)$. The line also lies on the second plane, so is perpendicular to its normal vector $(1,-2,3)$. Using the cross product, the line should point in the direction of \[
+\textbf{Method 1:} The line lies on the first plane, so is perpendicular to its normal vector $(6,-2,-1)$. The line also lies on the second plane, so is perpendicular to its normal vector $(1,-2,3)$. Using the cross product, the line should point in the direction of \[
 \begin{bmatrix}
 	6\\2\\-1
 \end{bmatrix} \times\begin{bmatrix}
@@ -1092,15 +1123,62 @@ We can impose an additional restriction that $x=0$ (or $y=0$ or $z=0$) and solve
 \end{align*}
 and get $(0,11/4,7/2)$ is a point on the intersection. The final parametric representation is $l(t)=(0,11/4,7/2)+t(4,-19,-14)$.
 
+\textbf{Method 2:} We can solve the system of equations to find the line of intersection, and arrive at the set of symmetric equations. A similar method would be to solve for two points on the line of intersection, then get the parametric equation. This method will be introduced later\\
 \exercises
 \begin{exerciselist}
-	\item todo...
-	\item On the plane given by $ax+by+cz=d$, find the closest distance from $P(x_1,y_1,z_1)$ to the plane. (Hint: Refer to Example 1.44 in section \ref{ex:1.44})
+	\item Find parametric and symmetric equations for the line that \begin{enumerate}[label=(\alph*)]
+		\item passes through $(0,0,0)$ and is parallel to $\vec{v}=3\vec{i}+4\vec{j}+5\vec{k}$
+		\item passes through $(1,1)$ and is perpendicular to the line described by $y=3x+3$
+		\item passes through $(0,1,2)$ and is perpendicular to plane with equation $3x+4y=2+z$
+		\item passes through $(0,1,2)$ and is perpendicular to the yz-plane
+		\item passes through $(1,3,0)$ and is parallel to the line with symmetric equations $x=y-1=(z-3)/2$
+	\end{enumerate}
+	\item Determine if these pair of lines are parallel, intersecting, or skew: \begin{enumerate}[label=(\alph*)]
+		\item (As described by parametric equations) $l_1(t)=(1,-1,2)+t(2,1,1), l_2(t) = t(1,0,-1)$
+		\item The line passing through $(3,1,3)$ and $(-2,-4,-5)$ and the line passing through $(1,3,5)$ and $(11,13,21)$.
+	\end{enumerate}
+	\item Determine if $P(3,1,2),Q(-1,0,2), R(11,3,2)$ are colinear.
+	\item Find an equation for the plane \begin{enumerate}[label=(\alph*)]
+		\item Containing $P(1,2,0)$ with normal vector $\vec{N}=2\vec{i}-\vec{j}+3\vec{k}$
+		\item containing $P(2,4,5)$ with normal vector $\vec{N}=\vec{i}+3\vec{k}$
+		\item containing $P(1,4,3)$ and perpendicular to the line given by the parametrization $r(t)=(1+t,2+4t,t)$
+		\item containing the origin and parallel to the plane described by $3x+4y-6z=-1$
+		\item containing the points $P(0,0,0),Q(1,-2,8),R(-2,-1,3)$
+	\end{enumerate}
+	\item Find the intersection of the planes with equations $2x+3y-z=1$ and $x-y-z=0$
+	\item Find the angle between the normal vectors of the following planes: \begin{enumerate}[label=(\alph*)]
+		\item the planes with equations $x+2y-z=2$ and $2x-y+3z=1$
+		\item the plane with equation $2x+3y-6z=0$ and the plane containing the points $P(1,3,-2),Q(5,1,3),R(1,0,1)$
+		\end{enumerate}
 \end{exerciselist}
 
 \section{End of Chapter Exercises}
 \begin{exerciselist}
-	\item todo - proof based questions
+	\item Let $PQRS$ be a parallelogram. Show that $\overline{PR}$ and $\overline{QS}$ bisect each other i.e. intersect at their midpoints. 
+	\item Complete the proof to \hyperref[prop:1.19]{Proposition 1.19} - Show that the dot product is symmetric and linear. 
+	\item Prove the \hyperref[thm:1.24]{Cauchy-Schwarz inequality}. Here is a hint: Write $\vec{w} =  \textrm{Proj}_{\vec{v}}{\vec{w}} + (\vec{w}-\textrm{Proj}_{\vec{v}}{\vec{w}})$, and take the squared-magnitude on each side using the dot product.
+	\item Prove or give a counterexample: The cross product is associative.
+	\item Prove the following identity: $(\vec{a}\times\vec{b})\times\vec{c} = -(\vec{b}\cdot\vec{c})\vec{a}+(\vec{a}\cdot\vec{c})\vec{b}$.
+	\item Show that the cross product satisfies the Jacobi identity: For any $\vec{a},\vec{b},\vec{c}\in \reals^3$, $(\vec{a}\times\vec{b})\times\vec{c} + (\vec{b}\times\vec{c})\times\vec{a} +(\vec{c}\times\vec{a})\times\vec{b} =\vec{0}$.
+	\item On the plane given by $ax+by+cz=d$, show that the closest distance from $P(x_1,y_1,z_1)$ to the plane is given by $|ax_1+by_1+cz_1-d|/\sqrt{a^2+b^2+c^2}$. (Hint: Refer to \hyperref[ex:1.44]{Example 1.44})
+	\item Define two lines in $\reals^3$ by the parametric equations \begin{align*}
+		l_1(t) = \vec{r}_1 + t\vec{v}_1\\
+		l_2(t)=\vec{r}_2+t\vec{v}_2
+	\end{align*}
+	We will derive a formula for the shortest distance between the two lines.
+	\begin{enumerate}[label=(\alph*)]
+		\item Consider the special case where the two lines are parallel. Construct two points $A$ and $B$ on $l_1$ and $l_2$ respectively. Find $B'$ Such that $\overrightarrow{AB'} = \textrm{Proj}_{\vec{v_1}}(\overrightarrow{AB})$. Argue that $B'$ is on the line $l_1$, and that the line $\overline{BB'}$ is perpendicular to $l_1$ and $l_2$. Conclude that the shortest distance between $l_1$ and $l_2$ is given by \[
+			\sqrt{|\vec{r}_2-\vec{r}_1|^2 - \left(\frac{(\vec{r}_2-\vec{r_1})\cdot\vec{v}_1}{|\vec{v}_1|}\right)^2}
+		\] 
+		\item Now we can assume the lines are not parallel. Find a vector $\vec{N}$ that is perpendicular to both lines.
+		\item (In your mind,) look in the direction of $\vec{N}$. $\vec{N}$ will now look like a dot. The lines will seem to overlap at points $A'$ and $B'$ respectively. Argue that $\overline{A'B'}$ is the shortest line from $l_1$ to $l_2$, and it is given by \[
+			\overrightarrow{A'B'}=\textrm{Proj}_{\vec{N}}(\overrightarrow{AB})
+		\], for any $A$ on $l_1$ and $B$ on $l_2$.
+		\item Conclude that the shortest distance in this case is given by \[
+			\left|\frac{(\vec{r}_2-\vec{r_1}) \cdot(\vec{v}_1\times\vec{v}_2)}{|\vec{v}_1\times\vec{v}_2|}\right|.
+		\]
+		\item Suppose $l_1$ and $l_2$ intersect at $P$. Verify that the formula evaluates to $0$, thus it gives a criterion to check if two lines intersect.
+	\end{enumerate}
 \end{exerciselist}
 	
-
+can this be compiled?

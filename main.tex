@@ -17,6 +17,10 @@
 \usepackage [english]{babel}
 \usepackage [autostyle, english = american]{csquotes}
 \usepackage{appendix}
+
+\usepackage[ruled,linesnumbered]{algorithm2e}
+\SetKwComment{Comment}{/* }{ */}
+\DontPrintSemicolon 
 \usepackage{tabularx}
 \usepackage{amsmath,amssymb}
 \usepackage{mathtools}
@@ -34,7 +38,7 @@
 %\addbibresource{bibliograph.bib}
 \usepackage{microtype}
 \usepackage{pagenote}
-
+\usepackage{array}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -79,6 +83,7 @@
 % If you want a different name/heading for the end notes
 \renewcommand{\notesname}{End Notes}
 \newcommand{\exercisename}{Exercises}
+\newcounter{thatonetheorem}
 \newcounter{exercisecounter} % continuity of exercises in a section
 \newenvironment{exerciselist}{
 	\begin{enumerate}
@@ -87,11 +92,25 @@
 		\setcounter{exercisecounter}{\value{enumi}}
 	\end{enumerate}
 }
+\newenvironment{thatonethmlist}{
+	\begin{enumerate}
+		\setcounter{enumi}{\value{thatonetheorem}}
+	}{
+		\setcounter{thatonetheorem}{\value{enumi}}
+	\end{enumerate}
+}
 \newcommand*{\exercises}{\section*{\exercisename}}
 
+\newcommand\todo{\textcolor{red}{\textbf{TODO: }}}
 %%%%%%%%%%%%% End customisation
 \newcommand{\reals}{\mathbb{R}}
 \newcommand\defeq{\mathrel{\stackrel{\makebox[0pt]{\mbox{\normalfont\tiny def}}}{=}}}
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
 
 \newcounter{thmcounter} % continuity of theorem
 \newcommand{\definition}[2]{\begin{tcolorbox}[title=Definition {\thechapter}.{\arabic{thmcounter}} ({#1}),colframe=black,label={def:\thechapter.\thethmcounter}]
@@ -155,5 +174,7 @@
 	\end{enumerate}
 	\fi
 	\input{coordinate_geometry/Chapter 1.tex}
-	
+	\input{linalg_basics/linalg_basics}
+	\input{span_linind}
+	\input{linalg_basics/determinants.tex}
 \end{document}

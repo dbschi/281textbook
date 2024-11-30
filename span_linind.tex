@@ -110,6 +110,12 @@ Finally, we have a special notion when the set $\{{v}_1,\ldots,v_k\}$ span $V$ a
 	In $\reals^n$, the standard basis vectors $\vec{e}_1,\vec{e}_2,\ldots,\vec{e}_n$ are a basis. This is why
 	we call them the standard basis. 
 }
+\definition{Dimension}{
+	If a vector space $V$ has a finite basis, we call $V$ finite dimensional. Else we call $V$ infinite dimensional. 
+}
+\begin{remark}
+	It is true that every basis of a vector space has the same number of elements, so we can assign a number (or infinity) to the dimension of a vector space. However, we will have to prove that later when we develop more technology.
+\end{remark}
 \theorem{Every Vector Space has a Basis}{
 	Let $V$ be a $\mathbb{K}$ vector space. Then $V$ has a basis.
 }
@@ -171,7 +177,8 @@ From the Axiom of Choice, one can derive Zorn's Lemma. This is the optional part
 \end{proof}
 \exercises
 \begin{exerciselist}
-	\item something here
+	\item \textit{(**) $\implies$ (*) in linear independence} Let $c_1v_1+\ldots + c_kv_k=0_V$. If $c_1\neq 0$, argue that $v_1\in \textrm{span}(v_2,...,v_k)$, thus this case cannot happen and $c_1=0$. Then show that $c_j=0$ for all $j$, and thus the $v_j$'s are linearly independent.
+	\item Write down a basis for the vector space of all polynomials of degree $k$ or less. 
 \end{exerciselist}
 \section{Systems of Linear Equations}
 As we alluded to earlier, many types of vector spaces are in some way very similar to $\reals^n$. For instance, the span of a set of $k$ linearly independent real-vectors has a natural correspondence to $\reals^k$.
@@ -216,6 +223,32 @@ Here, we introduce a new notation to write linear combiantions, as $c_1v_1+...+c
 	The product of $A$ and $\vec{b}$ is evaluated as \[
 		A\vec{b} = b_1\vec{v}_1+ b_2\vec{v}_2 + ...+ b_n\vec{v}_n.
 	\]
+}\example{
+	Let $M=\begin{bmatrix}
+		\vec{e}_1 & \vec{e}_2 &\ldots &\vec{e}_n
+	\end{bmatrix}$ be an $n\times n$ matrix.
+	Compute $M\vec{x}$ for any $\vec{x}\in\reals^n$.
+}
+The computation is not too difficult. We can follow the definition to get \[
+	M\vec{x}=x_1\vec{e}_1 + x_2\vec{e}_2 + \ldots + x_n\vec{e}_n = \vec{x}.
+\]
+Basically, multiplying a vector with the matrix with columns $\vec{e}_1,\ldots,\vec{e}_n$ does not change the vector. This should not be surprising, since the corresponding system of equations for $M\vec{x}=\vec{b}$ is \begin{align*}
+	x_1 &= b_1\\ x_2 &=b_2 \\ \vdots\\x_n&=b_n
+\end{align*}
+\definition{Identity Matrix}{
+	We denote the $n\times n$ \textbf{identity matrix} by \begin{align*}
+		I_n \defeq \begin{bmatrix}
+			\vec{e}_1 & \vec{e}_2 & \ldots&\vec{e}_n
+		\end{bmatrix}=\begin{bmatrix}
+			1 & 0 & 0& \ldots & 0\\
+			0 & 1 & 0 & \ldots & 0\\
+			0 & 0 & 1 & \ldots & 0\\
+			\vdots & && \ddots&\\
+			0 & 0 & 0& \ldots & 1
+		\end{bmatrix}.
+	\end{align*}
+		
+	
 }
 \proposition{
 	The matrix-vector product satisfies the following properties. Let $c\in\reals,\vec{x}_1,\vec{x}_2\in\reals^n, A\in M_{m\times n}(\reals)$, then \begin{itemize}
@@ -713,13 +746,24 @@ The second and third statements forces $m=\textrm{rank}(A)=n$, so $A$ is a squar
 \end{remark}
 \exercises
 \begin{exerciselist}
-	\item Determine if the following sets of vectors are linearly dependent or independent. \begin{enumerate}[label=(\alph*)]
+	\item Determine if the following sets of vectors are linearly dependent or independent. If they are not linearly independent, generate the set of homogenous solutions to the corresponding linear system. \begin{enumerate}[label=(\alph*)]
+		\item $\{(1,2,3), (0,1,1),(1,1,2)\}$
+		\item $\{\vec{e}_1,\vec{e}_2,\vec{e}_5\}\subset\reals^7$
 		\item 
 	\end{enumerate}
+	\item Let $m>n$. Show that every set of $m$ vectors in $\reals^n$ is not linearly independent. Show that every set of $n$ vectors in $\reals^m$ does not span $m$. Thus show that every basis for $\reals^n$ has $n$ vectors.
 	\item Let $\{v_1,...,v_k\}\subset V$. Show that exactly one of the following statements hold: \begin{enumerate}[label=(\alph*)]
 		\item For every $v\in \textrm{span}(\{v_1,...,v_k\})$, there is exactly one way to write $v$ as a linear combination of $v_1,...,v_k$.
 		\item For every $v\in \textrm{span}(\{v_1,...,v_k\})$, there is more than one way to write $v$ as a linear combination of $v_1,...,v_k$.
 	\end{enumerate}
+	\item \textit{Every vector space has a basis (weaker version)} This is a weaker statement of \href{thm:2.14}{Every Vector Space has a Basis}. To get around this, we use a finiteness assumption that our vector space $V$ is a subspace of $\reals^n$.\begin{enumerate}[label=(\alph*)]
+		\item Suppose that our subspace is $\{\vec{0}\}$. Show that this is spanned by the empty set. The empty set is (vacuously) linearly independent*, so we have a basis. \textit{* all elements of an empty set satisfy any condition}
+		\item Now suppose $S=\{\vec{v}_1,\ldots,\vec{v}_k\}\subset V\subseteq \reals^n$. Show that this is a linearly independent set in $V$ if and only if this is a linearly independent set $\reals^n$, so we can call it linearly independent without worrying about which vector space we work in.
+		\item Let $S$ be linearly independent. If $\textrm{span}(S)=V$ this will be a basis for $V$. Else show that there is some $\vec{v}_{k+1}\in V$ such that the set $S+\{\vec{v}_{k+1}\}$, so you can extend $S$ to a bigger linearly independent set.
+		\item Show that the previous process terminates, i.e. you cannot add in infinitely vectors and still make $S$ linearly independent. Therefore, it stops at some $k$ where $\textrm{span}(\{\vec{v}_1,\ldots,\vec{v}_k\})=V$.
+	\end{enumerate}
+	\item Show that every subset of a linearly independent set is linearly independent.
+	\item 
 \end{exerciselist}
 
 \section{Linear Transformations}
@@ -789,7 +833,68 @@ Now all we need to do check that this matrix works.
 	\end{bmatrix} = A\vec{x}.
 	\]
 \end{proof}	
-
+\subsection*{More intuition behind the proof}
+We can also think of a linear transformation geometrically.
+Let us track the transformation $T:\reals^2\to\reals^2$ that sends $T(\vec{e}_1)= (2,1)$ and $T(\vec{e}_2)=(-1,1)$.
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[l]{0.15\textwidth}
+		\begin{tikzpicture}
+			
+			\draw [->,color=red] (0,0)--(1,0) node[midway, below]{$\vec{e}_1$} ;
+			\draw [->,color=blue] (0,0)--(0,1) node [right,midway]{$\vec{e}_2$};
+			\end{tikzpicture}
+	\end{subfigure}
+	\centering
+	\begin{subfigure}{0.3\textwidth}
+		\begin{tikzpicture}
+	
+			\draw [->,thick] (0,0)--(4,0) node[midway, above]{$T$};
+			\node (A) at (5,0){};
+			\end{tikzpicture}
+	\end{subfigure}
+	\begin{subfigure}[r]{0.4\textwidth}
+		\begin{tikzpicture}
+	
+			\draw [->,color=red] (0,0)--(2,1) node[midway, below right ]{$T(\vec{e}_1)$} ;
+			\draw [->,color=blue] (0,0)--(-1,1) node [above right ,midway]{$T(\vec{e}_2)$};
+			\end{tikzpicture}
+	\end{subfigure}
+\end{figure}
+Let us only consider the integer lattice points for now. If we start at $(a,b)$, meaning from the origin, we take $a$ steps right and $b$ steps up. In our transformed plane, we need to take $a$ steps in $(2,1)$ and $b$ steps $(-1,1)$ by linearity. We can geometrically track the place of these lattic points using a grid.
+\begin{figure}[h]
+	\begin{subfigure}[l]{0.4\textwidth}
+		\begin{tikzpicture}
+			\draw (0,0) node{\textbullet};
+			\foreach \i in {-2,...,1}{
+				\foreach \j in {-2,...,1}{
+					\draw [->,thin] (\i,\j)--(\i+1,\j);
+					
+					\draw [->,thin] (\i,\j)--(\i,\j+1);
+				}
+			}
+			\draw [->,color=red,thick] (0,0)--(1,0) node[midway, below]{$\vec{e}_1$} ;
+			\draw [->,color=blue,thick] (0,0)--(0,1) node [right,midway]{$\vec{e}_2$};
+			\end{tikzpicture}
+			\caption{Original grid}
+	\end{subfigure}
+	\begin{subfigure}[r]{0.6\textwidth}
+		\begin{tikzpicture}
+			\draw (0,0) node{\textbullet};
+			\foreach \i in {-1,...,1}{
+				\foreach \j in {-1,...,1}{
+					\draw [->,thin] (\i*2-\j,\j+\i)--(\i*2-\j+2,\i+\j+1);
+					
+					\draw [->,thin] (\i*2-\j,\j+\i)--(\i*2-\j-1,\i+\j+1);
+				}
+			}
+			\draw [->,color=red,thick] (0,0)--(2,1) node[midway, below right ]{$T(\vec{e}_1)$} ;
+			\draw [->,color=blue] (0,0)--(-1,1) node [above right ,midway,thick]{$T(\vec{e}_2)$};
+			\end{tikzpicture}
+			\caption{Transformed grid}
+	\end{subfigure}
+\end{figure}
+This is just a change of our coordinate system. As long as we know where the standard basis vectors go (or any basis goes), it is enough to know the whole linear transformation. The construction is you 1. decompose any vector into the linear combination of the basis vectors, then 2. add up the corresponding linear combination of the transformed basis vectors. \textbf{This intuition of linear transformations being a shift in coordinates is very useful}, and helps transform abstract problems in linear algebra back to concrete geometry. 
 \example{
 	Express the linear transformations of the dot product, cross product, and projection as matrix-vector multiplications.
 }
@@ -880,6 +985,7 @@ to define the product of matrices.
 	\textbf{Addition: } Let $A,B,C\in M_{m\times n}(\reals)$, then: \begin{itemize}
 		\item \textit{(Associativity)} $A+(B+C)=(A+B)+C$.
 		\item \textit{(Commutativity)} $A+B=B+A$.
+		\item \textit{(Identity)} The zero matrix $0_{m\times n}$ satisfies $A+0_{m\times n}=A$.
 	\end{itemize}
 	\textbf{Scaling: } Let $\alpha,\beta\in\reals, A,B \in M_{m\times n}(\reals)$, then:\begin{itemize}
 		\item \textit{(Associativity)} $\alpha(\beta)A = (\alpha\beta)A$.
@@ -909,7 +1015,7 @@ to define the product of matrices.
 		\item \textit{(Associativity)} $A(CE)=(AC)E$.
 		\item \textit{Compatibility with Scaling} $A(\alpha C)=\alpha(AC) = (\alpha A)(C)$.
 		\item \textit{(Distributivity)} $(A+B)(C+D) = AC+AD+BC+BD$.
-		\item \textit{(Identity)} The $n \times n$ matrix $I_n = \begin{bmatrix}
+		\item \textit{(Identity)} The identity matrix $I_n = \begin{bmatrix}
 			\vec{e}_1 & \vec{e}_2 & \ldots & \vec{e}_n
 		\end{bmatrix}$ satisfies $I_nC = C$ and $BI_n=B$.
 	\end{itemize}
@@ -917,6 +1023,44 @@ to define the product of matrices.
 \begin{remark}
 	The matrix product is generally not commutative. In fact, the product $DB$ does not make sense, because the dimensions of the matrices are not compatible!
 \end{remark}
+\exercises
+\begin{exerciselist}
+	\item Find the corresponding matrices for the following transformations: \begin{enumerate}[label=(\alph*)]
+		\item 
+	\end{enumerate}
+	\item Find an example where \begin{enumerate}[label=(\alph*)]
+		\item Two matrices $A,B\in M_{n\times n}(\reals)$ are not commutative. i.e. $AB\neq BA$.
+		\item A matrix $0_{n\times n}\neq A\in M_{n\times n }(\reals)$ such that $A^k=0_{n\times n}$ for some $k>1$.
+	\end{enumerate}
+	\item Let $\theta,\phi\in[0,2\pi)$. Sketch how the matrix \[\begin{bmatrix}
+		\cos \theta & -\sin \theta\\
+		\sin \theta & \cos \theta
+	\end{bmatrix}
+	\] transforms the grid. Show that \[
+		\begin{bmatrix}
+			\cos \theta & -\sin \theta\\
+			\sin \theta & \cos \theta
+		\end{bmatrix}
+		\begin{bmatrix}
+			\cos \phi & -\sin \phi\\
+			\sin \phi & \cos \phi
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			\cos (\theta+\phi) & -\sin (\theta+\phi)\\
+			\sin (\theta+\phi) & \cos (\theta+\phi)
+		\end{bmatrix}
+	\]
+	and thus the set of matrix in this form are commutative. Is there a geometric argument for why these matrices must be commutative? 
+	\item Run the following code in python multiple times and pinky promise that you got the correct answer.\\ \begin{lstlisting}[language=Python]
+import numpy as np
+matrix1=np.random.randint(-10,11,size=(3,3))
+matrix2=np.random.randint(-10,11,size=(3,3))
+print("Multiply these two matrices:")
+print(matrix1,"\n",matrix2)
+print("Confirm that the answer is the following:")
+print(matrix1.dot(matrix2))\end{lstlisting}
+\end{exerciselist}
 \section{Surjective and Injective Linear Transformation}
 \definition{Types of functions}{
 	Let $f:U\to W$ be a function. We say $f$ is:
@@ -938,7 +1082,7 @@ to define the product of matrices.
 	\end{itemize}
 	The following functions are injective:\begin{itemize}
 		\item The `pad zeros' function $\iota:\reals^n \to \reals^{n+1}$ defined by $\iota(x_1,...,x_n) = (x_1,...,x_n,0)$ and adds a $0$ to the final coordinate.
-		\item The linear function $f:\reals to \reals$ defined by $f(x)=2x$.
+		\item The linear function $f:\reals \to \reals$ defined by $f(x)=2x$.
 	\end{itemize}
 	The following functions are surjective:\begin{itemize}
 		\item The identity map $Id:\reals^n\to\reals^n$ defined by $Id(\vec{x}) = I_n \vec{x} = \vec{x}$.

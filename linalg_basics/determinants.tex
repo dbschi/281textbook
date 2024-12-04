@@ -1,4 +1,4 @@
-\section{Invereses and determinants}
+\section{Inverses and determinants}
 \subsection{Inverse}
 \definition{Inverse function}{
     Let $T:U\to V$ be bijective.
@@ -139,16 +139,16 @@ Let $V$ be a finite dimensional real vector spaces. Then $V\simeq \reals^n$ for 
 	Let $\{v_1,\ldots,v_k\}$ and ${w_1,\ldots, w_l}$ be two bases for $V$. Then by the construction in the previous theorem, we have $V\simeq \reals^k$ and $V\simeq \reals^l$. So $\reals^k\simeq \reals^l$ and thus $k=l$.
 \end{proof}
 \subsection{Determinants}
-We now move towards the last equivalence for That One Theorem. Recall in the intuition behind the \href{thm:2.48}{Matrix Represnetation of Linear Transformations}, we constructed a grid and showed that a linear transformation is a change in the coordinate system.\\
+We now move towards the last equivalence for That One Theorem. Recall in the intuition behind the \hyperref[thm:2.48]{Matrix Representation of Linear Transformations}, we constructed a grid and showed that a linear transformation is a change in the coordinate system.\\
 \begin{figure}[h]
 	\begin{subfigure}[l]{0.4\textwidth}
 		\begin{tikzpicture}
 			\draw (0,0) node{\textbullet};
 			\foreach \i in {-2,...,1}{
 				\foreach \j in {-2,...,1}{
-					\draw [->,thin] (\i,\j)--(\i+1,\j);
+					\draw [->,thick,dotted] (\i,\j)--(\i+1,\j);
 					
-					\draw [->,thin] (\i,\j)--(\i,\j+1);
+					\draw [->,thick,dotted] (\i,\j)--(\i,\j+1);
 				}
 			}
 			\draw [->,color=red,thick] (0,0)--(1,0) node[midway, below]{$\vec{e}_1$} ;
@@ -161,9 +161,9 @@ We now move towards the last equivalence for That One Theorem. Recall in the int
 			\draw (0,0) node{\textbullet};
 			\foreach \i in {-1,...,1}{
 				\foreach \j in {-1,...,1}{
-					\draw [->,thin] (\i*2-\j,\j+\i)--(\i*2-\j+2,\i+\j+1);
+					\draw [->,thick,dotted] (\i*2-\j,\j+\i)--(\i*2-\j+2,\i+\j+1);
 					
-					\draw [->,thin] (\i*2-\j,\j+\i)--(\i*2-\j-1,\i+\j+1);
+					\draw [->,thick,dotted] (\i*2-\j,\j+\i)--(\i*2-\j-1,\i+\j+1);
 				}
 			}
 			\draw [->,color=red,thick] (0,0)--(2,1) node[midway, below right ]{$T(\vec{e}_1)$} ;
@@ -185,10 +185,10 @@ To say that the transformation is surjective means that the transformed unit squ
 				\foreach \j in {-1,...,1}{
                     \foreach \k in {-1,...,1}{
 
-					\draw [-,thin] (\i,\j,\k)--(\i+1,\j,\k);
+					\draw [-,thick,dotted] (\i,\j,\k)--(\i+1,\j,\k);
 					
-					\draw [-,thin] (\i,\j,\k)--(\i,\j+1,\k);
-					\draw [-,thin] (\i,\j,\k)--(\i,\j,\k+1);
+					\draw [-,thick,dotted] (\i,\j,\k)--(\i,\j+1,\k);
+					\draw [-,thick,dotted] (\i,\j,\k)--(\i,\j,\k+1);
                     }
 				}
 			}
@@ -205,10 +205,10 @@ To say that the transformation is surjective means that the transformed unit squ
 				\foreach \j in {-1,...,1}{
                     \foreach \k in {-3,...,3}{
 
-					\draw [-,thin] (\i*2-\j,\j+\i,0.5*\k)--(\i*2-\j+2,\i+\j+1,0.5*\k);
+					\draw [-,thick,dotted] (\i*2-\j,\j+\i,0.5*\k)--(\i*2-\j+2,\i+\j+1,0.5*\k);
 					
-					\draw [-,thin] (\i*2-\j,\j+\i,0.5*\k)--(\i*2-\j-1,\i+\j+1,0.5*\k);
-					\draw [-,thin] (\i*2-\j,\j+\i,0.5*\k)--(\i*2-\j,\i+\j,0.5*\k+2);
+					\draw [-,dotted,thick] (\i*2-\j,\j+\i,0.5*\k)--(\i*2-\j-1,\i+\j+1,0.5*\k);
+					\draw [-,dotted,thick] (\i*2-\j,\j+\i,0.5*\k)--(\i*2-\j,\i+\j,0.5*\k+2);
                     }
 				}
 			}
@@ -220,4 +220,108 @@ To say that the transformation is surjective means that the transformed unit squ
 	\end{subfigure}
     \caption{I tried my best, please use a bit of imagination}
 \end{figure}
+Here we use the god-given formula for the determinant.
+\definition{Determinant}{
+	We define a determinant function $\det : M_{n\times n}(\reals)\to\reals$ as follows.\begin{itemize}
+		\item $\det [a] = a$ for a $1\times 1$ matrix $[a]$
+		\item For higher dimensions $A = [a_{i,j}] \in M_{n\times n}(\reals)$, we recursively define \[
+			\det A  = \sum_{i=1}^n (-1)^{i+j+1} a_{i,j} \det A_{i,j}
+		\] for any $1\leq j\leq n$. Any value of $j$ will give the same formula upon expansion.
+	\end{itemize}
+}\begin{remark}
+	$A_{i,j}$ is the the \textbf{minor} of the matrix $A$ where you delete the $i$-th row and $j$-th column.
+	If \begin{align*}
+	A&=\begin{bmatrix}
+		a& b &*\\
+		* & * & *\\
+		c& d & *
+	\end{bmatrix},\\
+	A_{2,3}&=\begin{bmatrix}
+		a&b\\c&d
+	\end{bmatrix}.
+	\end{align*} 
+	
+\end{remark}
+\proposition{
+	For small matrices, we have these simplified formulae.
+	\begin{itemize}
+		\item[$1\times 1$] $\det ([a])=a.$
+		\item[$2\times 2$] $\det \left(\begin{bmatrix}
+			a&b\\
+			c&d
+		\end{bmatrix}\right)=ad-bc$. 
+		\item[$3\times 3$] $\det \left(\begin{bmatrix}
+			a&b&c\\d&e&f\\g&h&i
+		\end{bmatrix}\right)= aei+bfg+cdh-ceg-afh-bdi.$
+	\end{itemize} 
+}
+\begin{remark}
+	The mnenomic for memorizing the $3\times 3$ determinant is as follows:
+	Extend the matrix as \[
+	\begin{bmatrix}[ccc|cc]
+		a&b&c&a&b\\d&e&f&d&e\\g&h&i&g&h
+	\end{bmatrix}
+	\]
+	and take the difference between the red diagonal products and the blue diagonal products.
+	\begin{figure}[h]
+		\centering
+		\begin{tikzpicture}
+			\node (A) at (0,0) {a};
+			\node (B) at (1,0) {b};
+			\node (C) at (2,0) {c};
+			\node (AA) at (3,0){a};
+			\node (BB) at (4,0){b};
+			\node (D) at (0,-1) {d};
+			\node (E) at (1,-1 ){e};
+			\node (F) at (2,-1){f};
+			\node (DD) at (3,-1){d};
+			\node (EE) at (4,-1){e};
+			\node (G) at (0,-2) {g};
+			\node (H) at (1,-2){h};
+			\node (I) at (2,-2){i};
+			\node (GG) at (3,-2){g};
+			\node (HH) at (4,-2){h};
+	
+			\draw[-,color=red] (0,0)--(2,-2);
+			\draw[-,color=red] (1,0)--(3,-2);
+			\draw[-,color=red] (2,0)--(4,-2);
+			\draw[-,color=blue] (2,0)--(0,-2);
+			\draw[-,color=blue] (3,0)--(1,-2);
+			\draw[-,color=blue] (4,0)--(2,-2);
+			\draw[-,color=black] (2.5,0.5)--(2.5,-2.5);
+		\end{tikzpicture}
+	\end{figure}
+	
+\end{remark}
+As you have seen in a previous chapter, the formula for the determinant of a $3\times 3$ matrix coincides with the volume of the parallelepiped spanned by the column vectors.
 
+
+\example{
+	Calculate the determinant of the rotational matrix \[
+	R_\theta=
+	\begin{bmatrix}
+		\cos\theta &-\sin \theta \\
+		\sin \theta&\cos \theta
+	\end{bmatrix}\].
+}
+We just put this in the formula to get \[
+	\det R = \cos^2\theta - (-\sin^2\theta) = \cos^2\theta + \sin^2\theta = 1
+\]
+regardles of the value of $\theta$.
+\example{
+	Calculate the determinant of an upper-triangular matrix in the form \[
+	U=\begin{bmatrix}
+		a& *& *\\
+		0 & b &  *\\
+		0&0&c
+	\end{bmatrix}
+	\]
+}
+We do not know the values of $*$, but if we write out \[
+	\begin{bmatrix}[ccc|cc]
+		a&*&*&a&*\\0&b&*&0&b\\0&0&c&0&0
+	\end{bmatrix}\]
+the only diagonal that can possible have all non-zero entries gives the product $abc$. So the determinant of a triangular matrix is always the product of the diagonal terms.
+\example{
+	Determine how the elementary row operations change the determinant of a matrix.
+}

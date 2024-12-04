@@ -756,11 +756,11 @@ The second and third statements forces $m=\textrm{rank}(A)=n$, so $A$ is a squar
 		\item For every $v\in \textrm{span}(\{v_1,...,v_k\})$, there is exactly one way to write $v$ as a linear combination of $v_1,...,v_k$.
 		\item For every $v\in \textrm{span}(\{v_1,...,v_k\})$, there is more than one way to write $v$ as a linear combination of $v_1,...,v_k$.
 	\end{enumerate}
-	\item \textit{Every vector space has a basis (weaker version)} This is a weaker statement of \href{thm:2.14}{Every Vector Space has a Basis}. To get around this, we use a finiteness assumption that our vector space $V$ is a subspace of $\reals^n$.\begin{enumerate}[label=(\alph*)]
+	\item \textit{Every vector space has a basis (weaker version)} This is a weaker statement of \hyperref[thm:2.14]{Every Vector Space has a Basis}. To get around this, we use a finiteness assumption that our vector space $V$ is a subspace of $\reals^n$.\begin{enumerate}[label=(\alph*)]
 		\item Suppose that our subspace is $\{\vec{0}\}$. Show that this is spanned by the empty set. The empty set is (vacuously) linearly independent*, so we have a basis. \textit{* all elements of an empty set satisfy any condition}
 		\item Now suppose $S=\{\vec{v}_1,\ldots,\vec{v}_k\}\subset V\subseteq \reals^n$. Show that this is a linearly independent set in $V$ if and only if this is a linearly independent set $\reals^n$, so we can call it linearly independent without worrying about which vector space we work in.
 		\item Let $S$ be linearly independent. If $\textrm{span}(S)=V$ this will be a basis for $V$. Else show that there is some $\vec{v}_{k+1}\in V$ such that the set $S+\{\vec{v}_{k+1}\}$, so you can extend $S$ to a bigger linearly independent set.
-		\item Show that the previous process terminates, i.e. you cannot add in infinitely vectors and still make $S$ linearly independent. Therefore, it stops at some $k$ where $\textrm{span}(\{\vec{v}_1,\ldots,\vec{v}_k\})=V$.
+		\item Show that the previous process terminates, i.e. you cannot add in infinitely many vectors and still make $S$ linearly independent. Therefore, it stops at some $k$ where $\textrm{span}(\{\vec{v}_1,\ldots,\vec{v}_k\})=V$.
 	\end{enumerate}
 	\item Show that every subset of a linearly independent set is linearly independent.
 	\item 
@@ -868,9 +868,9 @@ Let us only consider the integer lattice points for now. If we start at $(a,b)$,
 			\draw (0,0) node{\textbullet};
 			\foreach \i in {-2,...,1}{
 				\foreach \j in {-2,...,1}{
-					\draw [->,thin] (\i,\j)--(\i+1,\j);
+					\draw [->,thick,dotted] (\i,\j)--(\i+1,\j);
 					
-					\draw [->,thin] (\i,\j)--(\i,\j+1);
+					\draw [->,thick,dotted] (\i,\j)--(\i,\j+1);
 				}
 			}
 			\draw [->,color=red,thick] (0,0)--(1,0) node[midway, below]{$\vec{e}_1$} ;
@@ -883,9 +883,9 @@ Let us only consider the integer lattice points for now. If we start at $(a,b)$,
 			\draw (0,0) node{\textbullet};
 			\foreach \i in {-1,...,1}{
 				\foreach \j in {-1,...,1}{
-					\draw [->,thin] (\i*2-\j,\j+\i)--(\i*2-\j+2,\i+\j+1);
+					\draw [->,thick,dotted] (\i*2-\j,\j+\i)--(\i*2-\j+2,\i+\j+1);
 					
-					\draw [->,thin] (\i*2-\j,\j+\i)--(\i*2-\j-1,\i+\j+1);
+					\draw [->,thick,dotted] (\i*2-\j,\j+\i)--(\i*2-\j-1,\i+\j+1);
 				}
 			}
 			\draw [->,color=red,thick] (0,0)--(2,1) node[midway, below right ]{$T(\vec{e}_1)$} ;
@@ -1015,7 +1015,7 @@ to define the product of matrices.
 		\item \textit{(Associativity)} $A(CE)=(AC)E$.
 		\item \textit{Compatibility with Scaling} $A(\alpha C)=\alpha(AC) = (\alpha A)(C)$.
 		\item \textit{(Distributivity)} $(A+B)(C+D) = AC+AD+BC+BD$.
-		\item \textit{(Identity)} The identity matrix $I_n = \begin{bmatrix}
+		\item \textit{(Identity)} The identity matrix $I_n \defeq \begin{bmatrix}
 			\vec{e}_1 & \vec{e}_2 & \ldots & \vec{e}_n
 		\end{bmatrix}$ satisfies $I_nC = C$ and $BI_n=B$.
 	\end{itemize}

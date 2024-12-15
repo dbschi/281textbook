@@ -720,7 +720,7 @@ and if $A\vec{x}=\vec{0}$ has exactly one solution, the $\vec{v}_j$'s are linear
 
 Something amazing also happens when the vectors are a basis (recall it means both linearly independent and spans $\reals^m$).
 
-The second and third statements forces $m=\textrm{rank}(A)=n$, so $A$ is a square matrix. The vectors span $\reals^m$ iff they are linearly independent.
+The second and third statements forces $m=\textrm{rank}(A)=n$, so $A$ is a square matrix. The vectors span $\reals^m$ iff they are linearly independent. Moreover, since $\textrm{rank}A=n$ for this square matrix, $\textrm{rref}A = I_n$, the identity matrix.
 \theorem{This One/ That One}{
 	Let $A\in M_{n\times n}(\reals)$, and write $A=[\vec{v}_1\ldots\vec{v}_n]$.
 	Then the following are equivalent.
@@ -734,6 +734,7 @@ The second and third statements forces $m=\textrm{rank}(A)=n$, so $A$ is a squar
 		\item Rank$(A)=n$.
 		\item rref$(A)$ has a pivot in every column.
 		\item rref$(A)$ has a pivot in every row.
+		\item rref$(A)=I_n$
 		\item $N(A)=\{\vec{0}\}$.
 	\end{thatonethmlist}
 }\begin{remark}

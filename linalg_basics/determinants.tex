@@ -67,7 +67,7 @@ then there is some matrix $B$ such that $AB=BA=I_n$.
 \end{remark}
 As we have already seen, only bijective linear transformations have inverses, so that means we have more to add to That One Theorem. We also see that being invertible implies having a left and right inverse, so might expect that having a left or right inverse corresponds to the columns being linearly independent or span $\reals^m$. 
 \example{
-    $A\in M_{m\times n}(\reals)$ having a left/right inverse indeed corresponds to the conditions that the columns are linearly independent and the columns span $\reals^m$. Figure out which conditions correspond to each other.
+    $A\in M_{m\times n}(\reals)$ having a left/right inverse indeed corresponds to the conditions that the columns are linearly independent and the columns span $\reals^m$. Figure out which conditions correspond to which.
 }
 There are two ways to think about this problem: one way is directly translate left and right inverses to the corresponding statements of the column vectors; the other way is to think of them in linear transformations and find out which one is surjective/injective. I will outline both methods.
 
@@ -114,6 +114,31 @@ This means we have three extra equivalences for a matrix being invertible.
 		\item $A$ has a right inverse.
 	\end{thatonethmlist}
 }
+
+Finally, we want to compute this inverse $A^{-1}$. Let us set the columns \[
+A=[\vec{a}_1 \ \vec{a}_2 \ \ldots \ \vec{a}_n],\ 
+A^{-1}=[\vec{b}_1 \ \vec{b}_2 \ \ldots \ \vec{b}_n],
+\] 
+then the condition $AA^{-1}$ translates to \begin{align*}
+	A\vec{b}_1&=\vec{e}_1,\\
+	A\vec{b}_2&=\vec{e}_2,\\
+	&\vdots \\
+	A\vec{b}_n&=\vec{e}_n.
+\end{align*}
+Which means we just have to solve $n$ different linear systems. We can do them all at once: by reducing the matrix \[
+\begin{bmatrix}[cccc|cccc]
+	\vec{a}_1 & \vec{a}_2 & \ldots &\vec{a}_n
+	&\vec{b}_1 & \vec{b}_2 & \ldots &\vec{b}_n
+\end{bmatrix}
+\]
+to rref,
+we will get \[
+\begin{bmatrix}[c|c]
+	I_n & *
+\end{bmatrix}
+\]
+if $A$ is invertible. The $*$ will be the solutions $\vec{b}_k$'s, which means $*$ is the inverse of $A$.
+
 \subsection{Isomorphisms}
 \definition{Isomorphism}{
 	Let $T:U\to V$ be a bijective linear transformation. We call $T$ an \textbf{isomorphism} and the vector spaces $U$ and $V$ are \textbf{isomorphic}. We denote this $U\simeq V$.
@@ -225,7 +250,7 @@ Here we use the god-given formula for the determinant.
 	We define a determinant function $\det : M_{n\times n}(\reals)\to\reals$ as follows.\begin{itemize}
 		\item $\det [a] = a$ for a $1\times 1$ matrix $[a]$
 		\item For higher dimensions $A = [a_{i,j}] \in M_{n\times n}(\reals)$, we recursively define \[
-			\det A  = \sum_{i=1}^n (-1)^{i+j+1} a_{i,j} \det A_{i,j}
+			\det A  = \sum_{i=1}^n (-1)^{i+j} a_{i,j} \det A_{i,j}
 		\] for any $1\leq j\leq n$. Any value of $j$ will give the same formula upon expansion.
 	\end{itemize}
 }\begin{remark}
@@ -241,6 +266,12 @@ Here we use the god-given formula for the determinant.
 	\end{bmatrix}.
 	\end{align*} 
 	
+\end{remark}
+\begin{remark}
+	The recursive formula also works for 
+	\[			\det A  = \sum_{i=1}^n (-1)^{i+j} a_{j,i} \det A_{j,i}
+		\]
+		where instead of expanding along the $j$-th row, we expand along the $j$-th column.
 \end{remark}
 \proposition{
 	For small matrices, we have these simplified formulae.
@@ -311,17 +342,93 @@ regardles of the value of $\theta$.
 \example{
 	Calculate the determinant of an upper-triangular matrix in the form \[
 	U=\begin{bmatrix}
-		a& *& *\\
-		0 & b &  *\\
-		0&0&c
-	\end{bmatrix}
+		a_1& *& *&\ldots& *\\
+		0 & a_2 & *& \ldots&*\\
+		0&0&a_3& \ldots & * \\
+		\vdots & & &\ddots& \\
+		0 & 0 & 0 & \ldots & a_n
+	\end{bmatrix}\in M_{n\times n}(\reals).
 	\]
 }
-We do not know the values of $*$, but if we write out \[
+Let's consider the special case $n=3$. We do not know the values of $*$, but if we write out \[
 	\begin{bmatrix}[ccc|cc]
-		a&*&*&a&*\\0&b&*&0&b\\0&0&c&0&0
-	\end{bmatrix}\]
+		a_1&*&*&a_1&*\\0&a_2&*&0&a_2\\0&0&a_3&0&0
+	\end{bmatrix},\]
 the only diagonal that can possible have all non-zero entries gives the product $abc$. So the determinant of a triangular matrix is always the product of the diagonal terms.
-\example{
-	Determine how the elementary row operations change the determinant of a matrix.
+The determinant of an upper triangular matrix is always the product of the diagonal terms. To show this, we need to exploit the recursive formula for the determinant.
+If we expand along the first column, most of the terms in the sum are $0$, except the first term that gives \[
+	(-1)^{1+1} a_1 \det \left( \begin{bmatrix}
+		 a_2 & *& \ldots&*\\
+		0&a_3& \ldots & * \\
+		\vdots  & &\ddots& \\
+		 0 & 0 & \ldots & a_n
+	\end{bmatrix}\right),
+\]
+which is $a_1$ times the determinant of a smaller upper triangular matrix. If we know that this $(n-1)\times (n-1)$ matrix has determinant $a_2a_3\ldots a_n$, this will prove the formula for a $n\times n$ matrix, then this result will prove the formula for a $(n+1)\times (n+1)$ matrix and so on! This technique is known as Mathematical Induction. If you want to prove a statement is true for all natural numbers $n$, you can show that it is true when $n=1$, and show that if the statement is true for $n=k$, it is also true for $n=k+1$.
+\begin{proof}
+	We show that the determinant of $U$ is $(a_1\ldots a_n)$ by induction on the value of $n$.
+
+	\textit{Base Case:} The determinant of the matrix $[a_1]$ is $a_1$, which is evidently the product of all the diagonal terms.
+	
+	\textit{Induction step:} Suppose the determinant of a $k\times k$ upper triangular matrix is the product of the diagonal terms. We compute the determinant of a $(k+1)\times (k+1)$ matrix in the form
+	\begin{align*}
+		U=[u_{i,j}]=\begin{bmatrix}
+			a_1& *& *&\ldots& *\\
+			0 & a_2 & *& \ldots&*\\
+			0&0&a_3& \ldots & * \\
+			\vdots & & &\ddots& \\
+			0 & 0 & 0 & \ldots & a_{k+1}
+		\end{bmatrix}.
+	\end{align*}
+	Applying the recursive formula and expanding along the first column, the only non-zero $u_{j,1}$ term is $u_{1,1}=a_1$, so \begin{align*}
+		\det U &= (-1)^{1+1} a_1 \det \left( \begin{bmatrix}
+			a_2 & *& \ldots&*\\
+		   0&a_3& \ldots & * \\
+		   \vdots  & &\ddots& \\
+			0 & 0 & \ldots & a_{k+1}
+	   \end{bmatrix}\right)\\
+	   &= a_1 (a_2 a_3\ldots a_{k+1}) 
+	\end{align*}
+	by applying the hypothesis on the $k\times k$ upper triangular matrix. Then the determinant of a $(k+1)\times (k+1)$ matrix is the product of the diagonal terms. 
+	By the Principle of Mathematical Induction, the determinant of an upper triangular matrix of any size is the product of its diagonal terms.
+\end{proof}
+
+
+\proposition{
+	The elementary row operations change the determinant of a matrix in the following way:\begin{itemize}
+		\item \textit{(Row Swap)} The determinant is multiplied by $-1$.
+		\item \textit{(Scaling)} The determinant is multiplied by the scaling constant.
+		\item \textit{(Sum)} The determinant does not change.  
+	\end{itemize}
 }
+The proof of this is not very enlightening, so we will skip it. It boils down to working with the general determinant formula and doing intense algebra manipulation.
+
+However, we have the following corollary 
+\corollary{
+	The determinant of a matrix can be computed as follows:\begin{enumerate}
+		\item Reduce the matrix to rref (or row echelon form).
+		\item Take the product of the diagonal terms.
+		\item Multiply this product by $1/c$ for every time you scaled a row by $c$ in computing the rref.
+		\item Multiply this product by $-1$ for every time you swaped two rows in computing the rref.
+		\item The final product is the determinant of the matrix.
+	\end{enumerate}
+}
+\theorem{This/That One (Determinants)}{
+
+Let $A=[\vec{v}_1\ldots \vec{v}_n]\in M_{n\times n}(\reals)$, and $T:\reals^n\to\reals^n$ be the unique linear transformation satisfying $T(\vec{x})=A\vec{x}$ for all $\vec{x}\in\reals^n$.
+	Then the following are equivalent.
+	\begin{enumerate}
+		\item $\{\vec{v}_1,\ldots,\vec{v}_n\}$ form a basis.
+		\\ $\vdots$
+	\end{enumerate}
+	
+	\begin{thatonethmlist}
+		\item $\det A \neq 0.$ 
+	\end{thatonethmlist}
+}
+\begin{proof}
+	Recall the motivation for introducing the determinant is the signed n-dimensional volume of the paralellotope formed by the column vectors. If (and only if) the volume is non-zero, they can tesselate the whole $\reals^n$ space.
+
+	To show the equivalence of det$A\neq 0$, we can use the condition from That One Theorem that rref$(A)=I_n$, and the previous corollary for computing determinants. If the determinant is $0$, then the product of the diagonal terms of rref$A$ has a zero, so rref$(A)\neq I_n$. On the converse, if the determinant is non-zero, all the diagonal terms in rref$(A)$ are non-zero. The only way this can happen for a matrix in rref is when the matrix is also the identity matrix.
+\end{proof}
+

@@ -1,4 +1,4 @@
-\section{Inverses and determinants}
+\section{Inverses, Isomorphisms and determinants}
 \subsection{Inverse}
 \definition{Inverse function}{
     Let $T:U\to V$ be bijective.
@@ -104,8 +104,9 @@ This means we have three extra equivalences for a matrix being invertible.
     Let $A=[\vec{v}_1\ldots \vec{v}_n]\in M_{n\times n}(\reals)$, and $T:\reals^n\to\reals^n$ be the unique linear transformation satisfying $T(\vec{x})=A\vec{x}$ for all $\vec{x}\in\reals^n$.
 	Then the following are equivalent.
 	\begin{enumerate}
-		\item $\{\vec{v}_1,\ldots,\vec{v}_n\}$ form a basis.
-		\\ $\vdots$
+		\item $\{\vec{v}_n,\ldots,\vec{v}_n\}$ form a basis.
+		\item $\{\vec{v}_n,\ldots,\vec{v}_n\}$ are linearly independent.
+		\item $\{\vec{v}_n,\ldots,\vec{v}_n\}$ span $\reals^n$. \\ $\vdots$
 	\end{enumerate}
 	
 	\begin{thatonethmlist}
@@ -119,7 +120,7 @@ Finally, we want to compute this inverse $A^{-1}$. Let us set the columns \[
 A=[\vec{a}_1 \ \vec{a}_2 \ \ldots \ \vec{a}_n],\ 
 A^{-1}=[\vec{b}_1 \ \vec{b}_2 \ \ldots \ \vec{b}_n],
 \] 
-then the condition $AA^{-1}$ translates to \begin{align*}
+then the condition $AA^{-1}=I_n$ translates to \begin{align*}
 	A\vec{b}_1&=\vec{e}_1,\\
 	A\vec{b}_2&=\vec{e}_2,\\
 	&\vdots \\
@@ -145,7 +146,7 @@ if $A$ is invertible. The $*$ will be the solutions $\vec{b}_k$'s, which means $
 }
 Recall many sections ago, we said that many types of vector spaces are very similar to $\reals^n$. Now that we have defined isomorphic vector spaces, we have a concrete statement of what it means to be similar.
 \theorem{Finite dimensional real vector spaces $\simeq \reals^n$ }{
-Let $V$ be a finite dimensional real vector spaces. Then $V\simeq \reals^n$ for some $n\in\mathbb{N}$.
+Let $V$ be a finite dimensional real vector space. Then $V\simeq \reals^n$ for some $n\in\mathbb{N}$.
 }
 \begin{proof}
 	Since $V$ is finite dimensional, let $\{v_1,...,v_k\}$ be a basis for $V$.
@@ -163,6 +164,89 @@ Let $V$ be a finite dimensional real vector spaces. Then $V\simeq \reals^n$ for 
 \begin{proof}
 	Let $\{v_1,\ldots,v_k\}$ and ${w_1,\ldots, w_l}$ be two bases for $V$. Then by the construction in the previous theorem, we have $V\simeq \reals^k$ and $V\simeq \reals^l$. So $\reals^k\simeq \reals^l$ and thus $k=l$.
 \end{proof}
+\definition{Dimension of a vector space}{
+	Let $V$ be finite dimensional. The \textbf{dimension} of $V$ is denoted dim$(V)$, and is the number $n$ for which $V\simeq \reals^n$.
+}
+\subsection*{Understanding generalized vector spaces}
+We can use coordinates to understand finite dimensional vector spaces. Let $V$ be $n$-dimensional, and pick a basis $\{v_1,\ldots,v_n\}$ for $V$. Then each element $w\in V$ can be written as a \textit{unique linear combination} of the basis vectors, or \[
+	v=c_1v_1+c_2v_2+\ldots+c_nv_n=\begin{bmatrix}
+		v_1&v_2&\ldots&v_n
+	\end{bmatrix}\begin{bmatrix}
+		c_1\\c_2\\\vdots\\c_n
+	\end{bmatrix}.
+\]Therefore, we can make sense of linear transformations between finite dimensional spaces as transformations $\reals^n\to\reals^m$. To make this concrete, let dim$V=n$, dim $W=m$, and pick bases $\{v_1,\ldots,v_n\},\{w_1,\ldots,w_m\}$ for $V$ and $W$ respectively. Using our coordinate representation, for any transformation $T:V\to W$, we can pick a matrix representation of $\tilde{T}:\reals^n\to\reals^m$ such that the two paths from $\reals^n\to\reals^m$ lead to the same result
+
+\begin{tikzpicture}
+	\begin{scope}[every node/.style={circle,thick,draw}]
+		\node (A) at (0,0) {$V$};
+		\node (C) at (4,0) {$W$};
+		\node (B) at (0,-4) {$\reals^n$};
+		\node (D) at (4,-4) {$\reals^m$};
+	\end{scope}
+	\node [left of =B]{$\begin{bmatrix}
+		c_1\\ \vdots \\ c_n
+	\end{bmatrix}$};
+	\node [right of =D]{$\begin{bmatrix}
+		d_1\\ \vdots \\ d_m
+	\end{bmatrix}$};
+	\node [right of =C]{$w$};
+	\node [left of =A]{$v$};
+\begin{scope}[
+every edge/.style={draw=red,very thick}]
+\path [->] (B) edge node [left,midway]{coordinate representation of $V$} (A);
+\path [->] (A) edge node [above,midway]{$T$} (C);
+\path [->] (C) edge node [right,midway]{coordinate representation of $W$} (D);
+
+\path [->,dotted] (B) edge node [above,midway]{ $\tilde{T}$} (D);
+\end{scope}
+\end{tikzpicture}\\
+In particular, this correspondence of using coordinates is how we motivated the use of linear independence for computing the dimension of the span of vectors. If $v_1,\ldots,v_k$ are linearly independent, span$(v_1,\ldots,v_k)$ has a basis $\{v_1,\ldots,v_k\}$ and is isomorphic to $\reals^k$ using coordinates.
+\subsection*{Rank Nullity Theorem}
+Recall the Rank of a matrix is the number of pivots in its rref. 
+\proposition{
+	Let $A\in M_{n\times m}(\reals)$. Then\[
+		\textrm{rank}(A)= \textrm{dim}(\textrm{col}(A))
+	\]
+}
+The intuition behind this statement is as follows: If you take all the columns that has a pivot in the rref, you will get a linearly independent set of vectors. This statement says that the span of these vectors is exactly col$(A)$, so forms a basis for the column space.  
+\begin{proof}
+	We need to show two things: First, if we isolate the pivot columns, we have a linearly independent set of vectors. Next, we have to show the span of these vectors equals the column space of $A$.
+	
+	Let $S$ be a sequence of row operations that reduce $A$ to rref$(A)$.
+
+	For linearly indepence, we isolate the columns of $A$ with pivot in rref$A$ to create a new matrix $A'$ of $n\times \textrm{rank}(A)$. The same sequence $S$ applied to $A'$ will reduce it to row echelon form, with a pivot in every column. Therefore, the vectors are linearly independent. 
+
+	To show they span the column space, we want to show for each $\vec{b}$ that $A\vec{x}=\vec{b}$ has a solution, $A'\vec{y}=\vec{b}$ has a solution in $\vec{y}$. To show this, we see that applying $S$ to $
+	\begin{bmatrix}[c|c]
+		A &\vec{b}
+	\end{bmatrix}
+	$
+	will give matrix in rref with no pivot in the final column. So applying $S$ to $\begin{bmatrix}[c|c]
+		A' &\vec{b}
+	\end{bmatrix}
+	$
+	will also lead to a matrix in rref with no pivot in the final column.
+\end{proof}
+Similarly, we can define a term for the dimension of nullspace of a matrix. \definition{Nullity}{
+	Let $A\in M_{n\times m}(\reals)$. We define the \textbf{nullity} of $A$\[
+	\textrm{Nullity}(A)=\textrm{dim}(N(A))
+	\]
+}
+\proposition{
+	$\textrm{Nullity}(A)$ is the number of columns in rref$(A)$ without pivots. 
+}
+We have a way to generate a basis for the nullspace, using the rows without a pivot, so this follows from the algorithm. 
+Now we have rank corresponding to the columns with pivots and nullity corresponding to the columns without pivots. This means that for any $n\times m$ matrix, the sum of rank and nullity is always the number of columns $m$. This is the statement of the Rank-Nullity Theorem. 
+\theorem{Rank-Nullity}{
+	Let $A\in M_{n\times m}(\reals)$. Then \[
+		\textrm{Rank}(A)+\textrm{Nullity}(A)=m.
+	\]
+	Phrased in terms of a linear transformation $T:U\to V$,
+	\[
+	\textrm{dim}(\textrm{Im}(T))+ \textrm{dim}(\textrm{ker}(T)) = \textrm{dim}(U).
+	\]
+} 
+
 \subsection{Determinants}
 We now move towards the last equivalence for That One Theorem. Recall in the intuition behind the \hyperref[thm:2.48]{Matrix Representation of Linear Transformations}, we constructed a grid and showed that a linear transformation is a change in the coordinate system.\\
 \begin{figure}[h]
@@ -418,8 +502,9 @@ However, we have the following corollary
 Let $A=[\vec{v}_1\ldots \vec{v}_n]\in M_{n\times n}(\reals)$, and $T:\reals^n\to\reals^n$ be the unique linear transformation satisfying $T(\vec{x})=A\vec{x}$ for all $\vec{x}\in\reals^n$.
 	Then the following are equivalent.
 	\begin{enumerate}
-		\item $\{\vec{v}_1,\ldots,\vec{v}_n\}$ form a basis.
-		\\ $\vdots$
+		\item $\{\vec{v}_n,\ldots,\vec{v}_n\}$ form a basis.
+		\item $\{\vec{v}_n,\ldots,\vec{v}_n\}$ are linearly independent.
+		\item $\{\vec{v}_n,\ldots,\vec{v}_n\}$ span $\reals^n$. \\$\vdots$
 	\end{enumerate}
 	
 	\begin{thatonethmlist}
@@ -431,4 +516,123 @@ Let $A=[\vec{v}_1\ldots \vec{v}_n]\in M_{n\times n}(\reals)$, and $T:\reals^n\to
 
 	To show the equivalence of det$A\neq 0$, we can use the condition from That One Theorem that rref$(A)=I_n$, and the previous corollary for computing determinants. If the determinant is $0$, then the product of the diagonal terms of rref$A$ has a zero, so rref$(A)\neq I_n$. On the converse, if the determinant is non-zero, all the diagonal terms in rref$(A)$ are non-zero. The only way this can happen for a matrix in rref is when the matrix is also the identity matrix.
 \end{proof}
-
+\theorem{Determinant of Product is Product of Determinant}{
+	Let $A,B\in M_{n\times n}(\reals)$, then \[
+	\det(AB)=\det (A) \det(B)
+	\]
+}
+\begin{proof}
+	First we consider the case where $\det (A)=0$. By That One theorem, the column space of $A$ is not $\reals^n$. Let $\vec{v}\notin \textrm{col}(A)$. Then $\vec{v}\notin \textrm{col} (AB)$. So by That One Theorem again $\det (AB)=0$.
+	
+	Now we can let $\det (A)\neq 0$. By That One Theorem, we have a sequence of row opeations transforming $A\to I_n$. Denoting the row operations as matrices, we have $X_1,\ldots,X_k\in M_{n\times n}(\reals)$ such that\[
+	X_k \ldots X_1A=I_n,
+	\]
+	so \[
+		X_k \ldots X_1AB =I_nB=B,
+	\]
+	or that the same row operations turn $AB$ into $B$. Starting with $\det (B)$, we can reverse the row operations (and scaling according to the factors in \hyperref[prop:2.75]{corollary 2.76}) to get $\det(AB)=\det(A)\det(B)$.
+\end{proof}
+\exercises
+\begin{exerciselist}
+	\item Compute the determinants of the following matrices: (you may find row reduction helpful) \begin{enumerate}
+		\item $\begin{bmatrix}
+			1&1&2\\1&3&5\\6&4&1
+		\end{bmatrix}$
+		\item $\begin{bmatrix}
+			1&2&3&4\\2&1&4&3\\1&4&2&3\\4&3&2&1
+		\end{bmatrix}$
+		\item $\begin{bmatrix}
+			0&0&0&0&3\\
+			1&0&0&0&2\\
+			0&1&0&0&1\\
+			0&0&1&0&4\\
+			0&0&0&1&2\\
+		\end{bmatrix}$
+		\item $\begin{bmatrix}
+			0&x&y\\-x&0&z\\-y&-z&0
+		\end{bmatrix}$
+	\end{enumerate}
+	\item For a $2\times 2$ matrix $\begin{bmatrix}
+		a&b\\c&d
+	\end{bmatrix}$, show that the matrix is invertible when $ad-bc$ is non-zero, and its inverse in this case is given by \[
+	\begin{bmatrix}
+		a&b\\c&d
+	\end{bmatrix}^{-1}=
+	\frac{1}{ad-bc}\begin{bmatrix}
+		d & -b\\-c& a
+	\end{bmatrix}.
+	\]
+	\item Let $A=[a_{i,j}]\in M_{n\times n}(\reals)$. The \textbf{transpose} of $A$ is denoted $A^T$ and has entries $b_{i,j}=a_{j_i}$ i.e. you swap the rows and columns, as an example \[
+	\begin{bmatrix}
+		1&2&3\\0&2&3\\0&0&3
+	\end{bmatrix}^T=\begin{bmatrix}
+		1&0&0\\2&2&0\\3&3&3
+	\end{bmatrix}
+	\]
+	Show that det$(A)=$det$(A^T)$, thus $A$ is invertible if and only if $A^T$ is invertible.
+\end{exerciselist}
+\newpage
+As a wrapup, here is That One Theorem with the things we have proven so far. (There are a few more you will encounter in Spring Quarter.)
+\theorem{This/That One}{
+	Let $A=[\vec{v}_1\ldots \vec{v}_n]\in M_{n\times n}(\reals)$, and $T:\reals^n\to\reals^n$ be the unique linear transformation satisfying $T(\vec{x})=A\vec{x}$ for all $\vec{x}\in\reals^n$.
+	Then the following are equivalent.
+	\begin{enumerate}
+		\item $\{\vec{v}_n,\ldots,\vec{v}_n\}$ form a basis.
+		\item $\{\vec{v}_n,\ldots,\vec{v}_n\}$ are linearly independent.
+		\item $\{\vec{v}_n,\ldots,\vec{v}_n\}$ span $\reals^n$.
+		
+		\item The system of equations $A\vec{x}=\vec{b}$ has exactly one solution for each $\vec{b}\in\reals^n$.
+		\item The system of equations $A\vec{x}=\vec{b}$ has at most one solution for each $\vec{b}
+		\in\reals^n$.
+		\item The system of equations $A\vec{x}=\vec{b}$ has at least one solution for each $\vec{b}\in\reals^n$.
+		\item rref$(A)=I_n.$
+		\item rref$(A)$ has a pivot in every column.
+		\item rref$(A)$ has a pivot in every row.
+		\item Rank$(A)=n$.
+		\item $N(A)=\{\vec{0}\}$.
+		\item col$(A)=\reals^n$.
+		\item $T$ is bijective.
+		\item $T$ is injective.
+		\item $T$ is surjective.
+		\item $\textrm{ker}(T)=\{\vec{0}\}.$
+		\item $\textrm{Im}(T)=\reals^n$.
+		\item $A$ is invertible.
+		\item $A$ as a left inverse.
+		\item $A$ has a right inverse.
+		\item $\det A \neq 0.$
+		\item $\det A^T \neq 0.$ 
+	\end{enumerate}
+}
+\section{End of Chapter Exercises}
+\begin{exerciselist}
+	\item Let $\vec{v}_1,\vec{v}_2,\ldots,\vec{v}_k\in \reals^n$ be non-zero and pairwise orthogonal. That is $\vec{v}_i\cdot\vec{v}_{j}=0$ if $i\neq j$ and $>0$ if $i=j$. \begin{enumerate} [label=(\alph*)]
+		\item Show that $\vec{v}_1,\ldots,\vec{v}_k$ are linearly independent. (Hint: what happens when you take the dot product of $c_1\vec{v}_1+\ldots+c_k\vec{v}_k=\vec{0}$ with $\vec{v}_1$ on both sides?)
+		\item Show that $k\leq n$.
+		\item Now suppose $k=n$. Find an inverse for the matrix \[
+		[\vec{v}_1 \ \ldots \ \vec{v}_n]. 
+		\]
+		Consider computing left and right inverses, one way is significantly harder than the other.
+	\end{enumerate}
+	\item Recall the \textbf{transpose} of $A=[a_{i,j}]\in M_{n\times m}(\reals)$ is an $m\times n$ matrix denoted $A^T$ and has entries $b_{i,j}=a_{j_i}$. \begin{enumerate}[label=(\alph*)]
+		\item Show that for any $\vec{x}\in \reals^m, \vec{y}\in \reals^n$, $A\vec{x}\cdot \vec{y}=\vec{x}\cdot \vec{y}.$
+		\item Show that for two matrices $A,B$,  $(AB)^T=B^T A^T$, whenever the product $AB$ is defined.
+		\item Conclude that if $A$ has an inverse, $(A^T)^{-1}=(A^{-1})^T.$
+	\end{enumerate}
+	
+	\item Let $\vec{x}\in \reals^3$, $A\in M_{3\times 3}(\reals).$ Suppose $A^2\vec{x}\neq\vec{0}$ and $A^3\vec{x}=\vec{0}$. Show that $\vec{x}, A\vec{x},A^2\vec{x}$ span $\reals^3$.
+	\item Let $A\in M_{n\times n}(\reals)$
+	\begin{enumerate}[label=(\alph*)]
+		\item Show that the solutions of the equation \[
+			A\vec{v}=\lambda \vec{v}
+			\]form a subspace of $\reals^n$ for any value $\lambda$.
+		\item Show that this subspace is not the trivial subspace if and only if \[
+		\textrm{det}(A-\lambda I_n)=0.
+		\]
+		\item Conclude that if $n$ is odd, there is some non-zero vector $\vec{v}$ such that $A\vec{v}$ is parallel to $\vec{v}$. You may use the fact that all odd-degree polynomials $p(x)$ have a real root, which you can prove using the intermediate value theorem considering the values of $\lim_{x\to \infty}p(x)$ and $\lim_{x\to -\infty}p(x)$. 
+		\item Suppose $\lambda_1,\ldots,\lambda_k$ are all distinct and $\vec{v}_1,\ldots,\vec{v}_k\in \reals^n$ non-zero vectors such that $A\vec{v}_j=\lambda_j\vec{v}_j$ for all $j$. Show that $\vec{v}_1,\ldots ,\vec{v}_k$ are linearly independent, thus $k\leq n$. You might it helpful to consider $k=1$ then apply induction.
+		\item Consider the sum \[
+		S=\sum_{\lambda\in\reals} \textrm{Nullity}(A-\lambda I_n).
+		\]
+		The previous part shows that at most $n$ values of $\lambda$ have a non-zero nullity, so we can make sense of the infinite sum as the sum over the finite number of values of $\lambda$ for which the nullspace is non-trivial. Show that $S\leq n$.
+	\end{enumerate}
+\end{exerciselist}

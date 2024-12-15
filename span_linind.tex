@@ -39,7 +39,7 @@ we can give a correspondence between the linear combination of $k$ vectors $\{c_
 		c_1 \\ c_2\\ ...\\ c_k
 	\end{bmatrix}
 \]
-Assuming this correspondence works, the geomtry of the span should resemble $\reals^k$.
+Assuming this correspondence works, the geometry of the span should resemble $\reals^k$.
 Unfortunately, this is not always true, for instance, consider the following counterexample:
 \example{
 	Sketch, in $\reals^3$, $\textrm{span}(\vec{i},\vec{k},\vec{i}+2\vec{k})$.
@@ -134,7 +134,7 @@ It also contains $S$ as each element in $S$ has $1$ (thus finitely many) non-zer
 Thus $\textrm{span}(S)\subseteq U \subset \tilde{V}$.
 
 To circumvent this, this proof requires the use of the axiom of choice, which we will give a statement below.
-\definition{Axiom of Choice}{
+\definition{Axiom of Choice - optional}{
 	The \textbf{Axiom of Choice} is one of the axioms in Zermelo-Frenkel (ZFC) Set theory. Its statement is as follows:
 	\begin{quotation}
 		Let $I$ be a set, $(S_i)_{i\in I}$ be an indexed family of non-empty sets. Then there exists an indexed set $(s_i)_{i\in I}$ such that
@@ -148,8 +148,8 @@ To circumvent this, this proof requires the use of the axiom of choice, which we
 	rearrange the points of a solid 3D ball to make two solid 3D balls, each having the same size as the original. (!)
 	While some mathematicians do not accept the Axiom of Choice and adopt ZF (ZFC without \textit{C}hoice), it generally makes our lives easier.
 \end{remark}
-From the Axiom of Choice, one can derive Zorn's Lemma. This is the optional part.
-\theorem{Zorn's Lemma}{
+From the Axiom of Choice, one can derive Zorn's Lemma.
+\theorem{Zorn's Lemma - optional}{
 	Assume the Axiom of Choice. Let $S$ be a partially ordered set, that is, there is a comparison function $\leq$ for some pairs of elements.
 	Then if for every ascending chain in $S$ \[
 	s_1,s_2,\ldots \in S \textrm{ such that } s_1\leq s_2 \leq s_3 \leq \ldots,
@@ -500,7 +500,18 @@ that a matrix is row equivalent to at most one reduced row echelon form matrix.
 \subsection{Recovering solutions from rref}
 %\subsubsection*{No solutions}
 %There are no solutions when the system of equations is inconsistent. In rref, this corresponds to creating a row that says $0=1$.
-
+\definition{Column space}{
+	Let $A\in M_{n\times m}(\reals)$, we define the \textbf{column space} of $A$ col$(A)$ to be the set of $\vec{b}\in\reals^n $ for which\[
+		A\vec{x}=\vec{b}
+	\]
+	has at least one solution.
+}
+\proposition{
+	If we write $A=[\vec{a}_1 \ \vec{a}_2 \ \ldots \ \vec{a}_m]$ then \[
+		\textrm{col}(A) = \textrm{span}(\vec{a}_1,\ldots,\vec{a}_m).
+	\]
+}
+One of the exercises will guide you through the proof.
 \subsubsection*{Producing one solution}
 Let us consider a general matrix in rref:\[
 	\begin{bmatrix}[c c c c c|c]
@@ -729,13 +740,14 @@ The second and third statements forces $m=\textrm{rank}(A)=n$, so $A$ is a squar
 		\item $\{\vec{v}_n,\ldots,\vec{v}_n\}$ are linearly independent.
 		\item $\{\vec{v}_n,\ldots,\vec{v}_n\}$ span $\reals^n$.
 		\item The system of equations $A\vec{x}=\vec{b}$ has exactly one solution for each $\vec{b}\in\reals^n$.
-		\item The system of equations $A\vec{x}=\vec{b}$ has at least one solution for each $\vec{b}\in\reals^n$.
 		\item The system of equations $A\vec{x}=\vec{b}$ has at most one solution for each $\vec{b}\in\reals^n$.
-		\item Rank$(A)=n$.
+		\item The system of equations $A\vec{x}=\vec{b}$ has at least one solution for each $\vec{b}\in\reals^n$.
+		\item rref$(A)=I_n.$
 		\item rref$(A)$ has a pivot in every column.
 		\item rref$(A)$ has a pivot in every row.
-		\item rref$(A)=I_n$
+		\item Rank$(A)=n$.
 		\item $N(A)=\{\vec{0}\}$.
+		\item col$(A)=\reals^n$.
 	\end{thatonethmlist}
 }\begin{remark}
 	This One Theorem goes by many names: Invertibility Theorem, Inverse Matrix Theorem, Inverse Function Theorem, and (my favorite) Amazingly Awesome Theorem by Prof. Ca\~nez.
@@ -750,7 +762,6 @@ The second and third statements forces $m=\textrm{rank}(A)=n$, so $A$ is a squar
 	\item Determine if the following sets of vectors are linearly dependent or independent. If they are not linearly independent, generate the set of homogenous solutions to the corresponding linear system. \begin{enumerate}[label=(\alph*)]
 		\item $\{(1,2,3), (0,1,1),(1,1,2)\}$
 		\item $\{\vec{e}_1,\vec{e}_2,\vec{e}_5\}\subset\reals^7$
-		\item 
 	\end{enumerate}
 	\item Let $m>n$. Show that every set of $m$ vectors in $\reals^n$ is not linearly independent. Show that every set of $n$ vectors in $\reals^m$ does not span $m$. Thus show that every basis for $\reals^n$ has $n$ vectors.
 	\item Let $\{v_1,...,v_k\}\subset V$. Show that exactly one of the following statements hold: \begin{enumerate}[label=(\alph*)]
@@ -764,7 +775,80 @@ The second and third statements forces $m=\textrm{rank}(A)=n$, so $A$ is a squar
 		\item Show that the previous process terminates, i.e. you cannot add in infinitely many vectors and still make $S$ linearly independent. Therefore, it stops at some $k$ where $\textrm{span}(\{\vec{v}_1,\ldots,\vec{v}_k\})=V$.
 	\end{enumerate}
 	\item Show that every subset of a linearly independent set is linearly independent.
-	\item 
+	\item Compute the nullspace of the matrix \[
+		\begin{bmatrix}
+			1&-1&1&-1\\
+			1& 2 &-1& 1\\
+			0 & 3 & -2 & 2
+		\end{bmatrix}
+	\]
+	and give a basis for it. Do the same for the matrices \[
+	A=\begin{bmatrix}
+		1&0&1&2\\
+		2&-1 & 1 & 0\\
+		-1 & 4 & -1 & 2
+	\end{bmatrix}, B=\begin{bmatrix}
+		1& 3&4&0&2\\
+		2&7&6&1&1\\
+		4&13&14&1&3
+	\end{bmatrix}
+	\]
+	\item Solve the folling systems of equations \begin{enumerate}[label=(\alph*)]
+		\item $\begin{bmatrix}[ccc|c]
+			1&2&3&4\\
+			3&1&2&-1\\
+			1&0&1&0
+		\end{bmatrix} $
+		\item $\begin{bmatrix}[ccc|c]
+			1&2&3&4\\
+			2&3&2&-1\\
+			1&1&-1&10
+		\end{bmatrix}$
+		\item $\begin{bmatrix}[cccc|c]
+			1&1&-2&3&9\\
+			2&1&0&1&-18\\
+			1&-1&1&0&-9\\
+			3&1&2&1&9\\
+		\end{bmatrix}$
+	\end{enumerate}
+	\item Solve \[
+	\begin{bmatrix}
+		3&2\\2&1
+	\end{bmatrix}X = \begin{bmatrix}
+		0&1\\1&0
+	\end{bmatrix}
+	\] for the $2\times 2$ matrix $X$.
+	\item Compute the following products \begin{enumerate}[label=(\alph*)]
+		\item $\begin{bmatrix}
+			1 & 0 & 1\\
+			0 & 1 & 0 \\
+			0 & 0 & 1\\
+		\end{bmatrix}\begin{bmatrix}
+			1&2&3\\4&5&6\\7&8&9
+		\end{bmatrix}$
+		\item $\begin{bmatrix}
+			1 & 0 & 0\\
+			-1 & 1 & 0 \\
+			0 & 0 & 1\\
+		\end{bmatrix}\begin{bmatrix}
+			1&2&3\\4&5&6\\7&8&9
+		\end{bmatrix}$
+		\item $\begin{bmatrix}
+			0 & 1 & 0\\
+			1 & 0 & 0 \\
+			0 & 0 & 1\\
+		\end{bmatrix}\begin{bmatrix}
+			1&2&3\\4&5&6\\7&8&9
+		\end{bmatrix}$
+		\item $\begin{bmatrix}
+			2 & 0 & 0\\
+			0 & 1 & 0 \\
+			0 & 0 & 1\\
+		\end{bmatrix}\begin{bmatrix}
+			1&2&3\\4&5&6\\7&8&9
+		\end{bmatrix}$
+	\end{enumerate}
+	\item Refer to the previous problem, express row operations as multiplication on the left. That is, if $A'$ is $A$ after applying a row operation, find the corresponding matrix $X$ such that $A'=XA$.
 \end{exerciselist}
 
 \section{Linear Transformations}
@@ -789,7 +873,6 @@ Many functions in the wild are linear transformations. This includes the functio
 		\item Integration over a bounded interval $\int_{a}^{b}$ is a linear transformation from the space of integrable functions to $\reals$.
 	\end{enumerate}
 }
-
 \proposition{
 	Let $U,V,W$ be $\mathbb{K}$-vector spaces, and $T_1:U\to V, T_2:U\to V, T_3:V\to W$ be linear transformations, then the following are also linear transformations: \begin{itemize}
 		\item $f_1:U\to V$, $f_1(\vec{x}) = T_1(\vec{x})+T_2(\vec{x})$
@@ -797,6 +880,32 @@ Many functions in the wild are linear transformations. This includes the functio
 		\item $f_3:U\to W$, $f_3(\vec{x})= T_3(T_1(\vec{x}))$.
 	\end{itemize}
 }
+\proposition{
+	Linear transformations are characterized by the image of a basis. Specifically, let $v_1,\ldots,v_n$ be a basis for $V$, and $u_1,\ldots, u_n \in U$. Then there is a unique linear transformation $T:V\to U$ satisfying \begin{align*}
+		T(v_1)&=u_1,\\
+		T(v_2)&=u_2,\\
+		\vdots\\
+		T(v_n)&=u_n.
+	\end{align*}	
+}
+\begin{proof}
+	Let us show uniqueness of such a transformation. (That is, it might not exist for some values of $u_k$'s, but when it does, it has to be unique.) 
+
+	Since every $v\in V$ is a unique linear combination of the basis vectors for any $v=c_1v_1+\ldots+c_nv_n$, we must have (by linearity of $T$), \[
+	T(v) = T(c_1v_1+\ldots+c_nv_n)=c_1T(v_1)+\ldots+c_nT(v_n)=
+	c_1u_1+\ldots+c_nu_n.
+	\]
+	This forces $T$ to have only one form. Finally, we can check that if we define 
+	\[
+	T(c_1v_1+\ldots+c_nv_n)=
+	c_1u_1+\ldots+c_nu_n,
+	\]
+	this is well defined as each $v$ is a unique linear combination of the basis vectors (we exactly one value of $T(v)$ assigned for each $v$), and it satisfies the conditions \begin{align*}
+		T(v+w)&=T(v)+T(w) \\
+		T(cv)&=cT(v)
+	\end{align*}
+	so is a linear transformation.
+\end{proof}
 The first example of linear transformation given $A\vec{x}$ is a very general type of linear transformation.
 The punchline is that it is \textbf{the} example of a linear transformation.
 \theorem{Matrix Representation of Linear Transformation}{
@@ -862,7 +971,7 @@ Let us track the transformation $T:\reals^2\to\reals^2$ that sends $T(\vec{e}_1)
 			\end{tikzpicture}
 	\end{subfigure}
 \end{figure}
-Let us only consider the integer lattice points for now. If we start at $(a,b)$, meaning from the origin, we take $a$ steps right and $b$ steps up. In our transformed plane, we need to take $a$ steps in $(2,1)$ and $b$ steps $(-1,1)$ by linearity. We can geometrically track the place of these lattic points using a grid.
+Let us only consider the integer lattice points for now. If we start at $(a,b)$, meaning from the origin, we take $a$ steps right and $b$ steps up. In our transformed plane, we need to take $a$ steps in $(2,1)$ and $b$ steps $(-1,1)$ by linearity. We can geometrically track the place of these lattice points using a grid.
 \begin{figure}[h]
 	\begin{subfigure}[l]{0.4\textwidth}
 		\begin{tikzpicture}
@@ -896,6 +1005,18 @@ Let us only consider the integer lattice points for now. If we start at $(a,b)$,
 	\end{subfigure}
 \end{figure}
 This is just a change of our coordinate system. As long as we know where the standard basis vectors go (or any basis goes), it is enough to know the whole linear transformation. The construction is you 1. decompose any vector into the linear combination of the basis vectors, then 2. add up the corresponding linear combination of the transformed basis vectors. \textbf{This intuition of linear transformations being a shift in coordinates is very useful}, and helps transform abstract problems in linear algebra back to concrete geometry. 
+
+It also helps to define analogs of column and nullspace for the transformations.
+\definition{Image and Kernel}{
+	Let $T:V\to U$ be a linear transformation. We define the \textbf{image} of $T$, denoted as $\textrm{Im}(T)$ to be the set \[
+		\{u\in U | T(\vec{v})=u \textrm{ has a solution in v}\}.
+	\]
+	We define the \textbf{kernel} of $T$, denoted as $\textrm{ker}(T)$, to be the set \[
+	\{v\in V | T(v)=0_U\}.
+	\]
+}\begin{remark}
+	The image and kernel of $T$ are subspaces of $U$ and $V$ respectively. Indeed, if we use the matrix representation of $T:\reals^n\to\reals^m$, we can see the image of $T$ is the column space of $A$ and the kernel of $T$ is the nullspace of $A$. 
+\end{remark}
 \example{
 	Express the linear transformations of the dot product, cross product, and projection as matrix-vector multiplications.
 }
@@ -947,7 +1068,7 @@ to define the product of matrices.
 	\alpha A = \{\alpha a_{i,j}\},
 	\]
 	the pointise scaling of each entry. We also define the product of matrices\[
-	AC = \left\{\sum_{k=1}^{n}a_{i,k}c_{k_j}\right\}.
+	AC = \left\{\sum_{k=1}^{n}a_{i,k}c_{k,j}\right\}.
 	\]
 }
 \begin{remark}
@@ -1027,7 +1148,17 @@ to define the product of matrices.
 \exercises
 \begin{exerciselist}
 	\item Find the corresponding matrices for the following transformations: \begin{enumerate}[label=(\alph*)]
-		\item 
+		\item The unique linear transformation $T:\reals^2 \to \reals^2$ defined by \[
+		T\left(\begin{bmatrix}
+			1\\1
+		\end{bmatrix}\right)=\begin{bmatrix}
+			2\\2
+		\end{bmatrix}, T\left(\begin{bmatrix}
+			1\\-1
+		\end{bmatrix}\right)=\begin{bmatrix}
+			3\\-3
+		\end{bmatrix}
+		\]
 	\end{enumerate}
 	\item Find an example where \begin{enumerate}[label=(\alph*)]
 		\item Two matrices $A,B\in M_{n\times n}(\reals)$ are not commutative. i.e. $AB\neq BA$.
@@ -1053,6 +1184,23 @@ to define the product of matrices.
 		\end{bmatrix}
 	\]
 	and thus the set of matrix in this form are commutative. Is there a geometric argument for why these matrices must be commutative? 
+	\item Let \[
+		A=\begin{bmatrix}
+			1&-1&3\\0&-2&2
+		\end{bmatrix},
+		B=\begin{bmatrix}
+			1&2\\1&0\\-3&2
+		\end{bmatrix},
+		C=\begin{bmatrix}
+			-1&1&-3\\0&2&-2
+		\end{bmatrix},
+		D=\begin{bmatrix}
+			-1 & -2&0\\1&-2&1\\2&1&-4
+		\end{bmatrix}.
+		\]
+		Compute the follow quantities (could be undefined): $A+3B,\ A+C,\ C+2D, \ AB, \ BA, \ CD, \ DC.$
+		\item Prove or provide a counterexample: for matrices $A,B,C$ where the products are well defined, if $AB=AC$ then $B=C$.
+		\item Prove or provide a counterexample: if $A,B$ are not the zero matrix, then $AB$ is not the zero matrix (where the matrix sizes are implicitly defined).
 	\item Run the following code in python multiple times and pinky promise that you got the correct answer.\\ \begin{lstlisting}[language=Python]
 import numpy as np
 matrix1=np.random.randint(-10,11,size=(3,3))
@@ -1104,6 +1252,7 @@ for each $\vec{b}\in\reals^m$.
 	Let $T:\reals^n\to\reals^m$, $A\in M_{m\times n}(\reals)$, and $T(\vec{x})=A\vec{x}$ for all $\vec{x}\in\reals^n$.
 	Then the following are equivalent:\begin{enumerate}
 		\item $T$ is surjective.
+		\item $\textrm{Im}(T)=\reals^m$.
 		\item $A(\vec{x})=\vec{b}$ is at least one solution in $\vec{x}$ for each $\vec{b}\in \reals^m$
 		\item rref$(A)$ has a pivot in every row.
 		\item The columns of $A$ span $\reals^m$.
@@ -1113,6 +1262,7 @@ for each $\vec{b}\in\reals^m$.
 	Let $T:\reals^n\to\reals^m$, $A\in M_{m\times n}(\reals)$, and $T(\vec{x})=A\vec{x}$ for all $\vec{x}\in\reals^n$.
 	Then the following are equivalent:\begin{enumerate}
 		\item $T$ is injective.
+		\item $\textrm{ker}(T)=\{\vec{0}\}.$
 		\item $A(\vec{x})=\vec{b}$ is at most one solution in $\vec{x}$ for each $\vec{b}\in \reals^m$.
 		\item rref$(A)$ has a pivot in every column.
 		\item The columns of $A$ are linearly independent.
@@ -1124,14 +1274,23 @@ This forces the matrix to be square, giving even more equivalences for That One 
 	Let $A=[\vec{v}_1\ldots \vec{v}_n]\in M_{n\times n}(\reals)$, and $T:\reals^n\to\reals^n$ be the unique linear transformation satisfying $T(\vec{x})=A\vec{x}$ for all $\vec{x}\in\reals^n$.
 	Then the following are equivalent.
 	\begin{enumerate}
-		\item $\{\vec{v}_1,\ldots,\vec{v}_n\}$ form a basis.
+		\item $\{\vec{v}_n,\ldots,\vec{v}_n\}$ form a basis.
+		\item $\{\vec{v}_n,\ldots,\vec{v}_n\}$ are linearly independent.
+		\item $\{\vec{v}_n,\ldots,\vec{v}_n\}$ span $\reals^n$.
 		\\ $\vdots$
 	\end{enumerate}
 	
 	\begin{thatonethmlist}
 		\item $T$ is bijective.
-		\item $T$ is surjective.
 		\item $T$ is injective.
+		\item $T$ is surjective.
+		\item $\textrm{ker}(T)=\{\vec{0}\}.$
+		\item $\textrm{Im}(T)=\reals^n$.
 	\end{thatonethmlist}
 }
 \exercises
+\begin{exerciselist}
+	\item Show that a linear transformation $T:V\to U$ is injectie $\iff \textrm{ker}(T)=\{0_V\}$.
+	\item Let $T:V\to U$, $S:U\to W$ be injective. Show that their composition $S\circ T: V\to W$ defined by $S\circ T(v)= S(T(v))$ is injective. Can $S\circ T$ still be injective if one of $S$ or $T$ fails to be injective?
+	\item Let $T:V\to U$, $S:U\to W$ be surjective. Show that their composition $S\circ T: V\to W$ is surjective. Can $S\circ T$ still be surjective if one of $S$ or $T$ fails to be surjective?
+\end{exerciselist}

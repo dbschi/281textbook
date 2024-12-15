@@ -569,7 +569,7 @@ Let $A=[\vec{v}_1\ldots \vec{v}_n]\in M_{n\times n}(\reals)$, and $T:\reals^n\to
 		1&0&0\\2&2&0\\3&3&3
 	\end{bmatrix}
 	\]
-	Show that det$(A)=$det$(A^T)$, thus $A$ is invertible if and only if $A^T$ is invertible.
+	Using the recursive formula of determinant, show that det$(A)=$det$(A^T)$, thus $A$ is invertible if and only if $A^T$ is invertible.
 \end{exerciselist}
 \newpage
 As a wrapup, here is That One Theorem with the things we have proven so far. (There are a few more you will encounter in Spring Quarter.)
@@ -611,20 +611,19 @@ As a wrapup, here is That One Theorem with the things we have proven so far. (Th
 		\item Now suppose $k=n$. Find an inverse for the matrix \[
 		[\vec{v}_1 \ \ldots \ \vec{v}_n]. 
 		\]
-		Consider computing left and right inverses, one way is significantly harder than the other.
 	\end{enumerate}
-	\item Recall the \textbf{transpose} of $A=[a_{i,j}]\in M_{n\times m}(\reals)$ is an $m\times n$ matrix denoted $A^T$ and has entries $b_{i,j}=a_{j_i}$. \begin{enumerate}[label=(\alph*)]
-		\item Show that for any $\vec{x}\in \reals^m, \vec{y}\in \reals^n$, $A\vec{x}\cdot \vec{y}=\vec{x}\cdot \vec{y}.$
+	\item Recall the \textbf{transpose} of $A=[a_{i,j}]\in M_{n\times m}(\reals)$ is an $m\times n$ matrix denoted $A^T$ and has entries $b_{i,j}=a_{j,i}$. \begin{enumerate}[label=(\alph*)]
+		\item Show that for any $\vec{x}\in \reals^m, \vec{y}\in \reals^n$, $A\vec{x}\cdot \vec{y}=\vec{x}\cdot A^T\vec{y}.$
 		\item Show that for two matrices $A,B$,  $(AB)^T=B^T A^T$, whenever the product $AB$ is defined.
-		\item Conclude that if $A$ has an inverse, $(A^T)^{-1}=(A^{-1})^T.$
+		\item Conclude that if $A$ is a square matrix and has an inverse, $(A^T)^{-1}=(A^{-1})^T.$
 	\end{enumerate}
-	
+	\item Let $A\in M_{n\times n}(\reals)$. Find a necessary and sufficient (if and only if) condition for $AA^T=1$. (Hint: what is the dot product between two columns of $A^T$?) 
 	\item Let $\vec{x}\in \reals^3$, $A\in M_{3\times 3}(\reals).$ Suppose $A^2\vec{x}\neq\vec{0}$ and $A^3\vec{x}=\vec{0}$. Show that $\vec{x}, A\vec{x},A^2\vec{x}$ span $\reals^3$.
-	\item Let $A\in M_{n\times n}(\reals)$
+	\item Let $A\in M_{n\times n}(\reals).$
 	\begin{enumerate}[label=(\alph*)]
-		\item Show that the solutions of the equation \[
+		\item Let $\lambda\in\reals$. Show that the solutions of the equation \[
 			A\vec{v}=\lambda \vec{v}
-			\]form a subspace of $\reals^n$ for any value $\lambda$.
+			\]form a subspace of $\reals^n$.
 		\item Show that this subspace is not the trivial subspace if and only if \[
 		\textrm{det}(A-\lambda I_n)=0.
 		\]
@@ -634,5 +633,40 @@ As a wrapup, here is That One Theorem with the things we have proven so far. (Th
 		S=\sum_{\lambda\in\reals} \textrm{Nullity}(A-\lambda I_n).
 		\]
 		The previous part shows that at most $n$ values of $\lambda$ have a non-zero nullity, so we can make sense of the infinite sum as the sum over the finite number of values of $\lambda$ for which the nullspace is non-trivial. Show that $S\leq n$.
+	\end{enumerate}
+	\item Let a real vector space $V=\textrm{span}(v_1,\ldots, v_n)$. Show that every set of $m>n$ vectors in $V$ are linearly dependent. In other words, let $m>n$, and $w_1,\ldots,w_m\in V$. Show that the $w_j$'s are linearly dependent.
+	\item Let $V$ a finite dimensional vector space. Let $U,W\subseteq V$ be two subspaces of $V$. 
+	\begin{enumerate}[label=(\alph*)]
+		
+		\item Show that the intersection of $U$ and $W$ $\defeq U\cap W$ is a subspace of $V$. Is the union of $U$ and $W$ $\defeq U\cup W$ necessarily a subspace of $V$?
+		\item Show that the set \[
+			U+W \defeq \{u+v|u\in U, w\in W\}
+		\]
+		is a subspace of $V$.
+		\item Let $U\cap W = \{0_V\}$. Show that $\textrm{dim}(U+ W) = \textrm{dim}(U)+\textrm{dim}(W)$.
+		\item In general, show that $\textrm{dim}(U+ W) = \textrm{dim}(U)+\textrm{dim}(W) - \textrm{dim}(U\cap W)$. (Approach 1: Start with a basis for $U\cap W$, and extend this to a basis for $U$ and a basis for $W$. Show that these vectors are linearly indpendent and span $U\cup W$) (Approach 2: Construct a surjective linear transformation from something $(\textrm{dim}(U)+\textrm{dim}(W))$-dimensional to $U+ W$, with the kernel isomorphic to $U\cap W$. Apply a theorem that is not That One Theorem).
+	\end{enumerate}
+	\item Let $P:V\to V$ be a linear transformation that satisfies $P(P(v))=P(v)$ for every $v\in V$. Show that every $v\in V$ can be decomposed into a \textit{unique} combination $v=v_1+v_2$, where $v_1\in \textrm{Im}(P)$ and $v_2\in \textrm{ker}(P)$.  
+	\item \textit{(Rank Nullity abstract proof)} Let $U,V$ be vector spaces, and $U$ is finite dimensional. Let $T:U\to V$ be a linear transformation. \begin{enumerate}[label=(\alph*)]
+		\item Show that $\textrm{Im}(T)$ is finite dimensional, so we can restrict the codomain of $T$ (through a redefinition) $T:U\to \tilde{V}=\textrm{Im}(T)$.
+		\item Show that this $T:U\to \textrm{Im}(T)$ is surjective.
+		\item Pick a basis for $\tilde{V}$ to be $\{\tilde{v}_1,\ldots,\tilde{v}_k\}$. For each $\tilde{v}_j$, there is some $u_j\in U$ such that $T(u_j)=\tilde{v}_j$. Show that $\{u_1,...,u_k\}$ are linearly independent.
+		\item Show that for every $u\in U$, we can write $u=w_1+w_2$, where $w_1\in \textrm{span}(u_1,\ldots,u_k)$ and $w_2\in \textrm{ker}(T)$. (Hint: what is $T(w_1+w_2)$?)
+		\item Because $\textrm{ker}(T)$ is a subspace of $U$, it is finite dimensional. Choose a basis $\{\tilde{u}_1,\ldots, \tilde{u}_l\}$ for $\textrm{ker}(T)$. Show that  $\{u_1,...,u_k,\tilde{u}_1,\ldots, \tilde{u}_l\}$ are linearly independent, and conclude that it is a basis for $U$.
+		\item Finish the proof that $k+l=\textrm{dim}(U)$, and why this proves the Rank-Nullity Theorem.
+	\end{enumerate}
+	\item \textit{(Adapted from HKDSE M2 2019 Q11)} Recall $M_{2\times 2}(\reals)$ is a vector space with zero vector $0_{2\times 2}$. Let $M=\begin{bmatrix}
+		2& 7\\-1&-6
+	\end{bmatrix}, I=I_{2\times 2}$. \begin{enumerate}[label=(\alph*)]
+		\item Show that $M$ and $I$ are linearly independent.
+		\item Find real numbers $a$ and $b$ such that $M^2=aM+bI$.
+		\item Let $V=\textrm{span}(M,I)$. Show the map $T(A)=MA$ for all $A\in V$ defines a linear transformation $V\to V$. Find the matrix representation $B$ for this transformation using the coordinates in the basis $\{M,I\}$.
+		\item Compute $B\begin{bmatrix}
+			1\\5
+		\end{bmatrix}$ and $B\begin{bmatrix}
+			1\\-1
+		\end{bmatrix}$. Hence express $M^n = T(T(\ldots T(I)))$ in terms of $M$ and $I$.
+		\item Repeat (a-d) on the matrix $M^{-1}$ to obtain a closed form expression for $M^{-n}=(M^{-1})^{n}$. (Hint: For (d), consider the vectors (5,1) and (1,-1))
+		\item Calculate $(M^n)^{-1}$ using the expression you got from (d) and verify it evaluates to the expression in (e).
 	\end{enumerate}
 \end{exerciselist}

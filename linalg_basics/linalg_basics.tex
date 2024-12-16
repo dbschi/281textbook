@@ -8,24 +8,30 @@ makes sense to take linear combinations of. Two operations must be defined: addi
 vector space meets all of the vector space axioms, which will be listed shortly. Many consequences can be drawn from these axioms,
 and we can build up linear algebra to solve any linear problem.
 
-Remark: One has to specify the field of scalars (\textit{field} just means number system) related to the vector space. In most cases
+\begin{remark}
+	One has to specify the field of scalars (\textit{field} just means number system) related to the vector space. In most cases
 here, we will be talking about real vector spaces (the field of scalars is $\mathbb{R}$). However, vector spaces can be defined with
 many other fields of scalars. Examples will follow the definition.
+\end{remark}
+\definition{Informal definition of a field}{
+	A field $\mathbb{K}$ is a set that supports
+	addition, subtraction, multiplication, division with the similar properties that you expect from the real numbers.
+}
 %\iffalse
 \subsection*{Where is this going?}
 In the previous chapter, we have seen vector manipulation in $\reals^n$. This chapter tries to generalize some observations we have about $\reals^n$ to other mathematical objects.
-For now, we call these sets that have `$\reals^n$'-vector-like properties \textbf{vector spaces}. This notion is a bit abstract, and we usually default to $\real^n$
+For now, we call these sets that have `$\reals^n$'-vector-like properties \textbf{vector spaces}. This notion is a bit abstract, and we usually default to $\reals^n$
 to gain intuition about vector spaces and motivate new definitions and techniques. It just so happens that \textit{every finite dimensional real vector space is `almost the same' as $\reals^n$},
 so many conclusions we get from $\reals^n$ naturally extend to other vector spaces.
 %\fi
 
-In the previous chapter, \href{prop:1.7}{one proposition} lists $8$ characteristics of $\reals^n$. Let us extract all these $8$
+In the previous chapter, \hyperref[prop:1.7]{one proposition} lists $8$ characteristics of $\reals^n$. Let us extract all these $8$
 statements, and define a vector space to be a set that satisfies these properties.
 \definition{Vector Space}{
 	Let $\mathbb{K}$ be a field, and $V$ be a set closed under operations addition $+ : V\times V\to V$ and multiplication $\cdot : \mathbb{K} \times V \to V$. We call $V$ a \textbf{vector space}, or a \textbf{$\mathbb{K}$-vector space} to specify the field if the following axioms hold. \\
 %	For all $\vec{u},\vec{v},\vec{w} \in V$, and $a,b \in \mathbb{K}$. 
 	\begin{enumerate}
-		\item \textit{(Associativity)}$x + (y + z) = (x + y) + z$  $\forall x, y, z \in V$.
+		\item \textit{(Associativity)} $x + (y + z) = (x + y) + z$  $\forall x, y, z \in V$.
 		\item \textit{(Commutativity)} $x + y = y + x$  $\forall x, y \in V$.
 		\item \textit{(Identity)} There exists some vector $0_V$ s.t. $x + 0_V = x$  $\forall x \in V$.
 		\item \textit{(Inverse)} $\forall x \in V$,  $\exists y \in V$ s.t. $x + y = 0_v$.
@@ -79,7 +85,10 @@ Let $W,U\subseteq V$ be subspaces. The intersection $W\cap U$ is a subspace of $
 \exercises
 \begin{exerciselist}
 	\item Determine if the following sets are real vector spaces:\begin{enumerate}[label=(\alph*)]
-		\item The set of real polynomials $f(x)=ax^3+bx^2+cx+d$ for all real constants $a,b,c,d$, such that $f\prime (x)=0$.
+		\item The set of $(x,y,z)\in \reals^3$ that satisfy $2x+3y-z=0$. 
+		\item The set of $(x,y,z)\in \reals^3$ that satisfy $2x+3y-z=4$.
+		\item  The set of $(x,y,z)\in \reals^3$ that satisfy $x^2+y^2-z^2=0$.
+		\item The set of real polynomials $f(x)=ax^3+bx^2+cx+d$ for all real constants $a,b,c,d$, such that $f^\prime (x)=0$.
 		\item The set of continuous functions $f:\reals\to\reals$ such that $f(0)=1$.
 	\end{enumerate}
 	\item Give an example of a vector space that only has one subspace.

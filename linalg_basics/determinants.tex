@@ -214,7 +214,7 @@ The intuition behind this statement is as follows: If you take all the columns t
 	
 	Let $S$ be a sequence of row operations that reduce $A$ to rref$(A)$.
 
-	For linearly indepence, we isolate the columns of $A$ with pivot in rref$A$ to create a new matrix $A'$ of $n\times \textrm{rank}(A)$. The same sequence $S$ applied to $A'$ will reduce it to row echelon form, with a pivot in every column. Therefore, the vectors are linearly independent. 
+	For linear independence, we isolate the columns of $A$ with pivot in rref$A$ to create a new matrix $A'$ of $n\times \textrm{rank}(A)$. The same sequence $S$ applied to $A'$ will reduce it to row echelon form, with a pivot in every column. Therefore, the vectors are linearly independent. 
 
 	To show they span the column space, we want to show for each $\vec{b}$ that $A\vec{x}=\vec{b}$ has a solution, $A'\vec{y}=\vec{b}$ has a solution in $\vec{y}$. To show this, we see that applying $S$ to $
 	\begin{bmatrix}[c|c]
@@ -627,7 +627,7 @@ As a wrapup, here is That One Theorem with the things we have proven so far. (Th
 		\item Show that this subspace is not the trivial subspace if and only if \[
 		\textrm{det}(A-\lambda I_n)=0.
 		\]
-		\item Conclude that if $n$ is odd, there is some non-zero vector $\vec{v}$ such that $A\vec{v}$ is parallel to $\vec{v}$. You may use the fact that all odd-degree polynomials $p(x)$ have a real root, which you can prove using the intermediate value theorem considering the values of $\lim_{x\to \infty}p(x)$ and $\lim_{x\to -\infty}p(x)$. 
+		\item Conclude that if $n$ is odd, there is some non-zero vector $\vec{v}$ such that $A\vec{v}$ is parallel to $\vec{v}$ (or $A\vec{v}=\vec{0}$). You may use the fact that all odd-degree polynomials $p(x)$ have a real root, which you can prove using the intermediate value theorem considering the values of $\lim_{x\to \infty}p(x)$ and $\lim_{x\to -\infty}p(x)$. 
 		\item Suppose $\lambda_1,\ldots,\lambda_k$ are all distinct and $\vec{v}_1,\ldots,\vec{v}_k\in \reals^n$ non-zero vectors such that $A\vec{v}_j=\lambda_j\vec{v}_j$ for all $j$. Show that $\vec{v}_1,\ldots ,\vec{v}_k$ are linearly independent, thus $k\leq n$. You might it helpful to consider $k=1$ then apply induction.
 		\item Consider the sum \[
 		S=\sum_{\lambda\in\reals} \textrm{Nullity}(A-\lambda I_n).

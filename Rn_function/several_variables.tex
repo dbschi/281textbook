@@ -42,12 +42,14 @@ The function here is not complicated at all: This is the distance $(x,y)$ from t
 
 We can compress these level sets back to 2 dimensions.
 \begin{figure}[h]
+    \centering
     \begin{subfigure}[l]{0.46\textwidth}
     \centering
     \includegraphics[width=\textwidth]{Rn_function/cone.png}
     \caption{Cross sections of the cone}
     \end{subfigure}
     \begin{subfigure}[r]{0.5\textwidth} 
+        \centering
 \begin{tikzpicture}
     \filldraw(0,0) circle(1pt);
     \draw (0,0)circle (0.5);
@@ -64,22 +66,39 @@ Let us see how our flatlander friend Frankie (apparently that is what the inhabi
 
 \example{
     What are the level sets of the function $f(x,y,z)={x^2+y^2+z^2}$? 
-}
+} \begin{wrapfigure}{l}{0.5\textwidth}
+    \centering
+    \begin{tikzpicture}
+        \filldraw(0,0) circle(1pt);
+        \draw (0,0)circle (0.707);
+        \draw (0,0)circle (1);
+        \draw (0,0)circle (1.224);
+        \draw (0,0)circle (1.414);
+        \draw (0,0)circle (1.58);
+        \draw (0,0)circle (1.73);
+    \end{tikzpicture}
+    \caption{Take the 2D analog $g(x,y)=x^2+y^2$. The level sets of $c=0,1,2,\ldots$ are not evenly spaced.}
+\end{wrapfigure}
 Now we play the role of Frankie. 
 
-First we try to see what the level sets $f(x,y,z)=c$ look like. This is a sphere of radius $\sqrt(c)$. The level sets are also spheres, but this time they are spaced a little bit different. To go from the level set $L_c$ to $L_{c+1}$, we go from the sphere of radius $\sqrt{c}$ to $\sqrt{c+1}$, and the shortest distance is  \[
-    \sqrt{c+1}-\sqrt{c} =  \frac{(\sqrt{c+1}-\sqrt{c})(\sqrt{c+1}+\sqrt{c})}{(\sqrt{c+1}+\sqrt{c})} = \frac{1}{\sqrt{c+1}+\sqrt{c}}
-\]
+First we try to see what the level sets $f(x,y,z)=c$ look like. This is a sphere of radius $\sqrt(c)$. The level sets are also spheres, but this time they are spaced a little bit different. To go from the level set $L_c$ to $L_{c+1}$, we go from the sphere of radius $\sqrt{c}$ to $\sqrt{c+1}$, and the shortest distance is  \begin{align*}
+    \sqrt{c+1}-\sqrt{c}&=  \frac{(\sqrt{c+1}-\sqrt{c})(\sqrt{c+1}+\sqrt{c})}{(\sqrt{c+1}+\sqrt{c})}\\ &= \frac{1}{\sqrt{c+1}+\sqrt{c}}
+\end{align*}
+
 which gets smaller as $c$ increases! This means we need to walk a shorter distance to increase our meter. Equivalently, the `slope' in this direction increases as we get further away.
+
+We could also hold $z$ constant at $0$ to take one more cross section $(x,y,0,c)$ in $x,y$. The `level sets' of the function $g(x,y)=f(x,y,0)$ look as follows:
+
+
 
 \example{Sketch the function $f(x,y)=xy$, either in 3D or through its 2D level sets.}
 
 Let us begin by considering the level sets $xy=c$. This describes the graph $y=c/x$, except for the case $c=0$, then the level set is the x and y axes.
 \begin{figure}[h]
     \centering
-    \begin{subfigure}{0.48\textwidth}
+    \begin{subfigure}{0.29\textwidth}
         \centering
-        \begin{tikzpicture}
+        \begin{tikzpicture}[scale=0.5]
             \draw[->] (-4, 0) -- (4, 0) ;%node[right] {$x$};
             \draw[->] (0, -4) -- (0, 4) node[above] {$y$};
             %\foreach \i in {1,..,3}{
@@ -93,9 +112,9 @@ Let us begin by considering the level sets $xy=c$. This describes the graph $y=c
           \end{tikzpicture}
           \caption{Positive $c$}
     \end{subfigure}
-    \begin{subfigure}{0.48\textwidth}
+    \begin{subfigure}{0.29\textwidth}
         \centering
-        \begin{tikzpicture}
+        \begin{tikzpicture}[scale=0.5]
             \draw[->] (-4, 0) -- (3.9, 0) node[below right ] {$x$};
             \draw[->] (0, -4) -- (0, 4) node[above] {$y$};
             %\foreach \i in {1,..,3}{
@@ -109,18 +128,50 @@ Let us begin by considering the level sets $xy=c$. This describes the graph $y=c
           \end{tikzpicture}
           \caption{Negative $c$}
     \end{subfigure}
+    \begin{subfigure}{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Rn_function/saddle.png}
+        \caption{A saddle}
+        %\caption{The surface $f(x,y)=xy$}
+    \end{subfigure}
 \end{figure}
 
 
-\begin{wrapfigure}{l}{0.4\textwidth}
-    \centering
-    \includegraphics[width=0.4\textwidth]{Rn_function/saddle.png}
-    %\caption{The surface $f(x,y)=xy$}
-\end{wrapfigure} There are many ways to visualize the actual surface from here: My goto way is to vary $c$ and see how the level set changes. In this case, starting from positive $c$ and decreasing, the curves get closer and closer to the $x$ and $y$ axis, and they `flip' across the axis as the sign of $c$ changes from positive to negative.
+ There are many ways to visualize the actual surface from here: My goto way is to vary $c$ and see how the level set changes. In this case, starting from positive $c$ and decreasing, the curves get closer and closer to the $x$ and $y$ axis, and they `flip' across the axis as the sign of $c$ changes from positive to negative.
 
 The graph looks something like a saddle, or a pringle chip. Saddle points are somewhere between a local maximum and a local minimum. The saddle point of this function is at the origin: going the direction of $x=y$, you will get $f(x,y)=x^2$ that curves upwards; going in the direction of $x=-y$, you get $f(x,y)=-x^2$ which curves downwards. This point is \textit{in some sense} a local minimum and a local maximum depending on which way you look at it.
 
+Indeed, we can rewrite \begin{align*}
+    xy = \frac{1}{2}\left[\left(\frac{1}{\sqrt{2}}(x+y)\right)^2 - \left(\frac{1}{\sqrt{2}}(x-y)\right)^2\right],
+\end{align*}
+so we can rotate our basis vectors $\vec{e}_1,\vec{e}_2\in \reals^2$ to get $(\vec{e}_1-\vec{e}_2)/\sqrt{2},(\vec{e}_1+\vec{e}_2)/\sqrt{2}$. In this new basis, we can plot the rotated saddle as $(y^2 -x^2)/2$.
 
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=0.6]
+            \draw[->] (-4, 0) -- (4, 0) node[right] {$x$};
+            \draw[->] (0, -4) -- (0, 4) node[above] {$y$};
+            %\foreach \i in {1,..,3}{
+            \draw[->] (0,0) -- (3,0) node[above]{$\vec{e}_1$};
+            \draw[->] (0,0) -- (0,3) node[left]{$\vec{e}_2$};
+            \draw[->,blue] (0,0) -- (2.121,2.121) node[above right]{$(\vec{e}_1+\vec{e}_2) / \sqrt{2}$};
+            \draw[->,blue] (0,0) -- (2.121,-2.121) node[below right]{$(\vec{e}_1-\vec{e}_2)/\sqrt{2}$};
+            %}
+            \draw[->,dotted,thick] (0,3) arc (90:50:3);
+            \draw[->,dotted,thick] (3,0) arc (0:-40:3);
+          \end{tikzpicture}
+          \caption{Positive $c$}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[t]{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Rn_function/saddle2.png}
+        \caption{The rotated saddle}
+        %\caption{The surface $f(x,y)=xy$}
+    \end{subfigure}
+\end{figure} 
 \example{Let $a,b,c>0$, and $k,m,l\in\reals$. What does the surface described by \[
     \frac{x^2-2kx}{a^2}+\frac{y^2-2my}{b^2}+\frac{z^2-2lz}{c^2}=1
 \]
@@ -141,7 +192,70 @@ In the later exercises, you will classify the surfaces described by \[
     x^2+y^2-z^2=1, \ x^2-y^2-z^2=1,
 \]
 which are called one and two sheeted hyperboloids respectively. 
-
-In later chapters we will see a way to change our coordinate system, through some rotation, scaling and translation, to make any surface in the form \[
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[l]{0.4\textwidth}
+        \centering
+        \includegraphics[scale=0.6]{Rn_function/onesheet.png}
+        \caption{Hyperboloid of one sheet}
+    \end{subfigure}
+    \begin{subfigure}[r]{0.4\textwidth}
+        \centering
+        \includegraphics[scale=0.6]{Rn_function/twosheet.png}
+        \caption{hyperboloid of two sheets}
+    \end{subfigure}
+\end{figure}
+In later chapters we will see a way to change our coordinate system, through some rotation, scaling and translation, to simplify any surface in the form \[
     ax^2+by^2+cz^2+dxy+eyz+fzx+gx+hy+iz=j
-\] look similar to that of a ellipsoid, one sheet hyperboloid, or a two sheet hyperboloid.
+\] to look like something of the form \[
+    \frac{x^2}{a^2}\pm\frac{y^2}{b^2}\pm\frac{z^2}{c^2}
+\]
+\exercises
+\begin{exerciselist}
+    \item Consider the level set $x^2+y^2-z^2=1$. \begin{enumerate}[label=(\alph*)]
+        \item We take the cross section of this surface with the plane $z=k$. What does this cross section look like in $x,y$?
+        \item We now hold $y=0$. What does this cross section look like?
+        \item Combine the first two parts, and try to sketch the surface in 3D. How many sheets or `connected regions' does this hyperboloid have?
+    \end{enumerate}
+    \item Consider the level set $x^2-y^2-z^2=1$. \begin{enumerate}[label=(\alph*)]
+        \item We take the cross section of this surface with the plane $x=k$. What does this cross section look like in $y,z$? How does this part differ from the last problem?
+        \item We now hold $y=0$. What does this cross section look like?
+        \item Combine the first two parts, and try to sketch the surface in 3D. How many sheets or 'connected regions' does this hyperboloid have?
+    \end{enumerate}
+    \item What the largest possible domain for the function \begin{enumerate}[label=(\alph*)]
+        \item $f(x,y)=e^{x^2-y^2}$
+        \item $f(x,y)=\ln (y^2-x^2-2)$
+        \item $f(x,y)=(x^2-y^2)/(x-y)$
+        \item $f(x,y,z)=1/(xyz)$
+        \item $f(x,y,z)=(z^2-x^2-y^2)^{-1/2}$.
+    \end{enumerate}
+    \item Describe the graph of the function \begin{enumerate}[label=(\alph*)]
+        \item $f(x,y)=5$
+        \item $f(x,y)=2x-y$
+        \item $f(x,y)=1-x^2-y^2$
+        \item $f(x,y,z)=4-\sqrt{x^2+y^2}$
+        \item $f(x,y,z)=\sqrt{24-4x^2-6y^2}$.
+    \end{enumerate}
+    \item Describe the level sets of the function \begin{enumerate}[label=(\alph*)]
+        \item $f(x,y)=x+y$
+        \item $f(x,y)=x^2+9y^2$
+        \item $f(x,y)=x-y^2$
+        \item $f(x,y)=x-y^3$
+        \item $f(x,y)=x^2+4x+y^2+2y+9$
+        \item $f(x,y,z)=x^2+y^2-z$
+        \item $f(x,y,z)=x^2+2x+y^2-2y+z^2+4z$
+        \item $f(x,y,z)=z^2-x^2-y^2$
+    \end{enumerate}
+    \item Describe the surfaces in $\reals^3$ described by $f(x,y,z)=$ \begin{enumerate}[label=(\alph*)]
+        \item $x^2+y^2=16$
+        \item $z^2=49x^2+y^2$
+        \item $z=25-x^2-y^2$
+        \item $x=4y^2-z^2$
+        \item $4x^2+y^2+9z^2=36$
+        \item $4x^2-y^2+9z^2=36$
+        \item $4x^2-y^2-9z^2=36$
+    \end{enumerate}
+    \item Let $c\in \reals$. Describe the intersection of the graph of $f(x,y)=x^2+9y^2$ in the given planes $x=c$, $y=c$, $z=c$.
+    \item \todo Intersection of cone with plane is a circle
+\end{exerciselist}
+\section{Limits and Continuity}

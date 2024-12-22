@@ -258,4 +258,194 @@ In later chapters we will see a way to change our coordinate system, through som
     \item Let $c\in \reals$. Describe the intersection of the graph of $f(x,y)=x^2+9y^2$ in the given planes $x=c$, $y=c$, $z=c$.
     \item \todo Intersection of cone with plane is a circle
 \end{exerciselist}
+\section{Topology of $\reals^n$}
+\begin{remark}[Author's notes]
+    This part is slightly touched on in Even's textbook (but scattered across the differentiation chapter). Some past 281 instructors such as John Enns dedicate half a week on topology.  
+\end{remark}
+\definition{Open Ball}{
+    Let $\vec{x}_0\in\reals^n,r>0$. We write the \textbf{open ball of radius $r$ centered at $a$} as $B(\vec{x}_0,r)$, and is the set of all points within $r$ distance away from $a$, i.e. \[
+    B(\vec{x}_0,r)\defeq \{x\in\reals^n \ | \ |\vec{x}-\vec{x}_o|<r\}.
+    \]
+}
+    Many statements that we will work towards are `local', in the sense that they only dependent on the behavior of a function in a small open ball centered at a point. For instance, if a function $f:\reals\to\reals$ is continuous at $x=0$, altering the value of the function at any $y\neq 0$ will not change the continuity of the function at $x=0$. This is because the function remains unchanged in the small open ball $B(0,|y|/2)$. Similar, the differentiability (and its derivative) also only depends on the local behavior of the function.
+
+    Thus, we define a set with a special property that each point in the set is `fully contained' inside the set.
+
+\definition{Open sets}{
+    Let $\Omega\subseteq \reals^n$.
+    We say that $\Omega$ is \textbf{open} if for every $\vec{x}\in\Omega$, there is some radius $r_{\vec{x}}>0$ 
+such that $B(\vec{x},r_{\vec{x}})\subseteq\Omega$.}
+\begin{remark}
+    We want to deal with open sets when we talk about the local behavior of a function. It is not useful to talk about the continuity of a function that is only defined on the integers, this set is not open because every ball centered at an integer will contain a non-integer.
+\end{remark}
+\proposition{An open ball is open.}
+Yeah, this needs a proof.
+To show this is open, let $\vec{x} \in B(\vec{x}_0,r)$. Our goal is construct a value $r_{\vec{x}}>0$ such that $B(\vec{x},r_{\vec{x}})\subseteq B(\vec{x}_0,r)$.
+
+\begin{wrapfigure}{l}{0.6\textwidth}
+    \centering
+    \begin{tikzpicture}
+        \node [label=right:{$\vec{x}_0$}] at(0,0) {\textbullet} ;
+        \draw [dotted] (0,0) circle (3);
+        \draw (0,0)--(-3,0) node [midway, below] {$r$}; 
+        \node [label=right:{$\vec{x}$}]at (1.5,1.5) {\textbullet};
+        \draw [dotted,red,thick] (1.5,1.5) circle (0.879);
+        \draw [thick, red] (1.5,1.5)--(0.878,2.1215) node [midway, left] {$r_{\vec{x}}$}; 
+    \end{tikzpicture}
+\end{wrapfigure}
+As long as the distance between $\vec{x}$ and $\vec{x}_0$ is strictly less than $r$, the points within a small vicinity of $\vec{x}$ all have distance $<r$ to $\vec{x}_0$.
+
+This can be made rigorous using the Triangle Inequality.
+\begin{proof}
+    Let $\vec{x} \in B(\vec{x}_0,r)$. Let $r_{\vec{x}}= r-|\vec{x}_0-\vec{x}|$. Then for any $\vec{y}\in B(\vec{x},r_{\vec{x}})$, we have\begin{align*}
+        |\vec{y}-\vec{x}_0|&= |\vec{y}-\vec{x}+\vec{x}-\vec{x}_0|\\ &\leq |\vec{y}-\vec{x}|+|\vec{x}-\vec{x}_0| \\& < r-|\vec{x}_0-\vec{x}|+|\vec{x}_0-\vec{x}|\\& =r,
+    \end{align*}
+   
+    so $\vec{y}\in B(\vec{x}_0,r)\implies B(\vec{x},r_{\vec{x}})\subseteq B(\vec{x}_0,r)$.
+\end{proof} \ \\
+\example{
+    The following sets are open:
+    \begin{enumerate}
+        \item The top-half plane in $\reals^2$. $\mathbb{H}\defeq \{(x,y) \ | \ y>0\}$. Sketch: for every $(x,y)\in\mathbb{H}$ take $r_{(x,y)}=y$.
+        \item The punctured ball $B^*(\vec{x},r)\defeq B(\vec{x},r)-\{\vec{x}\}$. Sketch: for every $\vec{y}\in B^*(\vec{x},r)$ take $r_{\vec{y}}=\min(|\vec{y}-\vec{x}|, r-|\vec{y}-\vec{x}|)$.
+        \item The whole space $\reals^n$ is open. Sketch: take $r_{\vec{x}}=1$ for any point.
+        \item The union of (possibly infinite) open sets $\bigcup_a G_a$, where each $G_a$ is open. Sketch: if $\vec{x}\in \bigcup_a G_a$, then $\vec{x}\in G_a$ for some $a$. Because $G_a$ is open, pick a radius such that the ball is contained in $G_a$.
+    \end{enumerate}
+    The following sets are not open:
+    \begin{enumerate}
+        \item The set contianing just one point $\{\vec{x}\}$. Sketch: every ball centered at $\vec{x}$ contains points outside of $\vec{x}$.
+        \item The set of points $\{\vec{x}\in \reals^n \ | \ |\vec{x}|\leq r\}$. Sketch: Any ball of radius $\epsilon>0$ centered around the point $(r,0,0,\ldots, 0)$ contains $(r+\epsilon,0,0,\ldots,0)$.
+    \end{enumerate}
+}
+We see that a set fails to be open if there is a point in the boundary of the set. I.e. no matter how small $\epsilon>0$ is, $B(\vec{x},\epsilon)$ extends beyond that set.
+\definition{Boundary}{
+    Let $\Omega\subseteq\reals^n$. We denote the \textbf{boundary} of $\Omega$ as $\partial \Omega$. This is the set of points in $\vec{x}\in\reals^n$ such that every open ball around $\vec{x}$ contains a point in $\Omega$ and a point not in $\Omega$.
+}
+Colloquially, $\vec{x}$ is very (arbitrarily) close to $\Omega$, but is also very (arbitrarily) close to $\Omega^c$. So it is on the boundary of the two sets.
+
+\example{
+    In $\reals^3$, $\partial B(\vec{0},r)$ is the sphere of radius $r$. Note that a sphere refers to only the surface while a ball consists of the whole interior.
+}
+\definition{Closure of a set and Closed sets}{
+    Let $\Omega\subseteq\reals^n$. We denote the \textbf{closure of $\Omega$} as $\bar{\Omega}\defeq \Omega\cup \partial\Omega$. If $\bar{\Omega}=\Omega$, we say $\Omega$ is \textbf{closed}. Equivalently, a set is closed if it contains its boundary.
+}
+\proposition{The closure of a set is closed.}
+What this means is that if we add in the boundary of a set, we do not create new `boundaries'.
+\begin{proof}
+    Let $\Omega\subseteq \reals^n$. Let $\vec{x}\in \partial \bar{\Omega}$. Consider open ball of radius $\epsilon>0$ centered around $\vec{x}$. We want to show that this ball contains a point in $\Omega$ and a point in $\partial \Omega$, thus $\vec{x}\in\partial \Omega$ so is already included in $\bar{\Omega}$. 
+    
+    This ball, by the definition of boundary of $\bar{\Omega}$, contains a point $\vec{a}\in\bar{\Omega}$ and a point in $\vec{b}\in\bar{\Omega}^c$. We first consider $\vec{b}$. Because $\vec{b}\in\bar{\Omega}^c\subseteq (\Omega \cup \partial\Omega)^c = \Omega^c \cap (\partial\Omega)^c\subseteq \Omega^c$. This point is in $\Omega^c$ too.
+    If $\vec{a}\in \Omega$, we are done. Else, $\vec{a}\in\partial \Omega$. As $B(\vec{x},\epsilon)$ is open, we can find some open ball $B(\vec{a},\delta)\subseteq B(\vec{x},\epsilon)$. Now we can reapply the definition for $\vec{a}\in\partial \Omega$ to get that there is some point $\vec{a}'\in B(\vec{a},\delta)$ that is in $\Omega$. So we have some $\vec{a}'\in B(\vec{x},\epsilon)$ that is contained in $\Omega$.
+
+    Since $\epsilon$ was arbitrary, we can conlude that every open ball centered around $\vec{x}$ contains a point in $\Omega$ and $\Omega^c$. So $\vec{x}\in\partial \Omega\subseteq \bar{\Omega}$.
+\end{proof}
+
+\exercises
+\begin{exerciselist}
+    \item \todo
+\end{exerciselist}
 \section{Limits and Continuity}
+\definition{Limit Point}{
+    Let $\Omega\subseteq\reals^n$. A \textbf{limit point of $\Omega$} $\vec{x}\in\reals^n$ is a point such that every open ball centered around $\vec{x}$ contains a point $\vec{y}\in\Omega$ with $\vec{y}\neq \vec{x}$. Alternatively, using the notation of punctured balls $B^*(\vec{x},r)\defeq B(\vec{x},r)-\{\vec{x}\}$, the intersection \[
+        B^*(\vec{x},r)\cap\Omega
+    \] is non-empty for every $r>0$.
+}
+Colloquially, you can approach (get closer and closer to) a limit point by using only points in $\Omega$.
+\begin{remark}
+    When we talk about limits, we care about the behavior around some point $\vec{x}$ but not at the point $\vec{x}$ (For all we care about, $\vec{x}$ could be outside the domain of the function). This is why the condition $\vec{y}\neq\vec{x}$ is in the definition of a limit point.
+\end{remark}
+\definition{Limit}{
+    \domain{f}{n}{m}. Let $\vec{a}$ be a limit point of $\Omega$, $\vec{b}\in\reals^m$. We denote \textbf{the limit of $f(\vec{x})$ as $\vec{x}$ tends to $\vec{a}$} as $\lim_{\vec{x}\to\vec{a}}$, and say that this limit equals $\vec{b}$ if for all $\epsilon>0$, there is $\delta>0$ such that \[
+    |f(\vec{x})-\vec{b}|<\epsilon \textrm{ if } \vec{x}\in B^*(\vec{x},\delta)\cap \Omega,
+    \]
+    or equivalently, \[
+        |f(\vec{x})-\vec{b}|<\epsilon \textrm{ if } 0<|\vec{x}-\vec{a}|<\delta
+    \]
+    where $f$ is defined.
+}
+\subsubsection*{Parsing the $\epsilon-\delta$ definition of limit}
+For an illustration. Let $\Omega=\reals^2$ and $f:\reals^2\to\reals^2$. We want to consider the limit \[
+\lim_{\vec{x}\to\vec{0}}f(\vec{x})=\vec{b}.
+\]
+We draw the function as taking in values from the input space $\reals^2$ and spitting them them out in the output space $\reals^2$.  
+\begin{figure}[h]
+    \centering
+        \begin{tikzpicture}
+            \node (A) [label=left:{$\vec{x}_1$}]at(-.2,-1) {\textbullet};
+            \node (ori) [label=left:{$\vec{0}$}]at(0,0) {\textbullet};
+            \node(C) [label=left:{$\vec{x}_2$}] at (0.5,0.5) {\textbullet};
+            \node(D)[label=right:{$f(\vec{x}_2)$}]
+            at (4.3,1.2) {\textbullet};
+            \draw[->](C) edge[bend left =20] (D);
+        \node (B) [label=right:{$f(\vec{x}_1)$}]at (5,0) {\textbullet};
+    \draw[->] (A) edge [bend right=20]  node[midway, below]{$f$} (B);
+    \draw [dotted] (ori) circle (1.5);
+    \draw (0,0)--(1.3,-0.75) node[midway, above]{$\delta$}; 
+    \node (lim) [label=right:{$\vec{b}$}] at (5.2,0.7){\textbullet};
+        \draw [dotted](lim) circle (1.2);
+        \draw (5.2,0.7) -- (4,0.7) node[midway, below] {$\epsilon$};
+        
+    \end{tikzpicture}
+\end{figure}
+
+We do not know what the value $f(\vec{0})$ is - it may not exist. However, we can see if the surrounding values of $f$ approaches some value. To make this rigorous, let's say we want to get within $\epsilon$ distance of the value $\vec{b}$. This corresponds to the open ball on the right. Now we want to pick $\delta$ such that at a very short distance $\delta$ away from $\vec{0}$, the image of $B^*(\vec{0},\delta)$ lands within $B(\vec{b},\epsilon)$. This corresponds to the left open ball.
+
+That means, you can get as close as you like to $\vec{b}$ as long as you are close to $\vec{0}$. If the $\epsilon$ requirement for closeness changes from $0.1$ to $0.0000001$, you can just pick a smaller $\delta$ to get within this distance. Remember: the order of the limit is someone first challenges that you need to get close to the limit in the output space ($\epsilon$), then you pick the ball around the input space ($\delta$) that satisfies that particular value of $\epsilon$.
+
+\proposition{
+    Suppose $\lim_{\vec{x}\to\vec{a}}f(\vec{x})$ exists, then it must be unique.
+}
+\begin{proof}
+    Suppose, for the sake of contradiction, we have the two limits $\vec{b}\neq\vec{b}'$ of $f$ as $\vec{x}\to\vec{a}$. Let $\epsilon=|\vec{b}-\vec{b}'|$. Pick $\delta_1,\delta_2$ such that $|f(\vec{x})-\vec{b}|<\epsilon$ and $|f(\vec{x}-\vec{b}'|<\epsilon|$ when $0<|\vec{x}-\vec{a}|<\delta_1$ and $0<|\vec{x}-\vec{a}|<\delta_2$ respectively. Then pick some $\vec{x}$ such that $0<|\vec{x}-\vec{a}|<\min(\delta_1,\delta_2)$. For this particular value of $\vec{x}$,\[
+        \epsilon=|\vec{b}'-\vec{b}|= |\vec{b}'-f(\vec{x})+f(\vec{x})-\vec{b}|\leq|\vec{b}'-f(\vec{x})|+|\vec{b}-f(\vec{x})| <\frac{\epsilon}{2}+\frac{\epsilon}{2}=\epsilon.
+    \]
+    This gives us the strict inequality $\epsilon<\epsilon$, which is impossible.
+\end{proof}
+\begin{remark}
+    A consequence of this is that if a limit exists, the limit will be the same using any path of approach. Caution: It is not enough to check a few paths to confirm a limit exists. Take the function \[
+        f(x,y)=\begin{cases}
+            1 &\textrm { if } x=0\\
+            0 &\textrm{otherwise }
+        \end{cases}
+    \]
+    Approaching $f(0,0)$ along any straight line $y=cx$ will give a limit of $0$. However, the limit does not exist, as approaching on the y-axis $x=0$ will give a limit of $1$. 
+\end{remark}
+\example{
+    Compute the limit (if it exists) of \[
+    \lim_{(x,y)\to (0,0)} \frac{xy}{\sqrt{x^2+y^2}}
+    \]
+}
+Let's assume that this limit exists, what must it be? We can test the limit along the x-axis and y-axis. I.e. We set $x$ or $y=0$ and let the the other variable approach $0$. If the limit exists, the limit should be the same no matter how which axis we approach the limit by. Then we see \begin{align*}
+    (x=0) \lim_{y\to 0}\frac{0y}{\sqrt{0+y^2}}& =0 \\
+    (y=0)\lim_{x\to 0}\frac{0x}{\sqrt{x^2+0}}&=0
+\end{align*}
+So the limit, if it exists, must be $0$.
+Can we show that this exists? Let $\epsilon>0$, then $\delta=[\textrm{placeholder}]$. We want \begin{align*}
+    \left|\frac{xy}{\sqrt{x^2+y^2}}-0\right|<\epsilon
+\end{align*} whenever $\sqrt{x^2+y^2}<\delta$. Intuitively, this should be true as the degree of the numerator is $2$ and the degree of the denominator is `$1$'. So the numerator shrinks to $0$ much faster than the denominator. To make this rigorous, we can use the inequality $|x|=\sqrt{x^2}\leq \sqrt{x^2+y^2}$ and similarly, $|y|\leq \sqrt{x^2+y^2}$ to get \[
+    \left|\frac{xy}{\sqrt{x^2+y^2}}-0\right|\leq\left|\frac{x^2+y^2}{\sqrt{x^2+y^2}}\right|
+    =\left|\sqrt{x^2+y^2}\right|<\delta.
+\]
+So setting $\delta=\epsilon$ works! Now we just replace the placeholder with $\epsilon$ and pretend we knew this all along.
+\begin{proof}
+    We claim the limit is $0$. Let $\epsilon>0$, then for all $|(x,y)|<\epsilon$, we have  \[
+        \left|\frac{xy}{\sqrt{x^2+y^2}}-0\right|\leq\left|\frac{x^2+y^2}{\sqrt{x^2+y^2}}\right|
+        =\left|\sqrt{x^2+y^2}\right|<\epsilon.
+    \]
+\end{proof}
+\example{
+    Compute the limit (if it exists) of \[
+    \lim_{(x,y)\to(0,0)} \frac{2x^2+y^2}{x^2+y^2}.
+    \]
+}
+Again, we test a few paths to approach this limit to see what it can be.
+Approaching from the y-axis $x=0$, we get \[
+\lim_{y=0}\frac{y^2}{y^2}=\lim_{y=0}1 =1.
+\]
+But if we approach from the x-axis $y=0$, we will get\[
+    \lim_{x=0}\frac{2x^2}{x^2}=\lim_{x=0}2 =2.
+\]
+These two limits are not equal, so we can conclude that the limit does not exist.
+
+
+

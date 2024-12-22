@@ -1,0 +1,69 @@
+
+\chapter{First Order Differential Equations}
+\setcounter{exercisecounter}{0}
+
+\setcounter{thmcounter}{1}
+\section{Introduction}
+A differential equation is an equation that relates an undetermined function with one or more of its derivatives. We call equations involving only single-variable derivatives of functions \textit{ordinary differential equations} (ODEs) and those containing partial derivatives of multivariable functions \textit{partial differential equations}(PDEs). We will focus on the former in this course and leave study of the latter to MATH 381. \newline
+\newline
+The highest order derivative occurring in an ODE defines the \textit{order} of the differential equation. We will look at first and second order ordinary differential equations. ODEs can be either homogeneous or inhomogeneous. Homogeneous equations have all terms involving the function $y$ or derivatives of $y$ summed to equal $0$, while inhomogeneous equations will sum to equal a nonzero term. 
+\[\mbox{Homogeneous}: f(y, y',...,y^n, t) = 0\]
+\[\mbox{Inhomogeneous}: f(y, y',...,y^n) = g(t)\]
+\newline
+Another classification of differential equations is concerned with the linearity of the terms. We can have either linear or nonlinear equations. An ODE
+\[f(y, y',...y^n,t) = g(t)\]
+is linear if $f$ is linear with respect to terms involving the variable $y$ or derivatives of $y$. The general form looks like
+\[a_0(t)y^n+....+a_n(t)y = g(t)\]
+Nonlinear equations will typically have terms involving $y$ or derivatives of $y$ multiplied together or terms involving nonlinear functions of $y$ such as $sin(y)$ or $e^y$.
+\newline
+
+
+\section{Separation of Variables}
+A separable differential equation is any differential equation of the form,
+\[N(y)\frac{dy}{dt} = M(t)\]
+This allows us to multiply across by $dt$ and integrate both sides to find a function $y(t)$. 
+\[\int N(y(t))\frac{dy}{dt}dt = \int M(t)dt\]
+I have written $N(y) = N(y(t))$ since $y$ is a function of $t$. Then we can suppose that $\frac{d}{dt}(y(t)) = N(y(t))\frac{dy}{dt}$. Which leads to the conclusion
+\[y(t) = \int M(t)dt + C\]
+for some constant $C$. You may have seen the differential treated as a fraction that can be separated and while that is sufficient for all computation purposes and will lead to the same answer, the formulation above is more mathematically rigorous. 
+
+\section{Differential Forms}
+Differential forms are generalized methods for describing derivatives and integrals in multi-dimensional spaces.
+Suppose we have the differential equation
+\[\frac{dy}{dx} = f(x,y)\]
+We can convert this equality into the form
+\[Mdx + Ndy = 0\]
+setting $f(x,y) = \frac{-M(x,y)}{N(x,y)}$.
+Solutions to each of these forms while conveying the same information, can be interpreted in different ways. A solution $f(x)$ to () is a collection of functions satisfying the differential equation, each corresponding to a different initial condition. A solution $f(x,y) = c$ to () is a collection of level curves in $\mathbf{R}^2$. Each $f(x)$ is a subset of one of the level curves $f(x,y) = c$. 
+\newline
+\hfill \break
+Along a curve $C$, we can write $ d\vec{r} = \langle dx, dy \rangle$ which points in the tangential direction. Similarly, we can define $F = \langle M, N \rangle$. Thus equation () can be rephrased as $F \cdot d\vec{r}$. \\
+\hfill \break
+
+\section{Integration Factors}
+
+
+
+
+
+
+\section{Variation of Parameters}
+Following our discussion of first order homogeneous differential equations, we now move on to discussing methods of findings solutions to inhomogeneous first order differential equations.
+\[\frac{dy}{dx} + a(x)y = b(x)\]
+We propose a solution $y(x) = u(x)h(x)$ where $h(x)$ is the solution to the corresponding homogeneous equation.
+\[\frac{dy}{dx} +a(x)y = 0\]
+The solution to this equation is
+\[h(x) = e^{-\int a(x)dx}\]
+Going back to our solution form $y(x) = u(x)h(x)$ and substituting into our inhomogeneous equation
+\[\frac{du}{dx}h + u\frac{dh}{dx} + a(x)uh = b(x)\]
+\[\frac{du}{dx}h + u\left( \frac{dh}{dx} + a(x)h \right) = b(x)\]
+Since $h(x)$ is a solution to the homogeneous equation, the term in the parenthesis vanish. Therefore our differential equation becomes
+\[\frac{du}{dx} = \frac{b}{h}\]
+Solving for $u$ we get
+\[u = \int \frac{b(x)}{h(x)}dx\]
+Lastly, multiplying by $h(x)$ to get our full solution $y(x)$
+\[y(x) = h(x)\left(\int \frac{b(x)}{h(x)}dx + C\right)\]
+Notice here that I have already included the constant of integration here. This is because the method of solving inhomogeneous differential equations often settles down to combining a general and particular solution. We see that the constant multiplied by $h(x)$ will give us a general solution to the homogeneous equation while the product of the term in the integral and $h(x)$ will give a particular solution. 
+
+
+\section{Existence and Uniqueness}

@@ -1,0 +1,350 @@
+
+\chapter{Second Order Differential Equations}
+\setcounter{exercisecounter}{0}
+
+\setcounter{thmcounter}{1}
+\section{Introduction}
+\section{Constant Coefficients}
+The first technique we will study in solving second order differential equations is for cases of homogeneous equations with constant coefficients. Such equations are of the form 
+\[ay'' + by' + cy = 0\]
+This equation suggests we are looking for solutions $y(t)$ for which the derivatives can be easily summed together to produce zero. Methods in calculus suggests the solution
+\[y(t) = e^{rt}\]
+Let's suppose this is the case, then
+\[y'(t) = re^{rt}\]
+\[y''(t) = r^2e^{rt}\]
+Substituting these into our differential equation
+\[a(r^2e^{rt}) + b(re^{rt}) + c(e^{rt}) = 0\]
+\[(ar^2 + br + c)e^{rt} = 0\]
+Since $e^{rt} \neq 0$, this implies we want to find values $r$ which satisfy 
+\[ar^2 + br + c = 0\]
+The fundamental theorem of algebra states that solving this equation will produce at least one complex root and 2 roots total counted for multiplicity. In this section, we will look at this case in which the equation produces two roots distinct $r_1, r_2 \in \mathbb{R}$. Thus we get two solutions, 
+\[y_1 = e^{r_1t}\]
+\[y_2 = e^{r_2t}\]
+We check linear independence with the Wronskian,
+\[\begin{vmatrix}
+e^{r_1t} & e^{r_2t} \\
+r_1e^{r_1t} & r_2e^{r_2t} \\
+\end{vmatrix} = r_2e^{r_1}e^{r_2} - r_1e^{r_1t}e^{r_2t} = (r_2-r_1)e^{r_1+r_2)t} \neq 0 \]
+since the exponential function is never zero and $r_1, r_2$ are distinct.
+This gives us two linearly independent solutions that produce a basis for the set of solutions to this differential equation, thus our general solution is
+\[y = c_1e^{r_1t} + c_2e^{r_2t}\]
+where $c_1, c_2$ are undetermined coefficients to be determined by initial conditions. 
+
+
+\section{Complex Roots}
+We now look at cases of equations in the previous section for which the characteristic equation produces complex roots. However, a quick remark is needed first. 
+\definition{Make this a remark somehow}{A polynomial of degree 2 with real coefficients can either have, 2 real, 2 complex, 1 repeated real or 1 repeated complex roots.}
+This means that any degree two polynomial cannot have one real root and one complex root. We will now look at cases for which we have two complex roots. 
+Suppose we have a differential equation of the form
+\[ay'' + by' + cy = 0\]
+The previous section suggests we solve the quadratic equation
+\[ar^2 + br+ c = 0\] 
+to find $r_1$ and $r_2$ that produce solutions $y_1 = e^{r_1t}$ and $y_2 = e^{r_2t}$ to the differential equation. If
+\[r_1 = a_1 + b_1i\]
+\[r_2 = a_2 + b_2i\]
+then our general solution becomes
+\[y = c_1e^{(a_1+b_1i)t} + c_2e^{(a_2+b_2i)t}\]
+However, certain cases prove it useful to find real solutions. 
+In these cases we use Euler's Identity 
+\[e^{(a+bi)t} = e^{at}(cos(bt) + isin(bt))\].
+The power in this technique is that it produces two real solutions from a single complex solution. We will prove this now.
+\proof{
+Suppose $y = u + iv$ is a complex solution to the second order homogeneous differential equation with constant coefficients 
+\[ay''+by'+cy=0\]
+where $u$ and $v$ are real valued functions.
+We have
+\[y' = u' + iv'\]
+\[y''=u''+iv''\]
+Substituting into our differential equation
+\[a(u''+iv'')+b(u'+iv')+c(u+iv)=0\]
+\[= (au''+bu'+u)+i(av''+bv'+cv)=0\]
+This suggests both the real and imaginary parts of this equation must be zero thus we have,
+\[au''+bu'+cu =0\]
+\[i(av''+bv'+cv)=0\]
+This results suggests that both $u$ and $v$ are real solutions to the differential equation. 
+}
+Now if we let $u = cos(bt)$ and $v = sin(bt)$ we have obtained two real solutions to our differential equation from one complex solution. We still must have the $e^at$ factor multiplied by $u+v$ and our two undetermined coefficients to be satisfied by initial conditions; therefore our general solution is
+\[y = e^{at}(c_1cos(bt) + c_2sin(bt))\]
+We check linear independence with the Wronskian
+\[\begin{vmatrix}
+    
+\end{vmatrix}\]
+From this result we see that for cases of complex roots only one root suffices to obtain a general solution. 
+
+\section{Method of Reduction of Order}
+When our characteristic equations of second-order constant coefficient homogeneous equations results in repeated roots, we obtain only one solution. Therefore we look to develop a technique to find a second solution. We suggest a solution of the form 
+\[y(t) = v(t)y_1(t)\]
+where $y_1(t)$ is the first solution found. 
+Taking derivatives we have
+\[y'(t) = v'(t)y_1(t) + v(t)y'_1(t)\]
+\[y''(t) = v''(t)y_1(t) + 2v'(t)y'_1(t) + v(t)y''_1(t)\]
+Substituting this into the differential equation to solve for the undetermined equation $v(t)$
+\[ay''+by'+cy = 0 \]
+\[a(v''y_1 + 2v'y'_1 + vy''_1) + b(v'y_1 + v'y'_1) + c(vy_1) = 0 \]
+\[av''y_1 + v'(2ay'_1+by_1) + v(ay''_1 + by'_1 + cy_1) = 0\]
+The third term is zero since $y_1$ is a solution to that differential equation which is the same as what we started out with. Therefore we have
+\[av''y_1 + v'(2ay'_1+by_1)=0\]
+\[\frac{v''}{v'} = \frac{-(2ay'_1+by_1)}{ay_1}\]
+We can solve this separable differential equation for $v'$
+\[\int \frac{dv}{v} = \int (-\frac{2y'_1}{y_1} - \frac{b}{a})dt\]
+This gives us the solution
+\[v' =\frac{1}{y_1^2}Ce^{-\int \frac{b}{a}dt}\]
+We have kept the argument in the exponential in integral form as this method is generalizable to any differential equation in which we have one solution and require another for a general solution, however, in the case of constant coefficients the exponential will be $e^{bt/a}$.
+
+
+\section{Variation of Parameters}
+Thus far we have developed techniques to solving homogeneous second order equations. We now turn our attention to finding methods to solve inhomogeneous equations.
+\[ay''+by'+cy = f(t)\]
+We find solutions to inhomogeneous equations by adding a general solution to the corresponding inhomogeneous equation with a particular solution to the inhomogeneous equation. 
+\[y = y_g + y_p\]
+Suppose we can find two linearly independent solutions to the corresponding homogeneous equation of (), $y_1, y_2$. The method of variation of parameters suggests we look for a particular solution of the form
+\[y(t)_p = u(t)y_1(t)+u_2(t)y_2(t)\]
+where $y_1(t), y_2(t)$ are solutions to the corresponding homogeneous equation and $u_1(t), u_2(t)$ are undetermined coefficients. 
+Taking the derivative
+\[y' = u'_1y_1+u_1y'_1 + u'_2y_2+u_2y'_2\]
+These calculations are made simpler if we set 
+\[u'_1y_1 + u'_2y_2 = 0 \]
+Therefore $y'$ becomes
+\[y' = u_1y'_1 + u_2y'_2 \]
+Finding $y''$
+\[y'' = u'_1y'_1 + u_1y''_1 + u'_2y'_2+u_2y''_2\]
+Substituting this into our differential equation
+\[a(u'_1y'_1 + u_1y''_1 + u'_2y'_2+u_2y''_2)+ b(u_1y'_1 + u_2y'_2 )+c(u_1y_1 + u_2y_2) = f(t)\]
+\[u_1(ay''_1 + by'_1+cy_1) + u_2(ay''_2 + by'_2+cy_2) + au'_1y'_1+au'_2y'_2 = f(t) \]
+Since $y_1$ and $y_2$ are solutions to the corresponding homogeneous equation, the first two terms are zero. Thus, our equation reduces to
+\[au'_1y'_1+au'_2y'_2 = f(t)\]
+We now have two equations and two unknowns.
+\[u'_1y_1 + u'_2y_2 = 0 \]
+\[au'_1y'_1+au'_2y'_2 = f(t)\]
+From this we obtain
+\[u'_1 = \frac{-y_2f(t)/a}{y_1y'_2 - y'_1y_2}\]
+\[u'_2 = \frac{y_1f(t)/a}{y_1y'_2 - y'_1y_2}\]
+We can integrate to find $u_1$ and $u_2$.
+\[u_1 = \int \frac{-y_2f(t)/a}{y_1y'_2 - y'_1y_2} dt\]
+\[u_2 = \int \frac{y_1f(t)/a}{y_1y'_2 - y'_1y_2} dt \]
+You may notice that the argument in the denominator is the Wronksian thereby implying that if our solutions $y_1, y_2$ are not linearly independent, then when don't have the requisite information to form a general solution to the differential equation. It that case we must return to section 3.5 and find a second linearly independent equation via Method of Reduction of Order. 
+\linebreak
+\linebreak
+This provides us with our particular solution to the inhomogeneous differential equation
+\[y_p = y_1\int \frac{-y_2f(t)/a}{y_1y'_2 - y'_1y_2} dt + y_2\int \frac{y_1f(t)/a}{y_1y'_2 - y'_1y_2} dt\]
+
+
+
+\section{Method of Undetermined Coefficients}
+There are certain classes of inhomogeneous equations such that we can propose a solution form and algebraically solve for specifying parameters. Such classes usually involve equations of constant coefficients and inhomogeneous terms of familiar functions like exponentials or sinusoidals. As in the previous section, to find a full solution to an inhomogeneous equation we sum together a general solution to the corresponding homogeneous equation with a particular solution to the inhomogeneous equation. Suppose we have the second order inhomogeneous differential equation
+\[a(t)y'' + b(t)y'+c(t)y = Acos(\omega t) + Bsin(\omega t)\]
+We propose a particular solution of the form
+\[y_p = X_1cos(\omega t) + X_2sin(\omega t)\]
+Taking derivatives
+\[y' = -\omega X_1sin(\omega t) + \omega X_2cos(\omega t)\]
+\[y'' = -\omega^2X_1cos(\omega t) - \omega^2X_2sin(\omega t)\]
+Substituting into our differential equation
+\[a(-\omega^2X_1cos(\omega t) - \omega^2X_2sin(\omega t)) + b( -\omega X_1sin(\omega t) + \omega X_2cos(\omega t) + c( X_1cos(\omega t) + X_2sin(\omega t)) \]
+\[= Acos(\omega t) + Bsin(\omega t)\]
+We rearrange to get a single cosine and sine term on each side
+\[(-a\omega^2X_1+b\omega X_2+cX_1)cos(\omega t) + (-a\omega^2X_2 - b\omega X_1 + cX_2)sin(\omega t)\]
+\[= Acos(\omega t) + Bsin(\omega t)\]
+From this it is apparent that 
+\[(-a\omega^2+c)X_1 + b\omega X_2 = A\]
+\[(-a\omega^2+c)X_2 - b\omega X_1 = B\]
+We can solve this using linear algebra
+\[\begin{bmatrix}
+    -a\omega^2 + c & b\omega \\
+    -b\omega & -a\omega^2 + c\\
+\end{bmatrix} \begin{bmatrix}
+    X_1 \\
+    X_2 \\
+\end{bmatrix}
+= 
+\begin{bmatrix}
+    A \\
+    B\\
+\end{bmatrix}\]
+
+\section{Existence and Uniqueness}
+
+
+
+\chapter{Eigenvalues and Eigenvectors}
+\section{Definition of Eigenvectors and Eigenvalues}
+We look to examine the behavior of linear transformations in which a vector space maps to itself. We denote $T \in \mathcal{L}(V)$ as the linear transformation $T: V \rightarrow V$ where $\mathcal{L}(V)$ is the set of all operators $\mathcal{L}(V,V)$. In order to perform operations on a subspace $U$ of $V$, we look to define a special class of operators that maps $U$ to itself. 
+\definition{Invariant Subspaces}{Suppose $U$ is a subspace of $V$. $U$ is \textit{invariant} for a given transformation $T: V \rightarrow V$, if $Tu \in U $ for any $u \in U$. }
+
+Vectors that constitute invariant subspaces and their change under $T $ are specially defined. 
+\definition{Eigenvalues and Eigenvectors}{Suppose $U \in V$ is invariant under $T$ and $u$ is a nonzero vector in  $U$. Then,
+\[Tu = \lambda u\]
+
+where $\lambda \in \mathbb{F}$ is the \textit{eigenvalue} of $T$ and $u$ is it's corresponding \textit{eigenvector}.}
+It is important to note that for a given eigenvalue there may be multiple eigenvectors. The dimension of the subspace the eigenvectors for a given eigenvalue span (called the \textit{eigenspace}) corresponds to the number of eigenvectors for the given eigenvalue. \\
+Rewriting the () gives,
+\[(T-\lambda I)u = 0.\]
+By construction it is apparent that the set of eigenvectors of $T$ is equal to $null(T-\lambda I)$.
+Since we have a nonzero vector mapping to zero, one can see that $\lambda$ is an eigenvalue of $T$ if and only if $T-\lambda I$ is not injective. And, since this gives a noninvertible square matrix by SOME THEOREM $\lambda$ is an eigenvalue of $T$ if and only if $T-\lambda I$ is not surjective as well.\\
+By SOME THEOREM, the determinant of a noninvertible matrix is zero. This property allows us to solve for the value of $\lambda$.
+
+\theorem{}{Suppose $\lambda_1, \lambda_2,...,\lambda_m$ are distinct eigenvalues of $T: V \rightarrow V$ corresponding to distinct eigenvectors $u_1, u_2,...,u_m$. Then the eigenvectors $u_1, u_2,...,u_k$ are linearly independent. }
+\proof{We proceed by contradiction. Suppose $u_1, u_2,...,u_m$ are linearly dependent. Choose $k$ to be the smallest integer such that,
+\[u_k \in span\{u_1, u_2,...,u_{k-1}\}. \]
+Therefore $u_k$ can be written as,
+\[u_k = a_1u_1 + a_2u_2 + ... + a_{k-1}u_{k-1}.\]
+Take the transformation $T$ of both sides of the equation,
+\[Tu_k = T(a_1u_1 + a_2u_2 + ... + a_{k-1}u_{k-1}) \]
+\[\lambda_ku_k = a_1\lambda_1u_1 + a_2\lambda_2u_2 + ... + a_{k-1}\lambda_{k-1}u_{k-1}.\]
+Multiply both sides of $()$ by $\lambda_k$ and subtract $()$ to obtain,
+\[0 = a_1(\lambda_k-\lambda_1)u_1 + ...+ a_{k-1}(\lambda_k-\lambda{k-1})u_{k-1}.\]
+By construction, this implies that $a_i = 0$ for $i \in (1, k-1)$ since the eigenvectors are linearly independent and the eigenvalues are distinct. However, this implies $u_k=0$, a contradiction since we don't consider $\vec{0}$ and eigenvector. 
+
+\corollary{There are at most $n$ distinct eigenvalues for each operator on an $n$-dimensional vector space.}
+Therefore, suppose we have $T \in \mathcal{L}(V)$ with $n$ distinct eigenvalues, then it follows that $T$ has $n$ distinct eigenvectors. From the previous theorem the set of eigenvectors to $T$ must be linearly independent therefore $n \leq dim(V)$. 
+
+\section{Computing Eigenvalues and Eigenvectors}
+We look to develop a method to solve for the eigenvalues and eigenvectors of some transformation $T \in \mathcal{L}(V,V)$. Suppose $T(x) = Ax$ and $n = dim(V)$, this implies that $A$ is $n \times n$. We look for $\lambda \in \mathbf{F}$ that satisfies
+\[Ax = \lambda x.\]
+Right multiplying each side by the identity matrix $n \times n$ identity matrix $I_n$ gives
+\[Ax = \lambda Ix.\]
+Solving to isolate $x$ produces the homogeneous equation
+\[(A - \lambda I)x = 0.\]
+From the previous section we know the eigenvectors of $A$ span $null(A)$. Therefore, we look for non-trivial vectors $x$ that solve $(A-\lambda I)$. This implies that $(A-\lambda I)$ must be non-invertible. We use the property that for non-invertible matrices the determinant is zero to solve for $\lambda$. 
+\[det(A-\lambda I) = 0\]
+Computing the determinant of $(A-\lambda I)$ produces a polynomial $P_k(\lambda)$ where $k \leq n$.
+\[P_k(\lambda) = 0\]
+Solving for the roots of $P_k(\lambda)$ finds the desired eigenvalues for $A$. For a polynomial of degree $k \leq n$, there will be at most $k$ eigenvalues. We substitute each computed eigenvalue into $(A-\lambda I)x = 0$ to solve for vectors $x$ that span $null(A)$. Each $x$ is an eigenvector of $A$. The space spanned by each eigenvalue $\lambda$ is called the \textit{eigenspace} of $\lambda$.
+\example{Consider $A = \begin{bmatrix} 1 & 4 & 3 \\ 4 & 1 & 0 \\ 3 & 0 & 1 \\ \end{bmatrix}$. 
+We wish to find $\lambda$ that satisfy, 
+\[\begin{bmatrix} 1 & 4 & 3 \\ 4 & 1 & 0 \\ 3 & 0 & 1 \\ \end{bmatrix}x = \lambda x\].
+Algebraically rearranging, 
+\[(\begin{bmatrix} 1 & 4 & 3 \\ 4 & 1 & 0 \\ 3 & 0 & 1 \\ \end{bmatrix} - \lambda I) x = 0\] 
+\[\begin{bmatrix} 1 - \lambda & 4 & 3 \\ 4 & 1 -\lambda & 0 \\ 3 & 0 & 1 -\lambda \\ \end{bmatrix}x = 0\]
+Solving $det(A-\lambda I) = 0$,
+\[\begin{vmatrix} 1 - \lambda & 4 & 3 \\ 4 & 1 -\lambda & 0 \\ 3 & 0 & 1 -\lambda \\ \end{vmatrix} = (1 - \lambda)((1-\lambda)^2-0)-4(4(1-\lambda)-0)+3(0-3(1-\lambda))\]
+\[ = (1-\lambda)^3 - 25(1-\lambda) = (1-\lambda)((1-\lambda)^2 - 25) \]
+\[= (1-\lambda)(\lambda^2-2\lambda -24) = (1 - \lambda)(6-\lambda)(4+\lambda) = 0 \]
+Therefore our eigenvalues are $\lambda = 1, 6$ and $-4$.
+We substitute each eigenvalue into $(A-\lambda I)x = 0$ to find the eigenvectors of $A$.
+For $\lambda = 1$,
+\[(A-1(I))x = \begin{bmatrix} 0 & 4 & 3 \\ 4 & 0 & 3 \\ 0 & 0 & 0 \\ \end{bmatrix}x = 0 \]
+By Gaussian-Jordan Reduction we get, 
+\[\begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 3/4 \\ 0 & 0 & 0 \\ \end{bmatrix} \]
+This means our eigenvector $\vec{x}$ is, 
+\[\vec{x} = x_3\begin{bmatrix} 0 \\ -3/4 \\ 1 \end{bmatrix}\]
+}
+\example{
+Repeating the same process for $\lambda = 6$,
+\[(A-6I) = \begin{bmatrix} -5 & 4 & 3 \\ 4 & -5 & 0 \\ 3 & 0 & -5 \\ \end{bmatrix}.\]
+By Gauss-Jordan Reduction we get, 
+\[\begin{bmatrix} 1 & 0 & -5/3 \\ 0 & 1 & -4/3 \\ 0 & 0 & 0 \\ \end{bmatrix}.\]
+Therefore our eigenvector is, 
+\[\vec{x} = x_3\begin{bmatrix} 5/3 \\ 4/3 \\ 1 \\ \end{bmatrix} \]
+Lastly for $\lambda = 4$,
+\[(A + 4I) = \begin{bmatrix} 5 & 4 & 3 \\ 4 & 5 & 0 \\
+3 & 0 & 5 \\ \end{bmatrix} \].
+Gauss-Jordan Reduction gives us, 
+\[\begin{bmatrix} 1 & 0 & 5/3 \\ 0 & 1 & -4/3 \\ 0 & 0 & 0 \\ \end{bmatrix}. \]
+Thus our eigenvector is, 
+\[\vec{x} = x_3 \begin{bmatrix} -5/3 \\ 4/3 \\ 1 \\ \end{bmatrix}.\]
+So our set of eigenvectors for $A$ is, 
+\[\biggl\{\begin{bmatrix} 0 \\ -3/4 \\ 1 \\ \end{bmatrix}, \begin{bmatrix} 5/3 \\ 4/3 \\ 1 \\ \end{bmatrix}, \begin{bmatrix} -5/3 \\ 4/3 \\ 1 \\ \end{bmatrix}\biggr \}. \]
+}
+\theorem{}{Suppose $A$ is an upper triangular matrix. Then the eigenvalues of $A$ are the the entries along the diagonal. Similarly, if $A$ were lower triangular the same result holds. }
+This theorem follows from the determinant of a triangular matrix being the product of the diagonal entries. Therefore, if we can subtract some $\lambda$ such that one of the entries becomes zero, then the matrix determinant is zero and the value of that $\lambda$ satisfies $Ax = \lambda x$.
+
+\begin{flushleft}
+\LARGE \textbf{Exercises} \\
+\normalsize
+\end{flushleft}
+
+\section{Matrix Exponentials}
+The
+
+
+
+
+
+\section{The Eigenvalue Method to Solving Ordinary Differential Equations}
+Suppose we have a system of coupled differential equations described by:
+\[x'_1 = a_{11}x_1 + ...a_{1n}x_n\]
+\[x'_2 = a_{21}x_1 + ...a_{2n}x_n\]
+\[\vdots\]
+\[x'_n = a_{n1}x_1 + ...a_{nn}x_n\]
+Where $x_1,...,x_n$ are functions of $t$ with derivatives $x'_1,...,x'_n$ and $a_{ij}$ are constants. We can write this system in terms of matrix vectors.
+\[A = \begin{bmatrix} 
+a_{11} & \hdots & a_{1n} \\ 
+\vdots & & \vdots \\ 
+a_{n1} & \hdots & a_{nn} 
+\end{bmatrix} \]
+\[\vec{x}(t) = \begin{bmatrix} 
+x_1(t) \\
+\vdots \\
+x_n(t) \end{bmatrix}\]
+\[\vec{x'}(t) = \begin{bmatrix} 
+x'_1(t) \\
+\vdots \\
+x'_n(t) \end{bmatrix}\]
+\[A\vec{x}(t) = \vec{x'}(t)\]
+We solve this equation by finding an $\vec{x}(t)$ that satisfies it on some interval of $t$.
+\definition{Fundamental Solution of a Matrix}{For an $n \times n$ matrix $A$, there exists a set of $n$ linearly independent functions $\vec{x_1}(t),...,\vec{x_n}(t)$  which constitute an $n$-dimensional basis for the vector space of all solutions of $A$. We call this set of functions the \textbf{fundamental solution of the matrix $A$}.}
+Suppose we have the system of uncoupled differential equations
+\[x'_1(t) = 3x_1(t)\]
+\[x'_2(t) = 2x_2(t)\]
+This can be written in matrix form as
+\[\begin{bmatrix}
+    3 & 0 \\
+    0 & 2 \\
+\end{bmatrix}
+\begin{bmatrix}
+    x_1(t) \\
+    x_2(t)
+\end{bmatrix} = \begin{bmatrix} 
+x'_1(t) \\
+x'_2(t) 
+\end{bmatrix}\]
+These equations suggest the solutions to this system of differential equations are 
+\[x_1(t) = c_1e^{3t}\]
+\[x_2(t) = c_2e^{2t}\]
+From this we deduce that the solution to any linear system of differential equations $A\vec{x} = \vec{x'}$ is of the form 
+\[\vec{x}(t) = \vec{v}e^{\lambda t}\]
+Taking the derivative $\vec{x'}(t)$
+\[\vec{x'}(t) = \lambda \vec{v}e^{\lambda t}\]
+Taking equation () once more and multiplying each side by $A$
+\[A \vec{x}(t) = A \vec{v}e^{\lambda t}\]
+The left sides of equations () and () are our differential equation thus our right sides must equal.
+\[A\vec{v}e^{\lambda t} = \lambda \vec{v}e^{\lambda t}\]
+This suggests that vectors $v$ and scalars $\lambda$ which satisfy this system of differential equations are eigenvectors and eigenvalues of the matrix $A$.
+\example{
+\[\frac{dx}{dt} = \begin{bmatrix}
+    2 & 1 \\
+    1 & 2 \\
+\end{bmatrix} x\]
+}
+This matrix gives the eigenvalues $\lambda = 3, -1$ corresponding to the eigenvectors
+\[\{\begin{bmatrix}
+    1 \\
+    1 \\
+\end{bmatrix}
+\begin{bmatrix}
+    -1 \\
+    1 \\
+\end{bmatrix}\}\]
+Therefore our solutions to the systems of differential equations are
+\[\{c_1\vec{x_1}(t) = e^{3t} \begin{bmatrix}
+    1 \\
+    1 \\
+\end{bmatrix},
+c_2\vec{v_2}(t) = e^{-t}\begin{bmatrix}
+    -1 \\
+    1 \\
+\end{bmatrix}\}\]
+
+\section{Generalized Eigenvectors}
+From section () we know that an $n \times n$ matrix $A$ with $n$ distinct eigenvalues $\lambda_i$ has $n$ corresponding eigenvectors $\vec{v}_i$ which form a basis for $\mathbf{R}^n$ . In this case each $\lambda_i$ has algebraic and geometric multiplicities both equal to $1$. However consider the matrix 
+\[A = \begin{bmatrix}
+1 & 1 \\
+0 & 1 \\
+\end{bmatrix} \]
+It has one eigenvalue $\lambda = 1$ which has one corresponding eigenvector
+\[\vec{x} = \begin{bmatrix}
+    0 \\
+    1 \\
+\end{bmatrix}\]
+We can see the eigenvectors of $A$ do not form a basis for $\mathbf{R}^2$. The algebraic multiplicity of $\lambda$ is $2$, however its geometric multiplicity is only $1$. Therefore we see that matrices with a set of eigenvectors which do not form a basis for the column space of $A$ display an inequality between the geometric and algebraic multiplicities. We can generalize the above example to the following definition. 
+\definition{Non-Diagonalizable Matrix}{}

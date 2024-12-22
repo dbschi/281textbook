@@ -1,0 +1,118 @@
+	
+	\chapter{Taylor's Theorem}
+    \setcounter{exercisecounter}{0}
+
+\setcounter{thmcounter}{1}
+ \section{Analytic Functions and Taylor Series}
+In this section we look to develop a method to represent functions as series. An important application of such is the use of series as solutions to differential equations. 
+
+\definition{Power Series}{
+    Let $x_0\in \reals$. A \textbf{power series} cenetered at $x_0$ is in the form \[
+        f(x)=\sum_{n=0}^{\infty} a_n(x-x_0)^n.
+    \]
+}
+\begin{remark}
+    The convention used for $0^0$ when $x=x_0$ here is $0^0=1$. You can imagine that it is the limit of $(x-x_0)^0$ as $x\to x_0$.
+\end{remark}
+\begin{remark}
+    The series might not converge. In fact, the root test for convergence gives an exact criteria for convergence.
+\end{remark}
+\definition{Radius of Convergence}{
+    Let $f(x)$ be a power series centered at $x_0$. The \textbf{radius of convergence} is the value $R$ such that \[
+    \begin{cases}
+        f(x) \textrm{ converges, } & \textrm{ if $|x-x_0|<R$},\\
+        f(x) \textrm{ diverges, } & \textrm{ if $|x-x_0|>R$}.
+    \end{cases}
+    \]
+}
+\definition{Analytic Functions}{
+Let $\Omega \subseteq \reals$ be open, and $f:\Omega\to\reals$. We say that $f$ is \textbf{analytic} at $x_0$ if there exists $\epsilon>0$, and a power series representation $p_{x_0}(x) = \sum_n a_n(x-x_0)^n$ such that $p_{x_0}(x)$ converges to $f(x)$ in $B(x_0,\epsilon)$. We say that $f$ is analytic on (a,b) if $f$ is analytic at every point in $(a,b)$.
+}
+In order for the power series representations of analytic functions to be useful, there must be some interval by which they converge. This is when series convergence tests are convenient. One of the results of having a power series that converges on some interval is that it is infinitely differentiable on that interval. 
+
+\theorem{Analytic Functions are Smooth}{Suppose $\sum a_nx^n$ is a power series representation for some function $f$ with a radius of convergence $R > 0$. Then $f$ is infinitely differentiable on $(-R, R)$. }
+The proof requires some analysis knowledge out of scope of the course. The hardest part is to show that you can differentiate under the summation, i.e. \[
+\frac{d}{dx}\sum_n {f_n(x)} = \sum_n \frac{d}{dx} f_n(x).
+\]
+Assuming this, we can get power series representations for $f'(x)$ and so on.
+\begin{align*}
+    \begin{array}{ccccccc}
+    f(x) =&  a_0 &+ a_1(x-x_0) &+ a_2(x-x_0)^2 &+a_3(x-x_0)^3&+a_4(x-x_0)^4& +\ldots \\
+    f'(x)=&   &a_1 &+ 2a_2(x-x_0) &+ 3a_3(x-x_0)^2 &+4a_4(x-x_0)^3 &+\ldots \\
+    f''(x)=& &   &2a_2 &+ 6a_3(x-x_0) &+ 12a_4(x-x_0)^2&+\ldots
+    \end{array}
+\end{align*}
+Importantly, these have the same radius of convergence as the original function (a root test can confirm this), so we get a closed form for the $k$-th derivative of $f$:
+\[f^{(k)}(x) = \sum_{n=k}^{\infty} \frac{n!}{(n-k)!}a_n(x-x_0)^{n-k} \] 
+
+\theorem{Uniqueness of Power Series}{
+    Let $f$ be analytic at $x_0$. Then its power series representation $\sum_n a_n (x-x_0)^n$ is unique with coefficients
+    \[a_k = \frac{f^{(k)}(x_0)}{k!}.\]}
+
+\begin{proof}
+    We take the general form of the $k$-th derivative, and evaluate it at $x=x_0$.
+    This gives us \[
+    f^{(k)}(x_0)=\sum_{n=k}^{\infty} \frac{n!}{(n-k)!}a_n(x_0-x_0)^{n-k}.
+    \]
+    On the right hand side, all the terms with $n>k$ will evaluate to $0$. The term with $n=k$ evaluates to $k!a_k$. This means \[
+    f^{(k)}(x_0) = k! a_k \implies a_k = \frac{f^{(k)}(x_0)}{k!}.
+    \]
+    Therefore, if a power series exists, it must be in the form \[
+    \sum_n \frac{f^{(n)}(x_0)}{n!} (x-x_0).
+    \]
+\end{proof}
+\definition{Taylor Series}{The \textbf{Taylor expansion} of $f$ centered at $x_o$ is given by
+\[f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(x_o)}{n!}(x-x_o)^n.\]}
+
+As Taylor Series are used to approximate functions, it is of relevance to determine the accuracy of a series in representing its desired function. 
+\exercises
+\begin{exerciselist}
+    \item Find the Taylor Series for the given functions at the indicated points. \begin{enumerate}[label=(\alph*)]
+        \item $f(x) = e^{-x}, x_0 = 0.$
+        \item $f(x) = e^x, x_0 = 1.$ 
+        \item $f(x)=1/x, x_0 = 1.$
+        \item $f(x) = \cos(x), x_0 = \pi/2.$ 
+        \item $f(x) = \ln(x), x_0 = 1.$
+    \end{enumerate}
+    \item Determine the radius of convergence of the given function about $x=0$. \begin{enumerate}[label=(\alph*)]
+        \item $f(x) = (1+x)/(x-2).$
+        \item $f(x) = 2x/(1+2x^2).$
+        \item $f(x) = 1/(1-t^3).$
+        \item $f(x) = ((t-4)(t^2+3))^{-1}.$
+    \end{enumerate} 
+\end{exerciselist}
+
+\section{Taylor's Theorem with Remainder}
+\definition{Taylor's Formula with Remainder}{The remainder of order n of the Taylor expansion of $f(x_o)$ is represented by the function,
+\[R_n(x) = f(x) - \sum_{k=0}^{n-1} \frac{f^{(k)}(x_o)}{k!}(x-x_o)^k.\]
+}
+The remainder of a Taylor expansion is the difference between the value of a function $f$ at $x$ and the partial sum of the $n^{th}$ term Taylor series. The series converges if $\lim_{n \rightarrow \infty} R_n = 0$. 
+
+\theorem{}{Let $f(x)$ be a function on the interval $(a,b)$. $f$ is analytic on $(a,b)$ if there exists and $M>0$ such that 
+\[|f^{(n)}(x) \leq M^n\]
+for all $x \in (a,b)$ and $n \in \mathbb{N}$. 
+}
+As a result of this theorem, the Taylor series expansion holds for all $x \in (a,b)$.
+\proof{Let $f(x)$ be a function on the interval $(a,b)$ and $x_o \in (a,b)$. For some $M \in \reals$ set $C = max{M|a-x_o, M|b-x_o|}$. Then the $n^{th}$ term remainder of the Taylor expansion of $f(x)$ at $x_o$ is given by
+\[R_n = f(x) - \sum_{k=0}^{n-1}\frac{f^{(k)}(x_o)}{k!}(x-x_o)^k = \sum_{k=n}^{\infty} \frac{f^{(k)}(x_o)}{k!}(x-x_o)^k \]
+Each term in this infinite series for $R_n$ is given by
+\[R_k = \frac{f^{(k)}(x_o)}{k!}(x-x_o)^k \leq \frac{M^k}{k!}\]}
+
+\section{Multidimesnional Taylor Series}
+We look to extend the formulation for the Taylor series to approximate functions of multiple variables. 
+\definition{}
+
+\section{Extrema of Multivariate Functions}
+Just as we are interested in finding the extreme points of functions of a single variable, we likewise wish to solve for stationary points of multivariate functions. Analysis of functions of multiple variables have analogous first and second derivative tests to those learned in single variable calculus. I used the term 'stationary point' as in three dimensions in addition to maxima or minima there exist so called 
+saddle points. A 3D representation of a saddle point is presented in figure 
+\definition{Multivariable First Derivative Test} {A point $(x_o, y_o) \in \mathbb{R^2}$ is a \textit{stationary point} of some function $f(x,y)$ if
+\[\nabla f \rvert_{(x, y) = (x_o, y_o)} = 0\]}
+Also similarly to the second derivative test in single variable calculus, we also have an analogous second derivative test in multivariable calculus to determine the classification of critical points. For this we use the discussion of multivariable Taylor series discussed in section . To second order, the Taylor expansion of some function $f(x,y)$ around $(x_o, y_o)$ is
+\[f(x,y) \approx f(x_o, y_o) + \nabla f(x_o, y_o)^T d + \frac{1}{2!}d^THf(x_o,y_o)d + R_2(x,y)\]
+From the first derivative test $\nabla f(x_o, y_o) = 0$ thereby eliminating that term. Also, we know $R_2 \rightarrow 0, (x,y) \rightarrow (x_o, y_o)$. Thus we have
+\[f(x,y) \approx f(x_o, y_o) + \frac{1}{2!}d^THf(x_o,y_o)d \]
+Rearranging we have 
+\[f(x,y) - f(x_o, y_o) = \frac{1}{2!}d^THf(x_o,y_o)d \]
+The left side appears as the numerator of the definition of the derivative. The sign of our derivative is dependent on the Hessian matrix $H$ which holds for all points $(x,y)$ near $(x_o, y_o)$. 
+\section{Lagrange Multipliers}
+

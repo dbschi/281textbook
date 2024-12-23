@@ -1,0 +1,28 @@
+\section{Differentiation in $\reals^n$}
+
+Recall the definition of a one-dimensional derivative: 
+
+\definition{One dimensional derivative}{
+    Let $\Omega\subseteq\reals$ be open, and $f:\Omega\to \reals$. We say $f$ is \textbf{differentiable} at $x_0\in\Omega$ if the limit \[
+    \lim_{x\to x_0} \frac{f(x)-f(x_0)}{x-x_0}
+    \]
+    exists, and we call this the \textbf{derivative} of $f$ at $x_0$.
+}
+
+One simple way we can generalize it to a function $\reals^n\to\reals^m$ is to take the derivative in each of the varibles.
+
+\definition{Partial Derivative}{
+    Let $\Omega\subseteq\reals^n$, and $f:\Omega\to\reals^m$. For $1\leq k \leq n$, we say the \textbf{partial derivative} of $f$ with respect to $x_k$ at $\vec{a}\in \Omega$ is the limit \[
+    \lim_{\tilde{a}_k\to a_k} \frac{f(a_1,\ldots,\tilde{a}_k,\ldots, a_n)-f(a_1,\ldots,a_k,\ldots, a_n)}{\tilde{a}_k - a_k}. 
+    \]
+    In other words, this is the one-dimensional derivate in the variable $x_k$.
+}
+\begin{notation}
+The partial derivative is denoted \[
+\frac{\partial f}{\partial x_k}(\vec{a})\textrm{\quad or \quad }f_{x_k}(\vec{a}).
+\]
+\end{notation}
+
+\example{
+    Let $f(x,y)=2x+\sin(xy)$. Compute the partial derivatives of $f$ in $x$ and $y$.
+}

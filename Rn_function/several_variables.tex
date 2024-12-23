@@ -2,6 +2,9 @@
 \chapter{Functions of Several Variables}
 \setcounter{exercisecounter}{0}
 \setcounter{thmcounter}{1}
+\begin{notation}
+    Here we will sometimes drop the arrow to denote vectors and coordinates in $\reals^n$.
+\end{notation}
 
 We now relax the conditions that functions have to be linear. Moreover, we can restrict the domain of the function to be some subset $\Omega \subseteq \reals^n$, as some functions are not everywhere defined on $\reals^m$.
 
@@ -346,7 +349,7 @@ What this means is that if we add in the boundary of a set, we do not create new
 \end{exerciselist}
 \section{Limits and Continuity}
 \definition{Limit Point}{
-    Let $\Omega\subseteq\reals^n$. A \textbf{limit point of $\Omega$} $\vec{x}\in\reals^n$ is a point such that every open ball centered around $\vec{x}$ contains a point $\vec{y}\in\Omega$ with $\vec{y}\neq \vec{x}$. Alternatively, using the notation of punctured balls $B^*(\vec{x},r)\defeq B(\vec{x},r)-\{\vec{x}\}$, the intersection \[
+    Let $\Omega\subseteq\reals^n$. A \textbf{limit point of $\Omega$} is a point $\vec{x}\in\reals^n$ such that every open ball centered around $\vec{x}$ contains a point $\vec{y}\in\Omega$ with $\vec{y}\neq \vec{x}$. Alternatively, using the notation of punctured balls $B^*(\vec{x},r)\defeq B(\vec{x},r)-\{\vec{x}\}$, the intersection \[
         B^*(\vec{x},r)\cap\Omega
     \] is non-empty for every $r>0$.
 }
@@ -395,6 +398,7 @@ That means, you can get as close as you like to $\vec{b}$ as long as you are clo
 \proposition{
     Suppose $\lim_{\vec{x}\to\vec{a}}f(\vec{x})$ exists, then it must be unique.
 }
+The idea is this: suppose you can get arbitrarily close to $\vec{b}$ and arbitrarily close to $\vec{b}'$. Then $\vec{b}$ and $\vec{b}'$ must also be arbitrarily close. But when you have two values that are arbitrarily close, then they must be the same value!
 \begin{proof}
     Suppose, for the sake of contradiction, we have the two limits $\vec{b}\neq\vec{b}'$ of $f$ as $\vec{x}\to\vec{a}$. Let $\epsilon=|\vec{b}-\vec{b}'|$. Pick $\delta_1,\delta_2$ such that $|f(\vec{x})-\vec{b}|<\epsilon$ and $|f(\vec{x}-\vec{b}'|<\epsilon|$ when $0<|\vec{x}-\vec{a}|<\delta_1$ and $0<|\vec{x}-\vec{a}|<\delta_2$ respectively. Then pick some $\vec{x}$ such that $0<|\vec{x}-\vec{a}|<\min(\delta_1,\delta_2)$. For this particular value of $\vec{x}$,\[
         \epsilon=|\vec{b}'-\vec{b}|= |\vec{b}'-f(\vec{x})+f(\vec{x})-\vec{b}|\leq|\vec{b}'-f(\vec{x})|+|\vec{b}-f(\vec{x})| <\frac{\epsilon}{2}+\frac{\epsilon}{2}=\epsilon.
@@ -447,5 +451,44 @@ But if we approach from the x-axis $y=0$, we will get\[
 \]
 These two limits are not equal, so we can conclude that the limit does not exist.
 
+\example{
+    Compute the limit (if it exists) of \[
+        \lim_{(x,y)\to(0,0)} \frac{x^2y}{x^4+y^2}.
+    \]
+}
+This is a tricky example. The limits along the $x$ and $y$ axes are both zero.
+In fact, the limit along every line passing the origin $y=mx$ is zero, as \begin{align*}
+    \lim_{x\to 0}\frac{x^2 (mx)}{x^4+(mx)^2} =  \lim_{x\to 0}\frac{mx}{x^2+m}= 0
+\end{align*}
+for any $m$. 
+However, if we take the limit along the path $y=x^2$, we get \begin{align*}
+    \lim_{x\to 0}\frac{x^4 }{x^4+x^4} = \frac{1}{2}.
+\end{align*}
+The limit does not exist! 
 
 
+To complete our discussion of limits, the limits in higher dimensions satisfy similar properties as the 1-D limits you know and love from Calculus.
+\proposition{
+    Let $\Omega\in\reals^n,\vec{x}_0\in\Omega$ and $f,g:\Omega\to\reals^m,c:\Omega\to\reals$. Suppose that the limits $\lim_{\vec{x}\to\vec{x}_0}f(\vec{x})$,  $\lim_{\vec{x}\to\vec{x}_0}g(\vec{x})$ exists, then the following are true:\begin{enumerate}
+        \item $\lim_{\vec{x}\to\vec{x}_0}f(\vec{x})+g(\vec{x})=lim_{\vec{x}\to\vec{x}_0}f(\vec{x})+lim_{\vec{x}\to\vec{x}_0}g(\vec{x})$
+        \item $\lim_{\vec{x}\to\vec{x}_0}f(\vec{x})-g(\vec{x})=lim_{\vec{x}\to\vec{x}_0}f(\vec{x})-lim_{\vec{x}\to\vec{x}_0}g(\vec{x})$
+        \item $lim_{\vec{x}\to\vec{x}_0}c(\vec{x})f(\vec{x}) = lim_{\vec{x}\to\vec{x}_0}c(\vec{x})lim_{\vec{x}\to\vec{x}_0}f(\vec{x})$
+        \item $lim_{\vec{x}\to\vec{x}_0}\frac{f(\vec{x})}{c(\vec{x})} = \frac{lim_{\vec{x}\to\vec{x}_0}f(\vec{x})}{lim_{\vec{x}\to\vec{x}_0}c(\vec{x})}$, if the denominator is not zero.
+    \end{enumerate}
+}
+The proof is not enlightening, and just uses a lot of $\epsilon-\delta$ definitions for limits.
+\definition{Continuity}{
+    \domain{f}{n}{m}. We say that $f$ is \textbf{continuous} at $\vec{x}_0\in\Omega$ if \[
+    \lim_{\vec{x}\to\vec{x}_0} f(x) = f(\vec{x}_0).
+    \]
+}
+\begin{remark}
+    Another way to look at this is that you can pull the limit into the function \[
+        \lim_{\vec{x}\to\vec{x}_0} f(x) = f(\lim_{\vec{x}\to\vec{x}_0}\vec{x})=f(\vec{x}_0).
+    \]
+\end{remark}
+
+\exercises
+\begin{exerciselist}
+\item
+\end{exerciselist}

@@ -28,7 +28,10 @@ In this section we look to develop a method to represent functions as series. An
 \definition{Analytic Functions}{
 Let $\Omega \subseteq \reals$ be open, and $f:\Omega\to\reals$. We say that $f$ is \textbf{analytic} at $x_0$ if there exists $\epsilon>0$, and a power series representation $p_{x_0}(x) = \sum_n a_n(x-x_0)^n$ such that $p_{x_0}(x)$ converges to $f(x)$ in $B(x_0,\epsilon)$. We say that $f$ is analytic on (a,b) if $f$ is analytic at every point in $(a,b)$.
 }
-In order for the power series representations of analytic functions to be useful, there must be some interval by which they converge. This is when series convergence tests are convenient. One of the results of having a power series that converges on some interval is that it is infinitely differentiable on that interval. 
+\proposition{
+    The set of points on which $f$ is analytic form an open set.
+}
+Being analytic is one of the strictest properties for a function. Analytic functions are infinitely differentiable (smooth).
 
 \theorem{Analytic Functions are Smooth}{Suppose $\sum a_nx^n$ is a power series representation for some function $f$ with a radius of convergence $R > 0$. Then $f$ is infinitely differentiable on $(-R, R)$. }
 The proof requires some analysis knowledge out of scope of the course. The hardest part is to show that you can differentiate under the summation, i.e. \[
@@ -64,7 +67,32 @@ Importantly, these have the same radius of convergence as the original function 
 \definition{Taylor Series}{The \textbf{Taylor expansion} of $f$ centered at $x_o$ is given by
 \[f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(x_o)}{n!}(x-x_o)^n.\]}
 
-As Taylor Series are used to approximate functions, it is of relevance to determine the accuracy of a series in representing its desired function. 
+A function locally equals to its Taylor series (about some point) if and only if it is analytic. We will see that if a function is analytic, it is equal to the Taylor series about a point everywhere the series converges.
+\theorem{Uniqueness of Analytic Functions}{
+    Let $f,g:(a,b)\to\reals$ be analytic. Suppose $f(x)=g(x)$ on some small ball $B(x_0,\epsilon)$. Then $f=g$ everywhere on $(a,b)$.
+}
+
+    Let's consider the function $h(x)=f(x)-g(x)$. This is analytic, as we can just take the difference of the respective coefficients in the power series for $f$ and $g$. We have $h(x)=0$ on $B(x_0,\epsilon)$. Our task now is to show that $h(x)=0$ everywhere, so $f=g$ everywhere.
+
+    The idea now is to start with the power series about $x=x_0$ \[
+    \sum_{n} 0 (x-x_0)^n.
+    \]
+    We can `slide' this $x_0$ across a little bit to $x_1\in B(x_0,\epsilon)$ to get \[
+        \sum_{n} 0 (x+x_1-x_0-x_1)^n =\sum_{n} 0 (x-x_1)^n 
+    \]
+    after binomial expansion of the terms $((x-x_1)+(x_1-x_0))^n$. Since $f$ is analytic at $x_1$, there is another ball centered at $x_1$ where $h=0$. Therefore, we can `slide' our center of the power series from $x_1$ to another $x_2$. If we can slide this to everywhere in $(a,b)$ we will get that the power series representation at every point is $0$. 
+
+    \textit{optional material:} How do we guarantee that we can slide everywhere? This requires another idea from analysis called compactness. In short, the compactness of the interval $[x_0,\tilde{x}]$ or $[\tilde{x},x_0]$ guarantees that we can slide our center of the power series across from $x_0$ to any $\tilde{x}\in (a,b)$ in a finite amount of steps. 
+
+    We will give another way to prove this, as we have introduced Zorn's lemma. Without loss of generality, let $x_0<\tilde{x}\in (a,b)$ Consider $S$, the set of points $x\leq \tilde{x}$ that you can `slide to' from $x_0$ in a finite amount of steps. I claim that every increasing sequence in $S$ is bounded above by some element in $S$.
+    Let $x_1\leq x_2\leq x_3 \leq \ldots$ be an increasing sequence in $S$. We take $y=\lim_{n\to\infty} x_n$, then the series is bounded above by $y$. To construct the finite sequence going from $x_0$ to $y$, we see that $f$ is analytic at $y$ thus it has a power series representation centered at $y$ that converges to $f$ for some $B(y,\delta)$. We take $m$ large such that $x_m>y-\delta/4$. If we slide the power series centered at $y$ to be centered at $x_m$, the power series converges to $f$ at least in $B(x_m,3\delta/4)\ni y$. That is, you can recenter the power series from $x_m$ to $y$. Therefore, we take the finite sequence that recenters the power series at $x_0$ to $x_m$, then recenter that sequence at $y$. Therefore $S$ contains a maximal element by Zorn's lemma. Finally, to find out what this maximal element is, we make use of the fact that the points where $f$ is analytic is open. Therefore, the only point that can be the maximal element of $S$ is $\tilde{x}$, which is used as the upper limit of all elements in $S$. Therefore $\tilde{x}$ is the maximal element in $S$, thus $f=0$ in some ball centered at $\tilde{x}$. We picked $\tilde{x}$ to be arbitrary, so $f=0$ everywhere in $(a,b)$.
+
+\corollary{
+    Let $x_0\in (a,b)$, and $f$ is analytic on $(a,b)$, $f$ equals the power series centered at $x_0$ where the power series converges.
+}
+\begin{proof}
+    The power series is analytic, and equals $f$ on some small open ball in $(a,b)$.
+\end{proof}
 \exercises
 \begin{exerciselist}
     \item Find the Taylor Series for the given functions at the indicated points. \begin{enumerate}[label=(\alph*)]
@@ -83,6 +111,10 @@ As Taylor Series are used to approximate functions, it is of relevance to determ
 \end{exerciselist}
 
 \section{Taylor's Theorem with Remainder}
+Sometimes we don't want to take the whole power series representation, but truncate the series to get an approximation for the functions.
+
+\todo show that the n-th order taylor series is the best n-th order approximation for a function.
+As Taylor Series are used to approximate functions, it is of relevance to determine the accuracy of a series in representing its desired function. 
 \definition{Taylor's Formula with Remainder}{The remainder of order n of the Taylor expansion of $f(x_o)$ is represented by the function,
 \[R_n(x) = f(x) - \sum_{k=0}^{n-1} \frac{f^{(k)}(x_o)}{k!}(x-x_o)^k.\]
 }

@@ -42,6 +42,8 @@
 \usepackage{pagenote}
 \usepackage{array}
 
+\tcbuselibrary{theorems}
+
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
@@ -135,6 +137,37 @@
 	
 	\addtocounter{thmcounter}{1}
 }
+
+
+%%% Eliseu's fix for theorem numbering
+
+% Definition
+\NewTcbTheorem[number within=chapter, use counter=thmcounter]{adefinition}{Definition}{
+	colframe=black, 
+	separator sign none, 
+	description delimiters parenthesis}{def}
+% Proposition
+\NewTcbTheorem[number within=chapter, use counter=thmcounter]{aproposition}{Proposition}{
+	colframe=red!50!blue!20!white,colback=red!35!blue!10!white, coltitle=black,
+	separator sign none, 
+	description delimiters parenthesis}{prop}
+% Theorem
+\NewTcbTheorem[number within=chapter, use counter=thmcounter]{atheorem}{Theorem}{
+	colframe=red!70!black,colback=red!5!white, 
+	separator sign none, 
+	description delimiters parenthesis}{thm}
+% Example
+\NewTcbTheorem[number within=chapter, use counter=thmcounter]{aexample}{Example}{
+	colframe=yellow!50!white,colback=yellow!20!white,coltitle=black,
+	separator sign none, 
+	description delimiters parenthesis}{ex}
+% Corollary
+\NewTcbTheorem[number within=chapter, use counter=thmcounter]{acorollary}{Corollary}{
+	separator sign none, 
+	description delimiters parenthesis,
+	coltitle=black,
+	attach title to upper={:\ }}{cor}
+
 \newtheorem*{remark}{Remark}
 \newtheorem*{notation}{Notation}
 %\newcommand{\exercises}{\section*{\exercisename}}
@@ -179,5 +212,7 @@
 	\input{linalg_basics/linalg_basics}
 	\input{span_linind}
 	\input{linalg_basics/determinants.tex}
+	%\input{coordinate_geometry/Chapter 1.tex}
+
 	\input{second_quarter/multiple_integrals.tex}
 \end{document}

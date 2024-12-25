@@ -166,7 +166,7 @@ Finally, we have a special notion when the set $\{{v}_1,\ldots,v_k\}$ span $V$ a
 \begin{remark}
 	It is true that every basis of a vector space has the same number of elements, so we can assign a number (or infinity) to the dimension of a vector space. However, we will have to prove that later when we develop more technology.
 \end{remark}
-\theorem{Every Vector Space has a Basis}{
+\theorem[basisexists]{Every Vector Space has a Basis}{
 	Let $V$ be a $\mathbb{K}$ vector space. Then $V$ has a basis.
 }
 \textcolor{red}{Understanding this proof is optional.} Our main hurdle here is that vector spaces are not necessarily `small' to work with.
@@ -878,7 +878,7 @@ The second and third statements forces $m=\textrm{rank}(A)=n$, so $A$ is a squar
 		\item For every $v\in \textrm{span}(\{v_1,...,v_k\})$, there is exactly one way to write $v$ as a linear combination of $v_1,...,v_k$.
 		\item For every $v\in \textrm{span}(\{v_1,...,v_k\})$, there is more than one way to write $v$ as a linear combination of $v_1,...,v_k$.
 	\end{enumerate}
-	\item \textit{Every vector space has a basis (weaker version)} This is a weaker statement of \hyperref[thm:2.14]{Every Vector Space has a Basis}. To get around this, we use a finiteness assumption that our vector space $V$ is a subspace of $\reals^n$.\begin{enumerate}[label=(\alph*)]
+	\item \textit{Every vector space has a basis (weaker version)} This is a weaker statement of \hyperref[thm:basisexists]{Every Vector Space has a Basis}. To get around this, we use a finiteness assumption that our vector space $V$ is a subspace of $\reals^n$.\begin{enumerate}[label=(\alph*)]
 		\item Suppose that our subspace is $\{\vec{0}\}$. Show that this is spanned by the empty set. The empty set is (vacuously) linearly independent*, so we have a basis. \textit{* all elements of an empty set satisfy any condition}
 		\item Now suppose $S=\{\vec{v}_1,\ldots,\vec{v}_k\}\subset V\subseteq \reals^n$. Show that this is a linearly independent set in $V$ if and only if this is a linearly independent set $\reals^n$, so we can call it linearly independent without worrying about which vector space we work in.
 		\item Let $S$ be linearly independent. If $\textrm{span}(S)=V$ this will be a basis for $V$. Else show that there is some $\vec{v}_{k+1}\in V$ such that the set $S+\{\vec{v}_{k+1}\}$, so you can extend $S$ to a bigger linearly independent set.
@@ -998,7 +998,7 @@ Many functions in the wild are linear transformations. This includes the functio
 \end{proof}
 The first example of linear transformation given $A\vec{x}$ is a very general type of linear transformation.
 The punchline is that it is \textbf{the} example of a linear transformation.
-\theorem{Matrix Representation of Linear Transformation}{
+\theorem[matrixrep]{Matrix Representation of Linear Transformation}{
 	Let $T:\reals^n \to \reals^m$ be a linear transformation. Then there is a matrix $A\in M_{m\times n}$ such that for all $\vec{x}\in\reals^n$,
 	\[
 		T(\vec{x})=A\vec{x}.

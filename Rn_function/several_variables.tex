@@ -1,4 +1,4 @@
-\newcommand\domain[3]{Let $\Omega\subseteq\reals^{#2}$, and ${#1}:\Omega \to \reals^{#3}$}
+\newcommand\domain[3]{Let $\Omega\subseteq\reals^{#2}$ be open, and ${#1}:\Omega \to \reals^{#3}$}
 \chapter{Functions of Several Variables}
 \setcounter{exercisecounter}{0}
 \setcounter{thmcounter}{1}
@@ -487,7 +487,13 @@ The proof is not enlightening, and just uses a lot of $\epsilon-\delta$ definiti
         \lim_{\vec{x}\to\vec{x}_0} f(x) = f(\lim_{\vec{x}\to\vec{x}_0}\vec{x})=f(\vec{x}_0).
     \]
 \end{remark}
-
+\example{
+    The following functions are continuous in the largest domain that they are defined in:
+    \begin{enumerate}
+        \item Elementary functions, i.e. $f(x)$ is the composition of sum, products, roots, polynomial, rational trigonometric, hyperbolic, trigonometric functions.
+        \item Compositions of different elementary functions in multiple variables.
+    \end{enumerate}
+}
 \exercises
 \begin{exerciselist}
 \item

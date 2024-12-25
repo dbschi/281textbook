@@ -6,11 +6,13 @@ Recall the definition of a one-dimensional derivative:
     Let $\Omega\subseteq\reals$ be open, and $f:\Omega\to \reals$. We say $f$ is \textbf{differentiable} at $x_0\in\Omega$ if the limit \[
     \lim_{x\to x_0} \frac{f(x)-f(x_0)}{x-x_0}
     \]
-    exists, and we call this the \textbf{derivative} of $f$ at $x_0$.
+    exists, and we call this the \textbf{derivative} of $f$ at $x_0$, and denote it $f'(x_0)$.
 }
-
-One simple way we can generalize it to a function $\reals^n\to\reals^m$ is to take the derivative in each of the varibles.
-
+It is a bit hard to extend this definition to functions $\reals^n\to\reals^m$. Let $\vec{f}:\reals^n\to\reals^m$, we forcefully write \begin{align*}
+    \vec{f}'(\vec{x}_0) =\lim_{\vec{x}\to\vec{x}_0}\frac{\vec{f}(\vec{x})-\vec{f}(\vec{x}_0)}{\vec{x}-\vec{x}_0},
+\end{align*}
+this equation does not really make sense, as we do not have a way to divide by a vector.
+There are two ways to mitigate this. The first way is to compress everything into one-dimension, and take the derivative with respect to one variable while holding all others constant.
 \definition{Partial Derivative}{
     Let $\Omega\subseteq\reals^n$, and $f:\Omega\to\reals^m$. For $1\leq k \leq n$, we say the \textbf{partial derivative} of $f$ with respect to $x_k$ at $\vec{a}\in \Omega$ is the limit \[
     \lim_{\tilde{a}_k\to a_k} \frac{f(a_1,\ldots,\tilde{a}_k,\ldots, a_n)-f(a_1,\ldots,a_k,\ldots, a_n)}{\tilde{a}_k - a_k}. 
@@ -24,6 +26,162 @@ The partial derivative is denoted \[
 \end{notation}
 
 \example{
-    Let $f(x,y)=2x+\sin(xy)$. Compute the partial derivatives of $f$ in $x$ and $y$.
+    Let $f(x,y)=(2x+\sin(xy),-y+\cos(xy))$. Compute the partial derivatives of $f$ in $x$ and $y$.
+}
+To compute the partial derivative in $x$ (resp. $y$), we hold $y$ constant, so under constant $y$ (resp. $x$), \begin{align*}
+    \frac{\partial f}{\partial x} (x,y) =& (2+y\cos(xy), -y\sin (xy)),\\
+    \frac{\partial f}{\partial y} (x,y) =& (x\cos(xy),-x\sin(xy)).
+\end{align*}
+
+The existence of a partial derivative implies the existence of a total derivative, so let us try to motivate the definition of that `real derivative'.
+Rethinking the one-dimensional derivative, we also use the derivative $f'(x_0)$ as a linear approximation for the function $f$. What this means is that for small $\Delta x$, \[
+f(x_0+\Delta x) = f(x_0)+ f'(x_0)\Delta x + \textrm{small error}.
+\]
+How small is this error? Moving everything else to one side and taking the limit $\Delta x\to 0$, \begin{align*}
+    \lim_{\Delta x \to 0 }\left|\frac{\textrm{small error}}{\Delta x}\right| &= \lim_{\Delta x \to 0 }\frac{f(x_0+\Delta x) - f(x_0)- f'(x_0)\Delta x}{\Delta x}\\
+    &=\lim_{\Delta x \to 0 }\frac{f(x_0+\Delta x) - f(x_0)}{\Delta x} - f'(x_0)\\
+    &=f'(x_0)-f'(x_0)\\
+    &=0.
+\end{align*}
+This means our error using this linear approximation shrinks faster $\Delta x$. Thus, we say that this is the best linear approximation for functions, and visually represent it as the line tangent to the curve at the point $(x_0,f(x_0))$.
+Similarly, we ask in higher dimensions, if we can approximate a function to be `locally linear', i.e. there is a linear transformation \begin{align*}
+    \vec{f}(\vec{x_0}+\Delta \vec{x}) = \vec{f(x_0)}+  T(\Delta \vec{x}) + \textrm{small error},
+\end{align*}
+with this small error shrinking to $\vec{0}$ faster than $\Delta \vec{x}$, or \[
+\lim_{\Delta \vec{x}\to \vec{0}} \frac{|\textrm{small error}|}{|\Delta \vec{x}|}=0.
+\]
+If there is such a transformation $T:\reals^n\to\reals^m$, then $T$ should be the higher dimensional `derivative' of $\vec{f}$ at $\vec{x}_0$. 
+By the Matrix Representation of Linear Transformations, let us write the derivative $T$ as a matrix. \definition{Total Derivative}{
+    \domain{\vec{f}}{n}{m}. We say $f$ is differentiable at $\vec{x}_0\in\Omega$ if there is $A\in M_{m\times n}$ such that \[
+    \lim_{\vec{x}\to\vec{x}_0} \frac{\vec{f}(\vec{x})-\vec{f}(\vec{x}_0)-A(\vec{x}-\vec{x}_0)}{|\vec{x}-\vec{x}_0|} =\vec{0}.
+    \]
+    In this case, we call $A$ the \textbf{(total) derivative} of $\vec{f}$ at $\vec{x}_0$, and denote it $d\vec{f}|_{\vec{x}_0}$.
+}
+\theorem{Differentiable functions are continuous}{
+    \domain{f}{n}{m} be differentiable everywhere on $\Omega$. Then $f$ is continuous.
+    
+}
+\begin{proof}
+    Let $\vec{x}_0\in\Omega$. We have 
+    \[
+    \lim_{\vec{x}\to\vec{x}_0} \frac{\vec{f}(\vec{x})-\vec{f}(\vec{x}_0)-df|_{\vec{x}_0}(\vec{x}-\vec{x}_0)}{|\vec{x}-\vec{x}_0|} =\vec{0},
+    \]
+    and want to show \[
+        \lim_{\vec{x}\to\vec{x}_0} \vec{f}(\vec{x})-\vec{f}(\vec{x}_0)=\vec{0}.
+    \]
+    Here we apply a standard trick (plus-minus), which means we massage the second equation to resemble the first:\begin{align*}
+        \lim_{\vec{x}\to\vec{x}_0} \vec{f}(\vec{x})-\vec{f}(\vec{x}_0) &= \lim_{\vec{x}\to\vec{x}_0} \vec{f}(\vec{x})-\vec{f}(\vec{x}_0)-df|_{\vec{x}_0}(\vec{x}-\vec{x}_0)-df|_{\vec{x}_0}(\vec{x}-\vec{x}_0)\\
+        &=\lim_{\vec{x}\to\vec{x}_0} \frac{\vec{f}(\vec{x})-\vec{f}(\vec{x}_0)-df|_{\vec{x}_0}(\vec{x}-\vec{x}_0)}{|\vec{x}-\vec{x}_0|} |\vec{x}-\vec{x}_0|-df|_{\vec{x}_0}(\vec{x}-\vec{x}_0)\\
+    \end{align*}
+    The first term is $\vec{0}*0 $ by the definition of derivative, and $|\vec{x}-\vec{x}_0|$ is a composition of elementary functions thus continuous. The second term is $df|_{\vec{x}_0}(\vec{0})$ as linear transformations are polynomials thus continuous.
+    Therefore the whole expression equals $\vec{0}$.
+\end{proof}
+\theorem{Uniqueness of derivative}{
+    The derivative $df$, if it exists, is unique and equals the matrix \begin{equation*}
+        J = \begin{bmatrix}
+            \frac{\partial \vec{f}}{\partial x_1} &
+            \frac{\partial \vec{f}}{\partial{x}_2} &
+            \frac{\partial \vec{f}}{\partial {x}_3} &
+            \ldots&
+            \frac{\partial \vec{f}}{\partial {x}_n}
+        \end{bmatrix}
+    \end{equation*}
+    evaluated at $\vec{x}_0$.
+}
+\definition{Jacobian Matrix}{
+    Suppose the partial derivatives of $\vec{f}$ exist, then we call the matrix 
+        \begin{equation*}
+            J = \begin{bmatrix}
+                \frac{\partial \vec{f}}{\partial x_1} &
+                \frac{\partial \vec{f}}{\partial{x}_2} &
+                \frac{\partial \vec{f}}{\partial {x}_3} &
+                \ldots&
+                \frac{\partial \vec{f}}{\partial {x}_n}
+            \end{bmatrix}=
+        \end{equation*}
+    
+    the \textbf{Jacobian Matrix} of $f$.
+}
+Before we go on to the proof, try if you can prove this using the ideas from the Matrix Representation of a linear transformation.
+Here is a hint: The partial derivative can also be written as \[
+\frac{\partial{f}}{\partial {x}_k}(\vec{x}_0) = \lim_{h\to 0}\frac{f(\vec{x}_0+h\vec{e}_k)-f(\vec{x}_0)}{h}.
+\]
+\begin{proof}[Proof of Uniqueness of Derivative]
+    Let $\vec{x}_0\in \Omega$. By the uniqueness of limit, we approach the limit \[
+        \lim_{\vec{x}\to\vec{x}_0} \frac{\vec{f}(\vec{x})-\vec{f}(\vec{x}_0)-d\vec{f}|_{\vec{x}_0}(\vec{x}-\vec{x}_0)}{|\vec{x}-\vec{x}_0|}
+    \]
+    along the line $\vec{x}=\vec{x}_0+h\vec{e}_k$ as $h\to 0$. Therefore, 
+    \begin{align*}
+        &\lim_{h\to 0} \frac{\vec{f}(\vec{x}_0+h\vec{e}_k)-\vec{f}(\vec{x}_0)-d\vec{f}|_{\vec{x}_0}(h\vec{e}_k)}{|h|}=\vec{0} \\
+        \implies &\lim_{h\to 0} \frac{\vec{f}(\vec{x}_0+h\vec{e}_k)-\vec{f}(\vec{x}_0)-d\vec{f}|_{\vec{x}_0}(h\vec{e}_k)}{h}=\vec{0}\\
+        \implies &\lim_{h\to 0} \frac{\vec{f}(\vec{x}_0+h\vec{e}_k)-\vec{f}(\vec{x}_0)}{h}-d\vec{f}|_{\vec{x}_0}(\vec{e}_k)=\vec{0}.\\
+    \end{align*}
+    This means that the $k$-th column of $d\vec{f}|_{\vec{x}_0}$ is $\vec{f}_{x_k}(\vec{x}_0)$, the partial derivative of $\vec{f}$ with respect to the $k$-th variable.
+\end{proof}
+
+\corollary{
+    If a function has a total derivative, then its partial derivatives exist.
 }
 
+\example{
+    Determine if the function \[
+    f(x,y)= x^2+y^2.
+    \]
+    is differentiable.
+}
+If this function is differentiable then the derivative must be the Jacobian $[2x \ 2y]$. Indeed, we can check for every $(x_0,y_0)\in\reals^2$ \begin{align*}
+    &\lim_{(x,y)\to(x_0,y_0)}\frac{x^2+y^2-x_0^2-y_0^2 - \begin{bmatrix}
+        2x_0 & 2y_0 
+    \end{bmatrix}\begin{bmatrix}
+        (x-x_0)\\(y-y_0)
+    \end{bmatrix}}{|(x,y)-(x_0,y_0)|}\\
+    =&\lim_{(x,y)\to(x_0,y_0)}\frac{
+        (x-x_0)^2+(y-y_0)^2}{((x-x_0)^2+(y-y_0)^2)^{1/2}}\\
+    =&0.
+\end{align*}
+Therefore, this function is differentiable everywhere in $\reals^2$.
+
+Having partial derivatives is not a sufficient condition for differentiability.
+\example{
+    Compute the partial derivatives of the function \[
+    f(x,y)=\begin{cases}
+        \frac{xy}{x^2+y^2}, &\textrm{ if }(x,y)\neq (0,0)\\
+        0, &\textrm{ if }(x,y)=0,0
+    \end{cases}
+    \]
+    at $(x,y)=0,0$.
+}
+The partial derivatives in $x$ and $y$ are both $0$, as $f=0$ when $x=0$ or $y=0$. However, this function is not differentiable. You can show this by checking that the Jacobian matrix $J$ does not satisfy the definition of the derivative. We can also get by with less work. This function is not even continuous! In fact, if we approach the limit $(x,y)\to(0,0)$ along $y=x$,
+we get \[
+\lim_{x\to 0 }\frac{x^2}{x^2+x^2} = \frac{1}{2}\neq f(0,0).
+\]
+\example{
+    Determine if the function \[
+    f(x,y)=\begin{cases}
+        \frac{2x^2y+y^3}{x^2+y^2}, &\textrm{ if }(x,y)\neq (0,0)\\
+        0, &\textrm{ if }(x,y)=0,0
+    \end{cases}
+    \]
+    is differentiable at $(x,y)=0,0$.
+}
+This function is continuous at $(0,0)$. Indeed we have \begin{align*}
+    f_x(0,0) = 0, f_y(0,0)= \lim_{y\to 0 } \frac{1}{y}\frac{y^3}{y^2}=1.
+\end{align*}
+Now let us investigate the limit \begin{align*}
+    \lim_{(x,y)\to(0,0)}\frac{\frac{2x^2y+y^3}{x^2+y^2} - \begin{bmatrix}
+        0&1
+    \end{bmatrix}\begin{bmatrix}
+        x\\y
+    \end{bmatrix}}{\sqrt{x^2+y^2}}
+    =\lim_{(x,y)\to(0,0)}\frac{2x^2y+y^3-x^2y-y^3}{(x^2+y^2)^{3/2}}=
+    \lim_{(x,y)\to(0,0)}\frac{x^2y}{(x^2+y^2)^{3/2}}.
+\end{align*}
+This limit does not exist. Specifically, the limit as we approach along the $x$-axis is $0$, but is not zero if we take the limit along the line $x=y$. Therefore this function is not differentiable at $(0,0)$.
+
+\theorem{Differentiability}{
+    \domain{f}{n}{m}. Let $x_0\in\Omega$, and the partial derivatives of $f$ are continuous in some open ball $B(x_0,\epsilon)\subseteq \Omega$. Then $f$ is differentiable at $x_0$.
+}
+\begin{proof}
+    \todo
+\end{proof}
+\todo applications (geometry of tangent planes, rate, directional derivatives), Chain rule

@@ -248,7 +248,7 @@ Now we have rank corresponding to the columns with pivots and nullity correspond
 } 
 
 \subsection{Determinants}
-We now move towards the last equivalence for That One Theorem. Recall in the intuition behind the \hyperref[thm:2.48]{Matrix Representation of Linear Transformations}, we constructed a grid and showed that a linear transformation is a change in the coordinate system.\\
+We now move towards the last equivalence for That One Theorem. Recall in the intuition behind the \hyperref[thm:matrixrep]{Matrix Representation of Linear Transformations}, we constructed a grid and showed that a linear transformation is a change in the coordinate system.\\
 \begin{figure}[h]
 	\begin{subfigure}[l]{0.4\textwidth}
 		\begin{tikzpicture}
@@ -488,7 +488,7 @@ which is $a_1$ times the determinant of a smaller upper triangular matrix. If we
 The proof of this is not very enlightening, so we will skip it. It boils down to working with the general determinant formula and doing intense algebra manipulation.
 
 However, we have the following corollary 
-\corollary{
+\corollary[rowdet]{
 	The determinant of a matrix can be computed as follows:\begin{enumerate}
 		\item Reduce the matrix to rref (or row echelon form).
 		\item Take the product of the diagonal terms.
@@ -530,7 +530,7 @@ Let $A=[\vec{v}_1\ldots \vec{v}_n]\in M_{n\times n}(\reals)$, and $T:\reals^n\to
 	so \[
 		X_k \ldots X_1AB =I_nB=B,
 	\]
-	or that the same row operations turn $AB$ into $B$. Starting with $\det (B)$, we can reverse the row operations (and scaling according to the factors in \hyperref[prop:2.75]{corollary 2.76}) to get $\det(AB)=\det(A)\det(B)$.
+	or that the same row operations turn $AB$ into $B$. Starting with $\det (B)$, we can reverse the row operations (and scaling according to the factors in corollary \ref{cor:rowdet}) to get $\det(AB)=\det(A)\det(B)$.
 \end{proof}
 \exercises
 \begin{exerciselist}

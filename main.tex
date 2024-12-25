@@ -41,6 +41,7 @@
 \usepackage{microtype}
 \usepackage{pagenote}
 \usepackage{array}
+\usepackage{xparse}
 
 \tcbuselibrary{theorems}
 
@@ -117,6 +118,7 @@
 \makeatother
 
 \newcounter{thmcounter} % continuity of theorem
+
 \newcommand{\definition}[2]{\begin{tcolorbox}[title=Definition {\thechapter}.{\arabic{thmcounter}} ({#1}),colframe=black,label={def:\thechapter.\thethmcounter}]
 		{#2}\end{tcolorbox}
 
@@ -153,12 +155,12 @@
 	description delimiters parenthesis}{prop}
 % Theorem
 \NewTcbTheorem[number within=chapter, use counter=thmcounter]{atheorem}{Theorem}{
-	colframe=red!70!black,colback=red!5!white, 
+	colframe=red!40,colback=red!5!white, coltitle=black,
 	separator sign none, 
 	description delimiters parenthesis}{thm}
 % Example
 \NewTcbTheorem[number within=chapter, use counter=thmcounter]{aexample}{Example}{
-	colframe=yellow!50!white,colback=yellow!20!white,coltitle=black,
+	colframe=yellow!20!white,colback=yellow!10!white,coltitle=black,
 	separator sign none, 
 	description delimiters parenthesis}{ex}
 % Corollary
@@ -167,6 +169,20 @@
 	description delimiters parenthesis,
 	coltitle=black,
 	attach title to upper={:\ }}{cor}
+
+%%% Eliseu's fix for backwards compatibility with Chi's macros
+
+\let\olddefinition\definition
+\let\oldproposition\proposition
+\let\oldtheorem\theorem
+\let\oldexample\example
+\let\oldcorollary\corollary
+
+\renewcommand{\definition}[3][\relax]{\ifx\relax#1\olddefinition{#2}{#3}\else \begin{adefinition}{#2}{#1} #3 \end{adefinition} \fi}
+\renewcommand{\proposition}[2][\relax]{\ifx\relax#1\oldproposition{}{#2}\else \begin{aproposition}{}{#1} #2 \end{aproposition} \fi}
+\renewcommand{\theorem}[3][\relax]{\ifx\relax#1\oldtheorem{#2}{#3}\else \begin{atheorem}{#2}{#1} #3 \end{atheorem} \fi}
+\renewcommand{\example}[2][\relax]{\ifx\relax#1\oldexample{}{#2}\else \begin{aexample}{}{#1} #2 \end{aexample} \fi}
+\renewcommand{\corollary}[2][\relax]{\ifx\relax#1\oldcorollary{}{#2}\else \begin{acorollary}{}{#1} #2 \end{acorollary} \fi}
 
 \newtheorem*{remark}{Remark}
 \newtheorem*{notation}{Notation}

@@ -5,7 +5,7 @@
 	margin=1in
 }
 \usepackage{blindtext}
-\usepackage{tikz,tcolorbox}
+\usepackage{tikz,tcolorbox,tikz-3dplot}
 \usepackage{pgfplots}
 \usepgfplotslibrary{fillbetween}
 \usepackage{xcolor}
@@ -179,10 +179,10 @@
 \let\oldcorollary\corollary
 
 \renewcommand{\definition}[3][\relax]{\ifx\relax#1\olddefinition{#2}{#3}\else \begin{adefinition}{#2}{#1} #3 \end{adefinition} \fi}
-\renewcommand{\proposition}[2][\relax]{\ifx\relax#1\oldproposition{}{#2}\else \begin{aproposition}{}{#1} #2 \end{aproposition} \fi}
+\renewcommand{\proposition}[2][\relax]{\ifx\relax#1\oldproposition{#2}\else \begin{aproposition}{}{#1} #2 \end{aproposition} \fi}
 \renewcommand{\theorem}[3][\relax]{\ifx\relax#1\oldtheorem{#2}{#3}\else \begin{atheorem}{#2}{#1} #3 \end{atheorem} \fi}
-\renewcommand{\example}[2][\relax]{\ifx\relax#1\oldexample{}{#2}\else \begin{aexample}{}{#1} #2 \end{aexample} \fi}
-\renewcommand{\corollary}[2][\relax]{\ifx\relax#1\oldcorollary{}{#2}\else \begin{acorollary}{}{#1} #2 \end{acorollary} \fi}
+\renewcommand{\example}[2][\relax]{\ifx\relax#1\oldexample{#2}\else \begin{aexample}{#1} #2 \end{aexample} \fi}
+\renewcommand{\corollary}[2][\relax]{\ifx\relax#1\oldcorollary{#2}\else \begin{acorollary}{}{#1} #2 \end{acorollary} \fi}
 
 \newtheorem*{remark}{Remark}
 \newtheorem*{notation}{Notation}
@@ -228,7 +228,6 @@
 	\input{linalg_basics/linalg_basics}
 	\input{span_linind}
 	\input{linalg_basics/determinants.tex}
-	%\input{coordinate_geometry/Chapter 1.tex}
-
-	\input{second_quarter/multiple_integrals.tex}
+	\input{Rn_function/several_variables.tex}
+	\input{Rn_function/differentiation.tex}
 \end{document}

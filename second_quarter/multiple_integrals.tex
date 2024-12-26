@@ -84,6 +84,7 @@ At this point, you must be anticipating that to get the exact answer we just nee
 % limits of nets 
 
 \section{Double Integrals}
+\label{sec:double_integrals}
 
 Based on the preceding discussion, we take Definition \ref{def:double_integral} to capture the basic notion of integrating over a region in $\mathbb{R}^2$. Note that the double integral is a fundamentally two-dimensional concept: the symbol $\iint$ is there just as an analogy to the one-dimensional case. As of right now, we have no idea how to compute double integrals for any reasonable function. A priori, you shouldn't look at them as two single integrals nested together. But it seems reasonable that they \textit{should} be related to single integrals in some way. The results later in this section will indeed establish that this intuition is correct, providing a computational method to deal with multidimensional integrals. Before we engage with such powerful tools, we need first to look at these objects from a geometrical perspective.
 
@@ -107,8 +108,6 @@ What general feature of integral is illustrated by Figure \ref{fig:riemman_sum}?
 
 Using the code in the next page, we calculated the volume enclosed by the hemisphere surface and the $xy$-plane in Figure \ref{fig:hemisphere} to be $2.094392$. From elementary geometry, we know the answer should be $4 \pi /6 \approx 2.094395$. The error comes, of course, from the fact that the Riemman sum is just an approximation, not the exact answer. As we increase the number of sampling points (i.e. make the rectangles smaller), these errors go away and the sum gets closer to the correct value, which is the integral. Our task now will be to learn how to get the exact value using some additional facts about double integrals.
 
-\pagebreak
-
 \begin{lstlisting}[language=Python]
 import numpy as np
 import matplotlib.pyplot as plt
@@ -129,7 +128,9 @@ X, Y = np.meshgrid(sampling_points, sampling_points, indexing='ij')
 # belongs to the next interval [1, 1+delta]
 Z = np.sqrt(1- X[:-1,:-1]*X[:-1,:-1] - Y[:-1,:-1]*Y[:-1,:-1])
 
-surface = ax.plot_surface( X[:-1,:-1], Y[:-1,:-1], Z,
+surface = ax.plot_surface( X[:-1,:-1], 
+                           Y[:-1,:-1], 
+                           Z,
                            cmap=cm.coolwarm, linewidth=0, 
                            antialiased=True)
 
@@ -159,30 +160,419 @@ fig.tight_layout()
 fig.savefig('double_integral.png')
 \end{lstlisting}
 
-Let's examine the simplest case: when $R = [x_0, x_1] \times [y_0, y_1]$ is a rectangle. Imagine a function defined on this rectangle $f: R\rightarrow \mathbb{R}$. If we slice the volume $V$ determined by the graph of $f$, we will obtain a collection of cross-sections whose area can be calculated using single-variable calculus: for a slicing along the $x$ axis, at each $x$ the area of the cross-section is $S_x = \int_{y_0}^{y_1} f(x, y) \ \mathrm{d} y$. Now, if we have a very dense slicing, then the volume can be approximated by adding up the volume of each tiny prism with base $S_x$ and width $\Delta x$. The exact volume will be given by an integral: $\int_{x_0}^{x_1} S_x \ \mathrm{d} x$. Moreover, there was nothing special about slicing along the $x$ axis, we could have done the same thing with the $y$ axis. For a visual demonstration, check Figure \ref{fig:cavalieri}. Thus, in this case we expect a relationship between double and single integrals:
+Let's examine the simplest case: when $R = [x_0, x_1] \times [y_0, y_1]$ is a rectangle. Imagine a function defined on this rectangle, $f: R\rightarrow \mathbb{R}$. If we slice the volume $V$ determined by the graph of $f$, we will obtain a collection of cross-sections whose area can be calculated using single-variable calculus: for a slicing along the $x$ axis, at each $x$ the area of the cross-section is $S_x = \int_{y_0}^{y_1} f(x, y) \ \mathrm{d} y$. Now, if we have a very dense slicing, then the volume can be approximated by adding up the volume of each tiny prism with base $S_x$ and width $\Delta x$. The exact volume will be given by an integral: $\int_{x_0}^{x_1} S_x \ \mathrm{d} x$. Moreover, there was nothing special about slicing along the $x$ axis, we could have done the same thing with the $y$ axis. For a visual demonstration, check Figure \ref{fig:cavalieri}. Thus, in this case we expect a relationship between double and single integrals:
 \begin{equation}
     \iint_R f(x,y) \ \mathrm{d} A = \int_{x_0}^{x_1} \left( \int_{y_0}^{y_1} f(x,y) \ \mathrm{d} y\right) \ \mathrm{d} x = \int_{y_0}^{y_1} \left( \int_{x_0}^{x_1} f(x,y) \ \mathrm{d} x\right) \ \mathrm{d} y
 \end{equation}
-This equivalence is nothing more than \hyperref[thm:cavalieri]{Cavalieri's principle}, which was formulated in the early 17th century by Italian mathematician Bonaventura Cavalieri. Note that this principle predates the invention of integral calculus by a few decades, and had important influence in the work of Newton and Leibniz.
+This equivalence is nothing more than \nameref{thm:cavalieri}, which was formulated in the early 17th century by Italian mathematician Bonaventura Cavalieri. Note that this principle predates the invention of integral calculus by a few decades, and had important influence in the work of Newton and Leibniz. Generalizing our findings a little bit, if we are slicing along the $x$-axis, the boundary along that direction need not be a straight line. So we can define more general \nameref{def:elementary_regions} under which our argument should still hold. Then, the theorem that tells us that a double integral can be decomposed in terms of single integrals is called \nameref{thm:fubini} theorem. 
 
+We are currently not in the position to provide rigorous proofs of Theorems \ref{thm:cavalieri} or \ref{thm:fubini}, but we should appreciate how these formal mathematical statements capture the intuition of simple geometrical reasoning. In fact, for Cavalieri, his principle was a starting point in the study of geometry, like the \textit{method of exhaustion} was for ancient Greek mathematicians. In modern language, Theorem \ref{thm:cavalieri} is seen as a consequence of much more fundamental concepts in calculus and measure theory. A satisfactory proof of Theorem \ref{thm:fubini} requires more precise definitions for integration than we gave here.
 
 \begin{atheorem}{Cavalieri's Principle}{cavalieri}
     Let $\Omega_1, \Omega_2 \subseteq \mathbb{R}^3$ be finite regions in $3\text{D}$. Pick a reference plane $\lambda$. If every plane parallel to $\lambda$ intersects $\Omega_1$ and $\Omega_2$ in cross-sections of equal area, then the two regions have the same volume.
-    
 \end{atheorem}
+
+\pgfplotsset{colormap={example}{color=(black!40) color=(black!40)}}
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            view={45}{30}, % Set the viewing angle
+            xlabel={$x$},
+            ylabel={$y$},
+            zlabel={$f(x, y)$},
+            width=10cm,
+            height=8cm,
+            domain=0:5,
+            y domain=0:5,
+            samples=25,
+            grid=both,
+            colormap name =example
+        ]
+        
+        % Define the function
+        \addplot3[surf,opacity=0.3] {sin(deg(x)) + cos(deg(y))+2};
+
+        \pgfplotsinvokeforeach{0.5,1.5,...,4.5}{
+            % Define the slice as an area plot
+            \addplot3[draw=blue, thick]
+            coordinates {
+                (#1, 0, {sin(deg(#1)) + cos(deg(0))+2})
+                (#1, 0, 0) 
+                (#1, 5, 0)  
+                (#1, 5, {sin(deg(#1)) + cos(deg(5))+2}) 
+            };
+
+            \addplot3+[blue, thick, no markers,samples=51, samples y=0,domain=0:5,variable=\t]
+            ({#1},{\t},{sin(deg(#1)) + cos(deg(\t))+2});
+        }
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Slicing of a function $f(x,y)$ along the $x$-axis on the region $R=[0,5] \times [0,5]$.}
+    \label{fig:cavalieri}
+\end{figure}
 
 \begin{adefinition}{Elementary Regions}{elementary_regions}
-    
+    \begin{itemize}
+        \item A region $R\subseteq \mathbb{R}^2$ is an elementary region of Type I if it can be written as:
+        \begin{equation*}
+            \label{eq:elregtype1}
+            R=\{(x,y) \in \mathbb{R}^2 : a~\leq~x~\leq~b \text{ and } u(x)~\leq~y~ \leq~v(x)\}
+        \end{equation*}
+        for real numbers $a < b$ and continuous real functions $f$ and $g$.
+        \item A region $R\subseteq \mathbb{R}^2$ is an elementary region of Type II if it can be written as: 
+        \begin{equation*}
+            \label{eq:elregtype2}
+            R=\{(x,y) \in \mathbb{R}^2 : u(y)~\leq~x~\leq~v(y) \text{ and } a~\leq~y~ \leq~b\}
+        \end{equation*}
+        for real numbers $a < b$ and continuous real functions $f$ and $g$.
+    \end{itemize}
 \end{adefinition}
 
-\begin{atheorem}{Fubini}{fubini}
-    
+\begin{atheorem}{Fubini's}{fubini}
+    If $R \subseteq \mathbb{R}^2$ is an elementary region and $f: R \rightarrow \mathbb{R}$ is continuous, then:
+    \begin{equation*}
+        \begin{aligned}
+            \iint_R f(x,y) \ \mathrm{d} A &= \int_{a}^{b} \left( \int_{u(x)}^{v(x)} f(x,y) \ \mathrm{d} y\right) \ \mathrm{d} x,  \qquad \text{if $R$ is of \hyperref[eq:elregtype1]{Type I}}\\
+            \iint_R f(x,y) \ \mathrm{d} A &= \int_{a}^{b} \left( \int_{u(x)}^{v(x)} f(x,y) \ \mathrm{d} x\right) \ \mathrm{d} y,  \qquad \text{if $R$ is of \hyperref[eq:elregtype2]{Type II}}\
+        \end{aligned}
+    \end{equation*}
 \end{atheorem}
 
+\exercises
+
+\begin{exerciselist}
+     \item Convince yourself that a right prism and an oblique prism with the same base have the same volume. Do they have the same surface area?
+     \item The volume $V$ of a prism with height $h$ and area of the base $B$ is $V=B h$. Use \nameref{thm:cavalieri} to find the volume of a pyramid with the same base and height.
+     \item Use \nameref{thm:fubini} theorem to compute $\iint_R \sqrt{1-x^2-y^2} \ \mathrm{d} A$, where $R$ is the unit disk centered at the origin. Which type was the elementary region you used? Was this the only choice?
+     \item Consider a thin rectangle $R$ of mass $m$ and side lengths $a\leq b$. Let $r(x,y)$ be the distance from the midpoint of the shortest side $P$ to an arbitrary point $(x,y)$. Compute $I = \frac{m}{a b} \iint_R r(x,y)^2 \ \mathrm{d} A$. This is the moment of inertia of the rectangle about a perpendicular axis passing through $P$.
+     \item Come up with a bounded path-connected region\footnote{A path-connected region is a set in which any two points can be connected by a continuous path.} that is not an elementary region. Can you decompose it as the union of finitely many elementary regions? % note: it's possible to find bounded path-connected regions that can't be decomposed as the union of finitely many elementary regions, but the student will probably come up with an example that can.
+\end{exerciselist}
+
 \section{Iterated Integrals}
+\label{sec:iterated_integrals}
+The knowledge acquired in the previous section is already sufficient for some interesting computations. We will soon see that various properties of single integrals, such as additivity, generalize to multidimensional integrals as well. To do that, we now work through explicit examples that emphasize important points in the study of double integrals.
+
+\begin{aproposition}{Additivity of Double Integrals}{double_integral_additivity}
+    Let $R_1$ and $R_2$ be two elementary regions that, at worst, share a common continuous boundary. Then, when the integrals exist:
+
+    \begin{equation*}
+        \iint_{R_1 \cup R_2} f(x,y) \ \mathrm{d}A = \iint_{R_1} f(x,y) \ \mathrm{d}A + \iint_{R_2} f(x,y) \ \mathrm{d}A
+    \end{equation*}
+
+    Let $f: R \rightarrow \mathbb{R}$ and $g: R \rightarrow \mathbb{R}$ be two integrable functions. Then:
+
+    \begin{equation*}
+        \iint_{R} f(x,y) +g(x,y) \ \mathrm{d}A = \iint_{R} f(x,y) \ \mathrm{d}A + \iint_{R} g(x,y) \ \mathrm{d}A
+    \end{equation*}
+\end{aproposition}
+
+These properties should feel intuitive from your experience with single-variable integrals. Integrating over an annulus is the classic case in which the first part of Proposition \ref{prop:double_integral_additivity} comes handy, since it allows us to split a complicated integral into simpler ones. 
+
+\begin{aexample}{}{annulus_integration}
+    Let $R$ be the annulus centered at the origin with inner radius $2$ and outer radius $4$. How do we integrate $x^2+y^2$ over $R$? We can split it into four elementary regions of \hyperref[eq:elregtype1]{Type 1} as follows:
+
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                xtick={-8,-6,...,8},ytick={-8,-6,...,8},
+                width=0.55\textwidth, xmax=4.2,ymax=4.2,ymin=-4.2,xmin=-4.2,
+                axis lines=middle,
+                clip=false,
+                axis on top,
+                axis equal image,
+                axis line style={draw=none},
+                tick style={draw=none},
+                ticks = none
+                ]
+                \fill [blue!20,even odd rule] (0,0) circle[radius=2] circle[radius=4];
+                \draw [thick, blue] (axis cs:0,0) circle [radius=2];
+                \draw [thick, blue] (axis cs:0,0) circle [radius=4];
+                \draw [thick, blue] (axis cs:-2,{-2*sqrt(3)}) --(axis cs:-2,{2*sqrt(3)});
+                \draw [thick, blue] (axis cs:2,{-2*sqrt(3)}) --(axis cs:2,{2*sqrt(3)});
+                \node at (axis cs:-3,0) [anchor=center, color=blue, font=\Large] {$R_1$};
+                \node at (axis cs:0,3) [anchor=center, color=blue, font=\Large] {$R_2$};
+                \node at (axis cs:3,0) [anchor=center, color=blue, font=\Large] {$R_3$};
+                \node at (axis cs:0,-3) [anchor=center, color=blue, font=\Large] {$R_4$};
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    Then, using Proposition \ref{prop:double_integral_additivity}:
+    \begin{equation*}
+            \iint_R x^2+y^2 \ \mathrm{d} A = \iint_{R_1} x^2+y^2 \ \mathrm{d} A + \iint_{R_2} x^2+y^2 \ \mathrm{d} A +\iint_{R_3} x^2+y^2 \ \mathrm{d} A +\iint_{R_4} x^2+y^2 \ \mathrm{d} A
+    \end{equation*}
+\end{aexample}
+
+\begin{remark}
+    By symmetry, we could have split the annulus into four elementary regions of \hyperref[eq:elregtype2]{Type 2} as well. Instead of dividing it vertically, we would divide it horizontally.
+\end{remark}
+
+\begin{aexample}{}{evaluate_annulus}
+    Let's evaluate the integrals in \ref{ex:annulus_integration} using \nameref{thm:fubini} theorem:
+    \begin{equation*}
+        \begin{aligned}
+            \iint_R x^2+y^2 \ \mathrm{d} A &= \iint_{R_1} x^2+y^2 \ \mathrm{d} A + \iint_{R_2} x^2+y^2 \ \mathrm{d} A +\iint_{R_3} x^2+y^2 \ \mathrm{d} A +\iint_{R_4} x^2+y^2 \ \mathrm{d} A \\
+            &= \int_{-4}^{-2} \left( \int_{-\sqrt{16-x^2}}^{\sqrt{16-x^2}} x^2+y^2 \ \mathrm{d} y\right) \ \mathrm{d} x + \int_{-2}^{2} \left( \int_{\sqrt{4-x^2}}^{\sqrt{16-x^2}} x^2+y^2 \ \mathrm{d} y\right) \ \mathrm{d} x +\cdots\\
+            &= \int_{-4}^{-2} \left(\frac{4}{3} \sqrt{16-x^2} \left(x^2+8\right)\right) \ \mathrm{d} x  \\ 
+            &+ \int_{-2}^{2} \frac{1}{3} \left(-\left(4-x^2\right)^{3/2}+\left(16-x^2\right)^{3/2}+3 x^2 \left(\sqrt{16-x^2}-\sqrt{4-x^2}\right)\right) \ \mathrm{d} x \\
+            &+ \int_{-2}^{2} \frac{1}{3} \left(-\left(4-x^2\right)^{3/2}+\left(16-x^2\right)^{3/2}+3 x^2 \left(\sqrt{16-x^2}-\sqrt{4-x^2}\right)\right) \ \mathrm{d} x \\
+            &+ \int_{2}^{4} \left(\frac{4}{3} \sqrt{16-x^2} \left(x^2+8\right)\right) \ \mathrm{d} x  \\ 
+            &= 2\left(\frac{128 \pi }{3}-16 \sqrt{3} + \right) + 2\left(16 \sqrt{3}+\frac{52 \pi }{3}\right) \\
+            &= 120 \pi
+        \end{aligned}
+    \end{equation*}
+
+    The integrals are laborious but straightforward. Still, there is a trick that makes this problem easier. If we go back to our definition of the double integral as a sum over tiny rectangles, there was nothing special about the rectangular shape other than the ease of bookkeeping. In this problem, to exploit the radial symmetry, we can imagine double integration as a sum over lots of thin rings instead. 
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                xtick={-8,-6,...,8},ytick={-8,-6,...,8},
+                width=0.45\textwidth, xmax=4.2,ymax=4.2,ymin=-4.2,xmin=-4.2,
+                axis lines=middle,
+                clip=false,
+                axis on top,
+                axis equal image,
+                %axis line style={draw=none},
+                tick style={draw=none},
+                ticks = none
+                ]
+                \useasboundingbox (axis cs:-4,-4) rectangle (axis cs:4,4);
+                \pgfplotsinvokeforeach{2,2.5,...,3.5}{
+                    \fill [blue!20,even odd rule] (0,0) circle[radius=#1] circle[radius=#1+0.25];
+                    \fill [blue!40,even odd rule] (0,0) circle[radius=#1+0.25] circle[radius=#1+0.5];
+                    \draw [thick, black] (axis cs:0,0) circle [radius=#1];
+                    \draw [thick, black] (axis cs:0,0) circle [radius=#1+0.25];
+                    \draw [thick, black] (axis cs:0,0) circle [radius=#1+0.5];
+                    }
+                    \draw [->](axis cs:{3.85/sqrt(2)},{3.85/sqrt(2)}) -- node[above right = 3 mm] {$\mathrm{d} A \approx (2 \pi r) \cdot \mathrm{d} r$}(axis cs:{6/sqrt(2)},{6/sqrt(2)});
+                    
+                    %\draw (axis cs:-6,-6) rectangle (axis cs:6,6);
+                \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+    
+    
+    Each ring of inner radius $r$ and outer radius $r + \mathrm{d}r$ has an area $\mathrm{d} A \approx (2 \pi r) \cdot \mathrm{d} r$ (note how our notation is in suggestive connection with the formal double integral notation). Moreover, the function $f$ is approximately constant in the entire ring (because $x^2+y^2 = r^2$). So to sum $f$ over the entire area of the annulus, we just need to sum $f$ over these rings. That is essentially an integral over $r$:
+
+    \begin{equation*}
+        \int_{2}^{4} f(r) (2 \pi r)\ \mathrm{d} r = 2 \pi \int_{2}^{4} r^3 \ \mathrm{d} r = 120 \pi
+    \end{equation*}
+
+    The reasoning used here will be useful when we discuss change of variables in Section \ref{sec:change_of_var}.
+\end{aexample}
+
+Sometimes, even though a double integral can be evaluated by integrating over either $x$ or $y$ first, one of the orders might be much simpler than the other. To see that, check Example \ref{ex:simple_order}.
+
+\begin{aexample}{}{simple_order}
+    Evaluate $ \iint_R x e^{xy} \ \mathrm{d} A$ for $R = [0,1] \times [0,1]$. Since this is a rectangle, by \nameref{thm:fubini} theorem,
+    \begin{equation*}
+        \iint_R x e^{xy} \ \mathrm{d} A = \int_{0}^{1} \left( \int_{0}^{1} x e^{xy} \ \mathrm{d} y\right) \ \mathrm{d} x = \int_{0}^{1} \left( \int_{0}^{1} x e^{xy} \ \mathrm{d} x\right) \ \mathrm{d} y
+    \end{equation*}
+
+    Integrating over $y$ first:
+    \begin{equation*}
+        \begin{aligned}
+            \iint_R x e^{xy} \ \mathrm{d} A &= \int_{0}^{1} \left( \int_{0}^{1} x e^{xy} \ \mathrm{d} y\right) \ \mathrm{d} x = \int_{0}^{1} \left( e^{xy}\biggr \rvert_{y=0}^{y=1}\right) \mathrm{d} x =\int_{0}^{1} \left(e^x-1\right) = e-2
+        \end{aligned}
+    \end{equation*}
+
+    Integrating over $x$ first:
+    \begin{equation*}
+        \begin{aligned}
+            \iint_R x e^{xy} \ \mathrm{d} A &= \int_{0}^{1} \left( \int_{0}^{1} x e^{xy} \ \mathrm{d} x\right) \ \mathrm{d} y = \int_{0}^{1} \left( \frac{e^{x y} (x y-1)}{y^2} \right) \biggr \rvert_{x=0}^{x=1}\ \mathrm{d} y = \int_{0}^{1} \frac{e^y (y-1)+1}{y^2} \ \mathrm{d} y \\
+            &= \int_{0}^{1} -\frac{e^y}{y^2}+\frac{1}{y^2}+\frac{e^y}{y} \ \mathrm{d} y
+        \end{aligned}
+    \end{equation*}
+
+    Individually, the first and last terms don't even integrate to nice closed-form solutions. The complicated components do conspire and cancel each other out in the end, and we can see this by performing integration by parts in the first term.
+    \begin{equation*}
+        \begin{aligned}
+            \int_{0}^{1} -\frac{e^y}{y^2}+\frac{1}{y^2}+\frac{e^y}{y} \ \mathrm{d} y &= \int_{0}^{1} \frac{d}{dy} \left(\frac{e^y}{y}\right)-\frac{e^y}{y}+\frac{1}{y^2}+\frac{e^y}{y} \ \mathrm{d} y = \int_{0}^{1} \frac{d}{dy} \left(\frac{e^y-1}{y}\right) \ \mathrm{d} y \\
+            &=e-1 + \lim_{y\rightarrow 0} \left(\frac{e^y-1}{y}\right) = e-2
+        \end{aligned}
+    \end{equation*}
+\end{aexample}
+
+Another interesting property arises when the integrand is separable (Proposition \ref{prop:double_integral_separation}).
+
+\begin{aproposition}{}{double_integral_separation}
+    If $f(x,y) = g(x) h(y)$ is integrable inside a rectangle $R= [a,b] \times [c,d] $, then:
+
+    \begin{equation*}
+        \iint_R f(x,y) \ \mathrm{d} A = \left(\int_{a}^{b}  g(x) \ \mathrm{d} x\right) \left(\int_{c}^{d}  h(y) \ \mathrm{d} y\right)
+    \end{equation*}
+    
+\end{aproposition}
+
+\begin{proof}
+    $R$ is an elementary region of \hyperref[eq:elregtype1]{Type 1}, with $u(x)=c$ and $v(x)=d$, so:
+    \begin{equation*}
+        \begin{aligned}
+            \iint_R f(x,y) \ \mathrm{d} A &= \int_{a}^{b} \left( \int_{c}^{d} g(x) h(y) \ \mathrm{d} y\right) \ \mathrm{d} x = \int_{a}^{b} g(x) \left( \int_{c}^{d}  h(y) \ \mathrm{d} y\right) \ \mathrm{d} x\\ &= \left(\int_{a}^{b}  g(x) \ \mathrm{d} x\right) \left(\int_{c}^{d}  h(y) \ \mathrm{d} y\right)
+        \end{aligned}
+    \end{equation*}
+    Where we first factored out $g(x)$ out of the $y$-integral, and then the entire $y$-integral out of the $x$-integral.
+\end{proof}
+
+Besides these properties, there are many important mathematical and physical quantities that can be obtained from double integrals. Most notably, we have the \nameref{def:geometric_center} and the \nameref{def:mass_center}.
+
+\begin{adefinition}{Geometric Center}{geometric_center}
+    The geometric center (or centroid) $C_G$ of a region $R \subseteq \mathbb{R}^2$ is defined as:
+    \begin{equation*}
+        C_G = \frac{1}{S}\left(\iint_R x \ \mathrm{d} A, \iint_R y \ \mathrm{d} A \right)
+    \end{equation*}
+    Where
+    \begin{equation*}
+        S = \iint_R 1 \ \mathrm{d} A
+    \end{equation*}
+    is the area of the region.
+\end{adefinition}
+
+\begin{adefinition}{Center of Mass}{mass_center}
+    The center of mass $C_M$ of a thin plate with area mass density $\rho(x,y)$ defined on a region $R \subseteq \mathbb{R}^2$ is defined as:
+    \begin{equation*}
+        C_M = \frac{1}{M}\left(\iint_R x \rho(x,y) \ \mathrm{d} A, \iint_R y \rho(x,y) \ \mathrm{d} A \right)
+    \end{equation*}
+    Where
+    \begin{equation*}
+        M = \iint_R \rho(x,y) \ \mathrm{d} A
+    \end{equation*}
+    is the mass of the plate.
+
+\end{adefinition}
+
+\begin{remark}
+    In physics, it is common to write $\mathrm{d} m$ as an abbreviation for $ \rho(x,y) \ \mathrm{d} A$, making the formulas for the \nameref{def:geometric_center} and the \nameref{def:mass_center} identical in form, with the only difference being the interpretation of the notation.
+\end{remark}
+
+\begin{remark}
+    These two definitions should make intuitive sense as \textit{weighted averages}. Each individual piece of the region contributes a tiny amount of ``mass'' that needs to be weighted by its coordinate.
+\end{remark}
+
+In physics, you might also encounter the \nameref{def:moment_of_inertia} as well.
+
+\begin{adefinition}{Moment of Inertia}{moment_of_inertia}
+    The moment of inertia of a thin plate (represented by a region $R\subseteq \mathbb{R}^2$) around an axis perpendicular to the plate $w$ is
+    \begin{equation*}
+        \iint_R r(x,y)^2 \ \mathrm{d}m
+    \end{equation*}
+    Where $r(x,y)$ is the distance from an arbitrary point $(x,y)$ to $w$.
+\end{adefinition}
+
+Example \ref{ex:geomcenter} and one of the exercises in Section \ref{sec:double_integrals} investigates some of these definitions and how to deal with them.
+
+\begin{aexample}{}{geomcenter}
+    Let $R$ be the region bounded by the curves $y= \log (x)$, $y=e^x$, $x=0$, and $x=1$. Let $f(x,y) = x y$ and $g(x,y) = y^2$. We compute $I_x = \iint_R f(x,y) \ \mathrm{d} A$ and $I_y = \iint_R g(x,y) \ \mathrm{d} A$.
+
+    Note that $R$ is manifestly an elementary region of \hyperref[eq:elregtype1]{Type I}, so we can use \nameref{thm:fubini} theorem to write:
+    \begin{equation*}
+        \begin{aligned}
+            I_x &= \int_{0}^{1} \left( \int_{\log x}^{e^x} x y \ \mathrm{d} y\right) \ \mathrm{d} x \\
+            &= \int_{0}^{1} x \left( \frac{y^2}{2}\right) \biggr \rvert_{ \log x}^{e^x} \ \mathrm{d} x \\
+            &= \frac{1}{2}\int_{0}^{1} x e^{2 x} - x \log^2(x) \ \mathrm{d} x \\
+            &= \frac{1}{2} \cdot \frac{1}{4} \left(-x^2-2 x^2 \log ^2(x)+2 x^2 \log (x)+e^{2 x} (2 x-1)\right) \biggr \rvert_{0}^{1} \\
+            &= \frac{1}{8} \left( e^2-1\right) - \frac{1}{8}\lim_{x\rightarrow 0} \left(-x^2-2 x^2 \log ^2(x)+2 x^2 \log (x)+e^{2 x} (2 x-1)\right)\\
+            &=\frac{e^2}{8}
+        \end{aligned}
+    \end{equation*}
+    A similar computation yields $I_y = \frac{1}{9} \left(17+e^3\right)$. We note that $M = \iint_R y \ \mathrm{d} A = \frac{e^2-5}{4}$ can be thought of as the mass of the region for a non-constant area mass density $\rho(x,y) = y$. Thus, the center of mass of the region is
+    \begin{equation*}
+        X=\frac{1}{M}(I_x, I_y) = \left(\frac{e^2}{2 \left(e^2-5\right)},\frac{4 \left(17+e^3\right)}{9 \left(e^2-5\right)}\right) \approx (1.54644, 6.89915)
+    \end{equation*}
+    This point lives well outside the convex hull of $R$! What did we do wrong? Nothing, really. The weirdness comes from the fact that we allowed for a negative mass density, so we shouldn't expect our intuition about centers of mass to hold here. Try to calculate the geometric center $C$ of this region, and you will see that it is located more or less where you expect it to be.
+
+    \begin{center}
+        \begin{tikzpicture}
+            \def\func{exp(x)}
+            \def\gunc{ln(x)}
+            \begin{axis}[
+                xtick={0,0.1,...,1},ytick={-2,-1,...,2},
+                width=0.75\textwidth, xmax=1.1,ymax=3,ymin=-2.2,xmin=0,
+                enlargelimits=false,
+                axis lines=middle,
+                clip=true,
+                domain=0:1,
+                axis on top
+                ]
+                \addplot[smooth, thick,domain=0:1, name path = top]{\func};
+                \addplot[smooth, thick,domain=0.005:1, name path = bot]{\gunc};
+                \addplot [blue!20] fill between [of=bot and top];
+                \addplot[thick] coordinates {(1,0) (1, {exp(1)})};
+                \node[pin={above right:$C$}, fill=black, circle,scale=0.5] at (axis cs:0.459849, 0.219721) {};
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+\end{aexample}
+
+\begin{remark}
+    We needed integration by parts and familiarity with limit theorems to complete the computation in Example \ref{ex:geomcenter}. If you are not comfortable with these concepts, this is the time to polish your knowledge in single-variable calculus.
+\end{remark}
+
+\exercises
+
+\begin{exerciselist}
+     \item Can you think of a region $R$ and area mass density function $\rho(x,y) > 0 $ such that the center of mass of the region lies outside $R$? Note how this is different from Example \ref{ex:geomcenter}.
+     \item Come up with a continuous function $f(x,y)$ such that its double integral over a rectangular region can easily be evaluated for one choice of integration order, but not the other.
+     \item Evaluate $\iint_{R} f(x,y) \ \mathrm{d} A$ for:
+     \begin{itemize}
+        \item $R = [-3,2] \times [0,1]$ and $f(x,y) = x^2 + x y + y^2$
+        \item $R = [0,1] \times [-1,0]$ and $f(x,y) = \sin(x+y) x y$
+        \item $R = \{\text{Region bounded by } y=x^2 \text{ and } y=-x^2+1\}$ and $f(x,y) = x - y$
+        \item $R = \{\text{Region bounded by } y=\sec^2(x), \, y=0, \text{ and } x=\pm1\}$ and $f(x,y) = e^{\tan(x)}$
+     \end{itemize}
+     \item Sketch the region of integration for each of the following iterated integrals:
+     \begin{itemize}
+        \item \begin{equation*}\int_{-1}^{1} \left( \int_{0}^{x^2+2} 12 x y \ \mathrm{d} y\right) \ \mathrm{d} x\end{equation*}
+        \item \begin{equation*}\int_{0}^{27} \left( \int_{y^{1/3}}^{3}6\sqrt{x^4+1} \ \mathrm{d} x\right) \ \mathrm{d} y\end{equation*}
+        \item \begin{equation*}\int_{0}^{1} \left( \int_{x}^{1} \frac{\sin(y)}{y}\ \mathrm{d} y\right) \ \mathrm{d} x\end{equation*}
+        \item \begin{equation*}\int_{0}^{2} \left( \int_{x^2}^{4} 12 y^3 e^{x^3} \ \mathrm{d} x\right) \ \mathrm{d} y
+        \end{equation*}
+     \end{itemize}
+     \item Evaluate all the iterated integrals in the previous exercise by switching the order of integration.
+     \item Determine the volume of the following solids using integration:
+     \begin{itemize}
+        \item Solid bounded by the surface $x^2+y^2+z=2$ and the plane $x+y+z=0$.
+        \item Solid bounded by the planes $z=5$, $y=0$,$y=1$, and the surface $z=x^2$.
+        \item Cone with heigh $h$ and area of base $B$.
+        \item Intersection of two perpendicular cylinders with radius $r$.
+        \item Intersection of a sphere of radius $R$ and a cylinder of radius $r<R$.
+     \end{itemize}
+\end{exerciselist}
 
 \section{Triple Integrals}
+
+So far, we have worked with two integrals nested together. The obvious next step towards a theory of multidimensional calculus is to consider triply-iterated integrals:
+\begin{equation*}
+    \int_{x_0}^{x_1} \left( \int_{y_0(x)}^{y_1(x)} \left( \int_{z_0(x,y)}^{z_1(x,y)} f(x,y,z) \ \mathrm{d} z \right) \ \mathrm{d} y\right) \ \mathrm{d} x
+\end{equation*}
+In analogy with the $2\text{D}$ case, we want to make sense of expressions of the type
+\begin{equation}
+    \label{eq:triple_integral}
+    \iiint_R f(x,y,z) \ \mathrm{d} V
+\end{equation}
+Clearly, if $R=[x_0,x_1] \times [y_0, y_1] \times [z_0, z_1]$ is a rectangular parallelepiped, the association between triple integrals and iterated integrals is immediate:
+\begin{equation*}
+    \iiint_{[x_0,x_1] \times [y_0, y_1] \times [z_0, z_1]} f(x,y,z) \ \mathrm{d} V  = \int_{x_0}^{x_1} \left( \int_{y_0}^{y_1} \left( \int_{z_0}^{z_1} f(x,y,z) \ \mathrm{d} z \right) \ \mathrm{d} y\right) \ \mathrm{d} x
+\end{equation*}
+But what about more general regions $R\subseteq \mathbb{R}^3$? We need an equivalent to \nameref{thm:fubini} theorem in 3 dimensions to deal with those. Even more importantly, we first need to assign a precise meaning to Equation~\ref{eq:triple_integral}. To do that, having worked out the intricacies of integration in $1\text{D}$ and $2\text{D}$, we'll proceed by analogy in $3\text{D}$ and take Definition \ref{def:triple_integral} to be our starting point. In this definition, $R$ was appropriately subdivided into small cells indexed by the integers $i$, $j$, and $k$. Such cells are shaped like rectangular parallelepipeds of side lengths $\Delta x_i$, $\Delta y_j$, and $\Delta z_k$. The largest individual cell dimension is appropriately labeled $\sigma$, and the same kinds of caveats that applied to the previous cases apply here (there is some ambiguity in how we define the limiting process, we need an auxiliary function $\tilde{f}$, etc.).
+
+\begin{adefinition}{Triple Integral}{triple_integral}
+    If $R \subseteq \mathbb{R}^3$ is a finite region and $f: R \rightarrow \mathbb{R}$ is a function, then the double integral of $f$ over the region $R$, is given by the following limit, when it exists:
+    
+    \begin{equation*}
+        \iiint_R f(x,y,z) \ \mathrm{d} V \defeq \lim_{\sigma \rightarrow 0} \sum_{i=1}^{l} \sum_{j=1}^{m} \sum_{k=1}^{n} \tilde{f}(\tilde{x}_i, \tilde{y}_j, \tilde{z}_k)\Delta x_i \Delta y_j \Delta z_k
+    \end{equation*}
+\end{adefinition}
+
+To deal with general regions in $3\text{D}$ using this definition, we will recycle our knowledge of double integrals (such as \nameref{thm:fubini} theorem). 
+
 
 % example with gravity, then later use it for gauss' law
 
 \section{Change of Variables}
+\label{sec:change_of_var}
+
+% gaussian integral

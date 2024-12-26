@@ -63,3 +63,5 @@ Thumbs.db
 *.xlsx
 *.fdb_latexmk
 *.fls
+*.toc
+.vscode/*

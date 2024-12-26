@@ -8,6 +8,7 @@
 \usepackage{tikz,tcolorbox,tikz-3dplot}
 \usepackage{pgfplots}
 \usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.18}
 \usepackage{xcolor}
 \usepackage{amsfonts}
 \usepackage{hyperref} 
@@ -42,6 +43,8 @@
 \usepackage{pagenote}
 \usepackage{array}
 \usepackage{xparse}
+
+\usepackage{comment}
 
 \tcbuselibrary{theorems}
 
@@ -194,6 +197,7 @@
 %% THIS LINE IS MANDATORY
 \makepagenote
 
+
 \begin{document}
 	\tableofcontents
 	% sample chapter
@@ -228,11 +232,11 @@
 		\item Show that all the zeros of $\zeta(s)$ lie on the line $\Re (z)=1/2$.
 	\end{enumerate}
 	\fi
-	\input{coordinate_geometry/Chapter 1.tex}
-	\input{linalg_basics/linalg_basics}
-	\input{span_linind}
-	\input{linalg_basics/determinants.tex}
-	\input{Rn_function/several_variables.tex}
-	\input{Rn_function/differentiation.tex}
+	%\input{coordinate_geometry/Chapter 1.tex}
+	%\input{linalg_basics/linalg_basics}
+	%\input{span_linind}
+	%\input{linalg_basics/determinants.tex}
+	%\input{Rn_function/several_variables.tex}
+	%\input{Rn_function/differentiation.tex}
 	\input{second_quarter/multiple_integrals.tex}
 \end{document}

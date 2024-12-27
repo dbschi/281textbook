@@ -4,6 +4,7 @@
 \setcounter{thmcounter}{0}
 \begin{notation}
     Here we will sometimes drop the arrow to denote vectors and coordinates in $\reals^n$.
+    Moreover, consistent with our vector notation, if the output of a function $f$ is a vector in $\reals^n$, then we will denote $f_1,\ldots, f_n$ as the corresponding entries (as functions) of the output.
 \end{notation}
 
 We now relax the conditions that functions have to be linear. Moreover, we can restrict the domain of the function to be some subset $\Omega \subseteq \reals^n$, as some functions are not everywhere defined on $\reals^m$.
@@ -342,7 +343,13 @@ What this means is that if we add in the boundary of a set, we do not create new
 
     Since $\epsilon$ was arbitrary, we can conlude that every open ball centered around $\vec{x}$ contains a point in $\Omega$ and $\Omega^c$. So $\vec{x}\in\partial \Omega\subseteq \bar{\Omega}$.
 \end{proof}
-
+\begin{aproposition}{Sets are not doors}{notdoor}
+    Sets are not doors. A set can be both open and closed, or neither.
+\end{aproposition}
+\begin{proof}
+    The empty set is both open and closed. In $\reals^n$, $\reals^n$ is both open and closed.
+    The set $1<|x|\leq 2$ is neither open nor closed in $\reals$, as it only contains part of its boundary.
+\end{proof}
 \exercises
 \begin{exerciselist}
     \item \todo

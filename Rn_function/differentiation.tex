@@ -326,6 +326,227 @@ Therefore, the best we can hope for is a rate of $|\nabla f|$ for ascent or a ra
 \end{align*}
 This means that $\nabla f$ also points in the direction of fastest ascent, and the magnitude of $\nabla f$ describes the rate of ascent! 
 \begin{remark}
-    You can also see $\frac{\nabla f}{|\nabla f|} $ and $ \frac{-\nabla f}{|\nabla f|} $ will form an angle of $0$ or $\pi$ with $\nabla f$, so you can also construct these two unit vectors using the cosine definition of dot product.
+    You can also see ${\nabla f} $ and $ -\nabla f$ will form an angle of $0$ or $\pi$ with $\nabla f$, so you can also construct these two unit vectors using the cosine definition of dot product.
 \end{remark}
+\begin{aexample}{Level sets orthogonal to gradient}{}
+    Show that levels sets are orthogonal to the gradient. Precisely, let $\Omega\subset \reals^n$, $f:\Omega \to \reals$$\gamma:[0,1]\to \Omega$ be a curve that satisfies \[
+    f(t)=c
+    \]
+    for a constant $c$. Show that \[
+        \gamma'(t) \cdot (\nabla f)(\gamma(t))=0.
+    \]
+    for all $t\in [0,1]$. Here \[
+    \gamma'(t) \defeq D\gamma(t) = \begin{bmatrix}
+        \gamma_1'(t)\\\vdots\\\gamma_n'(t)
+    \end{bmatrix}.
+    \]
+\end{aexample}
+We apply the Chain rule on the function $f(\gamma(t))$.
+On one hand, since $f(\gamma(t))$ is constant, \[
+D(f\circ \gamma) (t) = 0.
+\]
+Using the chain rule, \[
+    D(f\circ \gamma) (t) = (Df)(\gamma(t)) \gamma'(t) = (\nabla f)(\gamma(t)) \cdot \gamma'(t).
+\]
+\section{Implicit Differentiation}
+We warmup with an example of implicit differentiation in one variable.
+\example{
+    Let $x^2+y^2=1$. Find $dy/dx$.
+}
+To solve this, we can take the derivative with respect to $x$ on both sides to get \[
+2x+2y \frac{dy}{dx}=0 \implies \frac{dy}{dx}=-\frac{x}{y}.
+\]
+Let us interpret the result as a sanity check. $x^2+y^2=1$ describe a circle, and $dy/dx$ is the slope of the tangent line at any point. At $(0,1)$ and $(0,-1)$, we get the highest and lowest points of the circle, so the slope is $0$. In the first and third quadrant, the slope is negative; in the second and fourth quadrant, the slope is positive.
 
+This $dy/dx$ seems slightly different from the usual limit definition in the sense that $y$ is not necessarily a function of $x$. However, we can locally define $y$ in terms of $x$ as follows. \begin{itemize}
+    \item In the top half plane where $y>0$, we can set $y=\sqrt{1-x^2}$.
+    \item In the top half plane where $y<0$, we can set $y=-\sqrt{1-x^2}$.
+\end{itemize}
+Under this construction, you can verify that $dy/dx=-x/y$ at any point on the circle where $y\neq 0$. When $y=0$, the function breaks down as we divide by zero. This corresponds to the vertical tangent line at that point. There is no way to define $y$ locally as a function of $x$. 
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=1.5]
+        % Draw unit circle
+        \draw (0,0) circle (1);
+      
+        % Zero slope tangent at (0,1)
+        \draw (-1.2,1) -- (1.2,1) node[above,midway] {Zero slope};
+      
+        % Positive slope tangent in fourth quadrant (0.866, -0.5)
+        \draw[blue] (0.866 - 0.5, -0.5 - 0.866) -- 
+                    (0.866 + 0.3, -0.5 + 0.520) 
+                    node[below right , pos=0.1] {Positive slope};
+      
+        % Negative slope tangent in third quadrant (-0.5, -0.866)
+        \draw[red] (-0.5 - 0.6, -0.866 + 0.35) -- 
+                   (-0.5 + 0.3, -0.866 - 0.17) 
+                   node[left, pos=0.8] {Negative slope};
+      
+        % Vertical tangent at (1,0)
+        \draw (1,-1.2) -- (1,1.2) node[right,midway] {Vertical};
+      
+        % Add reference points
+        \filldraw (0,1) circle (1pt) (1,0) circle (1pt)
+                  (0.866,-0.5) circle (1pt) (-0.5,-0.866)  circle (1pt);
+      \end{tikzpicture}
+    \caption{We can define $y$ as a function of $x$ locally on the level set $x^2+y^2=1.$}
+\end{figure}
+The way we defined $y$ as a function of $x$ is known as an implicit function. In the sense that it is implicitly defined by the equation $x^2+y^2=1$.
+\definition{Implicit Equation}{
+    \domain{f}{n}{m}. An \textbf{implicit equation} is a relation in the form\[
+    f(\vec{x})=\vec{0}.
+    \]
+    By defining $g(\vec{x})=f(\vec{x})-\vec{c}$ for some constant $\vec{c}\in \reals^m$, we also get\[
+    f(\vec{x})=\vec{c} 
+    \]
+    is an implicit equation.
+}
+Our question is as follows: given an implicit equation, can we `solve' this equation locally? If such an equation exists, what is the partial derivatives of the variables?
+
+We shall spoil the big result of this section. 
+\begin{atheorem}{Implicit function}{implicitfunction}
+    \domain{f}{n+m}{n}. We denote the coordinates of a point $(\vec{x},\vec{y})\in \Omega$ as $(x_1,x_2,\ldots, x_n,y_1,\ldots,y_m)$. Let $(\vec{a},\vec{b})\in \Omega$. If the matrix \[
+    \begin{bmatrix}
+        \pdv{f_1}{x_1} & \pdv{f_1}{x_2} & \cdots & \pdv{f_1}{x_n}\\
+        \vdots &\ddots&& \vdots \\
+         \pdv{f_n}{x_1}& \pdv{f_n}{x_2} &\cdots & \pdv{f_n}{x_n}
+    \end{bmatrix}
+    \] is invertible at $(\vec{a},\vec{b})\in \Omega$, then there exists an open set $U\subseteq \reals^m$ containing $\vec{b}$ and a differentiable function $g:U\to \reals^n$ such that \[
+    f(g(\vec{y}),\vec{y})
+    \]
+    is constant, and $g(\vec{b})=\vec{a}$. In this case, we call the function $g$ an \textbf{implicit function}.
+\end{atheorem}
+
+Before we work through some examples, let us parse the statement of the Implicit Function Theorem. 
+The Jacobian matrix of $f$ can be expressed as \[
+    Df\defeq \begin{bmatrix}[c | c]
+        Df_x&Df_y
+    \end{bmatrix}.= \begin{bmatrix}[c c c c | c c c c]
+        \pdv{f_1}{x_1} & \pdv{f_1}{x_2} & \cdots & \pdv{f_1}{x_n}& \pdv{f_1}{y_1} & \pdv{f_1}{y_2} & \cdots & \pdv{f_1}{y_m}\\
+        \vdots &\ddots&& \vdots & \vdots &\ddots&& \vdots \\
+        \pdv{f_n}{x_1}& \pdv{f_n}{x_2} &\cdots & \pdv{f_n}{x_n}&\pdv{f_n}{y_1}& \pdv{f_n}{y_2} &\cdots & \pdv{f_n}{y_m}
+    \end{bmatrix}.
+\]
+This is a $n\times(n+m)$ matrix. The left matrix $Df_x$ is exactly the matrix we want to check for the conditions of Implicit Function theorem. If it is invertible, then That One Theorem implies that there is a unique solution in $\vec{x}$ for the equation \[
+    Df_x \vec{x} + Df_y\vec{y}= \vec{c}
+\]
+for any fixed $\vec{c}\in \reals^n$ and $\vec{y}\in \reals^m$. Therefore, if we hold $\vec{c}$ constant, we should expect that we can solve $\vec{x}$ as a function of $\vec{y}$. 
+
+Another way to look at it is to apply the Rank-Nullity theorem. Approximating the function locally as \[
+    f(\vec{a},\vec{b})+Df_x(\vec{x}-\vec{a})+Df_y(\vec{y}-\vec{b})+ \rm{error}.
+    \]
+The rank of $Df$ is $n$, so the nullity is $(n+m)-n= m $. We thus have $m$ dimensions that are in `excess'. These $m$ variables are the $y_j$'s, each corresponding to one dimension in the nullspace of $D_f$. 
+
+\begin{aexample}{Derivative of implicit function}{implicitjacobian}
+    Work out the derivative of the implicit function $g:U\to \reals^n$ using the Chain rule.
+\end{aexample}
+
+Recall that $f(g(\vec{y}),\vec{y})$ is constant. This is a composition of two functions. The first function sends \[
+\vec{y}\mapsto (g(\vec{y}),\vec{y}),
+\]
+which has Jacobian matrix \[
+    \begin{bmatrix}
+        Dg \\\hline I_m
+    \end{bmatrix}
+\]
+and the second function is $f$. Since the function is constant, the derivative of the composition of these functions is $0_{m\times m}$, so we have \[
+    0_{m\times m}=
+    \begin{bmatrix}[c | c]
+        Df_x&Df_y
+    \end{bmatrix} \begin{bmatrix}
+        Dg \\\hline I_m
+    \end{bmatrix} = Df_xDg + Df_y.
+\]
+Rearranging the terms,\[
+    -Df_y = Df_xDg \implies Dg = -Df_x^{-1}Df_y.
+\]
+
+
+\example{\domain{f}{n}{}. Suppose for $\vec{v}\in \Omega$ satisfies $\nabla f (\vec{v})\neq \vec{0}$. What is the local dimension of the level set described by the implicit equation\[
+    f(\vec{x})=f(\vec{v})
+\]
+around $\vec{v}$?
+}
+We wish to apply the implicit function theorem. If the conditions of the implicit function theorem applies, then this will be a function $\reals^{(n-1)+1} \to \reals^1$. So the implicit function gives that the level set is locally the graph of a function in $(n-1)$ variables (locally $(n-1)$ dimensions).
+
+To check for the conditions of implicit function theorem, we use the fact that $Df = \nabla f^T$ is non zero at $\vec{v}$, thus has rank $1$. If the $i$-th column is the pivot column, then we can express \[
+x_i = g(x_1,x_2,\ldots, x_{i-1},x_{i+1},\ldots, x_n)
+\]  
+
+Physically, $Dg$ will define the tangent line/plane/hyperplane to the level set at $(\vec{v},f(\vec{v}))$.
+
+The tangent plane is not guaranteed to exist. For instance, take the implicit equation described by \[
+    x^2-y^2=0.
+\]
+Plotting this in $\reals^2$, this gives two lines $y=x$ and $y=-x$. At almost every point $(x,y)$ in the level set, exactly one of $y=x$ or $y=-x$ hold. Therefore, we can restrict our attention to one line, and the local dimension of the line is $1$.
+
+On the other hand, the point $(0,0)$ lies on both lines. For a (miniature-sized) person standing at the origin, the level set is locally a cross, which is the union of two $1$-dimensional objects does not look like a line or a plane.
+
+by the Implicit Function Theorem. 
+\definition{Implicit Derivative}{
+    \domain{f}{n}{}. Consider the implicit equation \[
+        f(\vec{x})= c.
+    \]We define the \textbf{Implicit Derivative} \[
+    \frac{\partial x_i}{\partial x_j} \defeq \frac{\partial g}{\partial x_j},
+    \]
+    where $g$ is the implicit function that solves for $x_i$ using the variables $(x_1,\ldots,x_{i-1},x_i,\ldots, x_n)$.
+}
+\example{
+    Express the implicit derivative in terms of the partial derivatives of $f$.
+}
+We first check the conditions of the Implicit function theorem. To express $x_i$ as an implicit function of the other variables, the square `matrix' we need to check for invertibility is \[
+\begin{bmatrix}
+    \pdv{f}{x_i}
+\end{bmatrix}.
+\]
+This is invertible exactly when the partial derivative is non zero. Thus using Example \ref{ex:implicitjacobian}, \[
+\pdv{x_i}{x_j}= -\frac{\pdv{f}{x_j}}{\pdv{f}{x_i}}.
+\]
+You can confirm this equation for $dy/dx$ on the circle implicitly defined by $x^2+y^2=1$.
+
+\section{Inverse function theorem}
+We can also ask the question of whether a function has an inverse. That is, for a function $f:\reals^n\to\reals^m$, is there a function $g:\reals^m\to\reals^n$ that undos $f$. We require \[
+    f(g(\vec{y})) = \vec{y} 
+\]
+for all $\vec{y}\in\reals^m$ and \[
+g(f(\vec{x}))=\vec{x}
+\]
+for all $\vec{x}\in \reals^n$. If such a function exists, we call it the inverse of $f$, and denote it as $f^{-1}$.
+
+\example{
+    Suppose $f^{-1}$ exists. What is $D(f^{-1})$?
+}
+
+We apply the chain rule on $f\circ f^{-1}$ and $f^{-1}\circ f$. Suppose $f(\vec{x})=\vec{y}$ and thus $f^{-1}(\vec{y})=\vec{x}$.
+On one hand, we have \[
+I_m=D(f\circ f^{-1})(\vec{y}) = Df (f^{-1}(\vec{y})) D(f^{-1})(\vec{y})= Df (\vec{x}) D(f^{-1})(\vec{y}).
+\]
+On the other hand, we have \[
+    I_n=D(f\circ f^{-1}) = D(f^{-1}) (f(\vec{x})) Df(\vec{x})= D(f^{-1}) (\vec{y}) Df(\vec{x}).
+\]
+That means $Df(\vec{x})$ has a left and right inverse $D(f^{-1})(\vec{y})$. So $Df(\vec{x})$ is surjective and injective by Example \ref{ex:ex:leftrightsurinj}. By That One Theorem, $Df(\vec{x})$ is invertible, with $(Df(\vec{x}))^{-1}=D(f^{-1})(\vec{y})$.
+
+The surprising fact is that the converse is true. If $Df(\vec{x})$ is invertible, then locally there is an inverse function $f^{-1}$.
+\theorem{Inverse Function}{
+    \domain{f}{n}{n}. Let $\vec{a}\in\Omega$, and suppose that $Df(\vec{x})$ is invertible. Then there exists open sets $U$ containing $\vec{a}$ and $V$ containing $\vec{b}=f(\vec{a})$, and a function $g:V\to U$ such that \begin{align*}
+        f(g(\vec{y}))&=\vec{y}\\
+        g(f(\vec{x}))&=\vec{x}
+    \end{align*}
+    for all $\vec{y}\in V$ and $\vec{x}\in U$.
+    Moreover, \[
+    Dg(\vec{y}) = (Df(\vec{x}))^{-1} 
+    \]
+    for $\vec{y}=f(\vec{x})$, and $\vec{x}\in U$.
+}
+\begin{proof}
+    The second statement is a result of the previous example, so we only need to show the first statement. 
+
+    Consider the implicit equation in $2n$ variables \[
+    f(\vec{x}) -\vec{y}=\vec{0}.
+    \]
+    On one hand, we can solve $\vec{y}=f(\vec{x})$ explicitly. By the inverse function theorem, this is unique at some open set around $\vec{x}$. If we can obtain $\vec{x} = g(\vec{y})$ as an implicit function, then we must have $f$ and $g$ are inverses of each other. Indeed, since $Df$ is invertible, the conditions of the Implicit Function Theorem apply and we have an implicit function $g$ such that \[
+    f(g(\vec{y}))-\vec{y}=\vec{0}.
+    \]
+\end{proof}
+\exercises

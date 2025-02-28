@@ -98,7 +98,7 @@ We could also hold $z$ constant at $0$ to take one more cross section $(x,y,0,c)
 \example{Sketch the function $f(x,y)=xy$, either in 3D or through its 2D level sets.}
 
 Let us begin by considering the level sets $xy=c$. This describes the graph $y=c/x$, except for the case $c=0$, then the level set is the x and y axes.
-\begin{figure}[h]
+\begin{figure}[h] \label{saddle}
     \centering
     \begin{subfigure}{0.29\textwidth}
         \centering
@@ -260,7 +260,11 @@ In later chapters we will see a way to change our coordinate system, through som
         \item $4x^2-y^2-9z^2=36$
     \end{enumerate}
     \item Let $c\in \reals$. Describe the intersection of the graph of $f(x,y)=x^2+9y^2$ in the given planes $x=c$, $y=c$, $z=c$.
-    \item \todo Intersection of cone with plane is a circle
+    \item Consider the (double) cone $C$ in $\reals^3$ described by the equation $x^2+y^2=z^2$ :
+    \begin{enumerate}[label=(\alph*)]
+        \item Describe the intersection of the $C$ with the planes $z=c$ and $x=c$. Your answer may depend on the sign of $c\in \reals$.
+        \item In general, what is the intersection of $C$ with the plane $ax+by+cz=d$?
+    \end{enumerate}
 \end{exerciselist}
 \section{Topology of $\reals^n$}
 \begin{remark}[Author's notes]

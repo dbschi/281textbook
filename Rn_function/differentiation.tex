@@ -181,10 +181,60 @@ This limit does not exist. Specifically, the limit as we approach along the $x$-
 \theorem{Differentiability}{
     \domain{f}{n}{m}. Let $x_0\in\Omega$, and the partial derivatives of $f$ are continuous in some open ball $B(x_0,\epsilon)\subseteq \Omega$. Then $f$ is differentiable at $x_0$.
 }
+The proof is optional. Here is the idea: Since we compute limit of vectors as the limit in each coordinate, it suffices to check that each component of $f= (f_1,f_2,\ldots, f_m)$ is differentiable. Now let us restrict to one of these $f_i$'s, and call it $g$. We already have a candidate for its derivative, namely we want to show \[
+    Dg(\vec{x}) = \begin{bmatrix}
+        \pdv{g}{x_1}(\vec{x}) & \cdots & \pdv{g}{x_n}(\vec{x})
+    \end{bmatrix}.
+\]
+Let us consider a point $\vec{x}+\vec{h}$. We want to relate $g(\vec{x})$ to $g(\vec{x}+\vec{h})$. To do this, we slowly `walk' from $\vec{x}$ to $\vec{x}+\vec{h}$. The path $\gamma$ we take is as follows:
+\begin{itemize}
+    \item walk from $p_0\defeq\vec{x}$ to $p_1\defeq \vec{x}+(h_1,0,\ldots, 0)$
+    \item walk from $\vec{x}+(h_1,0,\ldots, 0)$ to $p_2\defeq\vec{x}+(h_1,h_2,\ldots, 0)$
+    \item repeat for each other coordinate
+    \item walk from $p_{n_1}\defeq \vec{x}+(h_0,\ldots,h_{n-1}, 0)$to $p_n\defeq\vec{x}+(h_0,\ldots,h_{n-1}, h_n)$.
+\end{itemize}
+\begin{figure}[h]
+    \centering
+\begin{tikzpicture}
+    \node[label={above:$\vec{x}$}] (a) at (0,0) {\textbullet};
+    \node[label={above:$\vec{x}+\vec{h}$}] (b) at (3,3) {\textbullet};
+    \node[label={below right:$\vec{x} + (h_1,0)$ }](c) at (3,0) {\textbullet};
+    \path [->] (a) edge node[midway, below]{first coordinate}(c);
+    \path [->] (c) edge node[midway, right]{second coordinate}(b);
+    
+\end{tikzpicture}
+\caption{sample path for $f:\reals^2\to \reals$}
+\end{figure}
+On each segment of this path, $f\circ \gamma$ is a differentiable function, and we can apply the mean value theorem to bound how much $f$ changes.
 \begin{proof}
-    \todo
+It suffices to show the case where $m=1$. Let $\vec{x}\in \Omega$. We want to show that \[
+Df(\vec{x}) = \begin{bmatrix}
+    \pdv{f}{x_1}(\vec{x}) & \cdots & \pdv{f}{x_n}(\vec{x})
+\end{bmatrix}.
+\]
+Let $\epsilon>0$. By continuity of the partial derivatives, find $r>0$ such that for all $1\leq j\leq n$ and $\vec{y}< r,$\[
+    \left|\pdv{f}{x_j}(\vec{x}) -\pdv{f}{x_j}(\vec{x}+\vec{y}) \right| \leq \frac{\epsilon}{n}
+\]
+Therefore, for all $0<\vec{h}< r$,\begin{align*}
+    f(\vec{x}+\vec{h}) - f(\vec{x})= & \sum_{j=1}^n f(p_j)-f(p_{j-1})\\
+        \leq&\sum_{j=1}^n h_j \pdv{f}{x_j}(\tilde{p}_j),
+\end{align*}
+where $\tilde{p}_j$ is a point on the straight line between $p_{j-1}$ and $p_j$ by the Mean Value Theorem. Thus, 
+\begin{align*}
+    \frac{1}{|\vec{h}|}| f(\vec{x}+\vec{h}) - f(\vec{x}) -\begin{bmatrix}
+        \pdv{f}{x_1}(\vec{x}) & \cdots & \pdv{f}{x_n}(\vec{x})
+    \end{bmatrix}\vec{h}| \leq & \frac{1}{|h|}\sum_{j=1}^n |h_j| \left|\pdv{f}{x_j}(\tilde{p}_j)-
+    \pdv{f}{x_j}(\vec{x})\right|\\
+    \leq &\frac{1}{|h|}\sum_{j=1}^n |h| \frac{\epsilon}{n} \\
+    \leq &\epsilon.
+\end{align*}
+We thus have \[
+\lim_{\vec{h}\to\vec{0}}\frac{|f(\vec{x}+\vec{h}) - f(\vec{x}) -\begin{bmatrix}
+    \pdv{f}{x_1}(\vec{x}) & \cdots & \pdv{f}{x_n}(\vec{x})
+\end{bmatrix}\vec{h}|}{|\vec{h}|} = 0
+\]
+as desired.
 \end{proof}
-\todo applications (geometry of tangent planes, rate, directional derivatives), Chain rule
 \theorem[chainrule]{Chain Rule}{
     Let $\Omega_1\subseteq\reals^n$, $\Omega_2\subseteq\reals^m$ be open subsets. Let $f:\Omega_1\to\Omega_2$, $g:\Omega_2\to\reals^p$ (That is, the composition $g\circ f: \Omega_1\to \reals^p$). If $f$ and $g$ are differentiable then $g\circ f$ is differentiable, and \[
         d(g\circ f) (\vec{x}) = dg(f(\vec{x})) df(\vec{x}).
@@ -348,6 +398,17 @@ D(f\circ \gamma) (t) = 0.
 Using the chain rule, \[
     D(f\circ \gamma) (t) = (Df)(\gamma(t)) \gamma'(t) = (\nabla f)(\gamma(t)) \cdot \gamma'(t).
 \]
+\example{
+    Consider the level set of the function \[
+    F(x,y,z)=xy-z
+    \]
+    at $0$. What is the equation of the tangent plane of the level set at $(0,0,0)$.
+}
+
+At the origin, $\nabla F = (0,0,1)$. This vector is normal to the level set, that is, it is normal to the tangent plane of the level set at $(0,0,0)$, therefore, the equation of the tangent plane is \[
+0(x-0) + 0(y-0) + 1(z-0) = 0 \implies z=0.
+\]
+The tangent plane is the $xy$-plane. You can confirm that the level set is the graph of the function $z=xy$. This is the \hyperref[saddle]{saddle} we graphed a few sections ago. At the origin, the saddle is locally flat, so has the flat tangent plane.
 \section{Implicit Differentiation}
 We warmup with an example of implicit differentiation in one variable.
 \example{

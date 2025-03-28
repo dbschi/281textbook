@@ -1,0 +1,35 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {1}Taylor's Theorem}{2}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Analytic Functions and Taylor Series}{2}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Taylor's Theorem with Remainder}{5}{section.1.2}%
+\contentsline {section}{\numberline {1.3}The Binomial Theorem}{6}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Properties of Binomial Coefficients}{8}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Negative and Non-Integer Exponents}{8}{subsection.1.3.2}%
+\contentsline {section}{\numberline {1.4}Multidimensional Taylor Series}{8}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Error in the Taylor Expansion}{10}{subsection.1.4.1}%
+\contentsline {section}{\numberline {1.5}Extrema of Multivariate Functions}{10}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Lagrange Multipliers}{11}{section.1.6}%
+\contentsline {chapter}{\numberline {2}First Order Differential Equations}{13}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Introduction}{13}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Separation of Variables}{13}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Differential Forms}{14}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Exact Equations}{15}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Integration Factors}{16}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Variation of Parameters}{17}{section.2.6}%
+\contentsline {section}{\numberline {2.7}Existence and Uniqueness of Solutions for First-Order ODEs}{18}{section.2.7}%
+\contentsline {chapter}{\numberline {3}Second Order Differential Equations}{20}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Introduction}{20}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Constant Coefficients}{20}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Complex Roots}{21}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Method of Reduction of Order}{23}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Variation of Parameters}{24}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Method of Undetermined Coefficients}{26}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Existence and Uniqueness}{29}{section.3.7}%
+\contentsline {chapter}{\numberline {4}Eigenvalues and Eigenvectors}{30}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Definition of Eigenvectors and Eigenvalues}{30}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Computing Eigenvalues and Eigenvectors}{31}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Diagonalization}{34}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Spectral Theorem}{36}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Generalized Eigenvectors}{36}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Matrix Exponentials}{37}{section.4.6}%
+\contentsline {section}{\numberline {4.7}The Fundamental Solution of a Matrix}{38}{section.4.7}%

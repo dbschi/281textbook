@@ -1,0 +1,10 @@
+PWD c:\Users\ejsha\OneDrive - Northwestern University\MATH 281 Textbook Revisions\Text
+INPUT C:\Users\ejsha\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
+INPUT c:\Users\ejsha\OneDrive - Northwestern University\MATH 281 Textbook Revisions\Text\Taylor.tex
+OUTPUT Taylor.log
+INPUT C:\Users\ejsha\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx10.tfm
+OUTPUT Taylor.pdf
+INPUT C:\Users\ejsha\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
+INPUT C:\Users\ejsha\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmti10.tfm
+INPUT C:\Users\ejsha\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx7.tfm
+INPUT C:\Users\ejsha\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx5.tfm

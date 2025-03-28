@@ -1,0 +1,264 @@
+\chapter{First Order Differential Equations}
+\setcounter{exercisecounter}{0}
+
+\setcounter{thmcounter}{1}
+\section{Introduction}
+A differential equation is an equation that relates an undetermined function with one or more of its derivatives. We call equations involving only single-variable derivatives of functions \textit{ordinary differential equations} (ODEs) and those containing partial derivatives of multivariable functions \textit{partial differential equations}(PDEs). We will focus on the former in this course and leave study of the latter to MATH 381. \newline
+\newline
+The highest order derivative occurring in an ODE defines the \textit{order} of the differential equation. We will look at first and second order ordinary differential equations. ODEs can be either homogeneous or inhomogeneous. Homogeneous equations have all terms involving the function $y$ or derivatives of $y$ summed to equal $0$, while inhomogeneous equations will sum to equal a nonzero term. 
+\[\mbox{Homogeneous}: f(y, y',...,y^n, t) = 0\]
+\[\mbox{Inhomogeneous}: f(y, y',...,y^n) = g(t)\]
+\newline
+Another classification of differential equations is concerned with the linearity of the terms. We can have either linear or nonlinear equations. An ODE
+\[f(y, y',...y^n,t) = g(t)\]
+is linear if $f$ is linear with respect to terms involving the variable $y$ or derivatives of $y$. The general form looks like
+\[a_0(t)y^n+....+a_n(t)y = g(t)\]
+Nonlinear equations will typically have terms involving $y$ or derivatives of $y$ multiplied together or terms involving nonlinear functions of $y$ such as $sin(y)$ or $e^y$.
+\newline
+
+
+\section{Separation of Variables}
+A separable differential equation is any differential equation of the form,
+\[N(y)\frac{dy}{dt} = M(t)\]
+This allows us to multiply across by $dt$ and integrate both sides to find a function $y(t)$. 
+\[\int N(y(t))\frac{dy}{dt}dt = \int M(t)dt\]
+I have written $N(y) = N(y(t))$ since $y$ is a function of $t$. Then we can suppose that $\frac{d}{dt}(y(t)) = N(y(t))\frac{dy}{dt}$. Which leads to the conclusion
+\[y(t) = \int M(t)dt + C\]
+for some constant $C$. You may have seen the differential treated as a fraction that can be separated and while that is sufficient for all computation purposes and will lead to the same answer, the formulation above is more mathematically rigorous. 
+
+
+\section{Differential Forms}
+\noindent Let's take a look back at section (). 
+The line integral of a vector field $F$ along a curve $C$ is defined as
+\begin{align*}
+\int_C F \cdot d\vec{r} = \int_C Mdx + Ndy
+\end{align*}
+where $F = \langle M, N \rangle$.
+Given a the pair of functions $M(x,y)$ and $N(x,y)$, the expression
+\begin{align*}
+Mdx + Ndy
+\end{align*}
+is called a \textit{differential form}. 
+Differential forms are generalizations of derivatives and integrals to manifolds. 
+They are used to define integrals on curves, surfaces, volumes, and higher-dimensional geometries. 
+A differenti 0-form is a smooth function.
+A differential 1-form is a linear map that takes a vector field as input and returns a function. 
+In $\mathbf{R}^3$ this is of the form,
+\begin{align*}
+\omega = Pdx + Qdy + Rdz
+\end{align*}
+where $P, Q, R$ are smooth functions of $x, y, z$.
+A differential 2-form is a linear map that takes two vector fields as input and returns a function.
+In $\mathbf{R}^3$ this is of the form,
+\begin{align*}
+\omega = Adxdy + Bdydz + Cdzdx.
+\end{align*}
+In general, a differential $k$-form is a linear map that takes $k$ vector fields as input and returns a function.
+Expressed for $\mathbf{R}^n$ this is of the form,
+\begin{align*}
+\omega = \sum_{i_1 < i_2 < ... < i_k} A_{i_1, i_2, ..., i_k} dx_{i_1}dx_{i_2}...dx_{i_k}.
+\end{align*}
+In higher level mathematics, the wedge product $\wedge$ is used to define differential forms, however for our purposes how we have defined them is sufficient.
+Further study of differential forms is left to a differential geometry course. 
+\newline
+We return to differential 2-forms in the context of first order differential equations.
+Suppose we have $F = \langle M, N \rangle$. 
+Then,
+\begin{align*}
+    Mdx + Ndy = F \cdot d\vec{r}.
+\end{align*}
+We know that a vector field $F$ is conservative if it is the gradient of a scalar field $f$.
+That is, $F = \nabla f$.
+Then, $F \cdot d\vec{r} = df$.
+Thus, if $F$ is conservative, then $Mdx + Ndy = df$.
+This suggests,
+\begin{align*}
+    \frac{\partial f}{\partial x} = M \quad \text{and} \quad \frac{\partial f}{\partial y} = N
+\end{align*}
+such that, 
+\begin{align*}
+    df = \frac{\partial f}{\partial x}dx + \frac{\partial f}{\partial y}dy.
+\end{align*}
+Therefore, $F$ is conservative if and only if $Mdx + Ndy$ is equal to the differential of some function $f$.
+We define such forms as exact. 
+Recall from section (), some vector field $F = \langle M, N \rangle $ is conservative if, 
+\begin{align}
+    \frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}.
+\end{align}
+In terms of differential forms, this is equivalent to saying $Mdx + Ndy$ is closed. 
+One must be careful here, every exact form is closed because all conservative vector fields satisfy 2.1, however not all closed forms are exact.
+That is, some vector fields may satisfy 2.1 but not be conservative.
+\section{Exact Equations}
+We now look to make use of the concept of differential forms to solve first order differential equations.
+Consider the differential equation,
+\begin{align*}
+    \frac{dy}{dx} = f(x,y).
+\end{align*}
+We can rewrite this as,
+\begin{align*}
+    Mdx + Ndy = 0
+\end{align*}
+Suppose $F = \langle M, N \rangle $ is exact, then
+\begin{align*}
+    \frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}.
+\end{align*}
+This means there exists some function $f$ such that $\nabla f = F = \langle M, N \rangle$.
+Section () tells us that exact forms correspond to conservative vector fields.
+Recall from our study of line integrals that the line integral of a conservative vector field $F$ is $f(b) - f(a)$ where $\nabla f = F$ and $a$ and $b$ are the endpoints of the curve.
+Therefore, we can integrate our differential form 
+\begin{align*}
+    \int Mdx + Ndy 
+\end{align*}
+to find $f(x,y)$.
+In practice, we integrate $Mdx$ and $Ndy$ separately.
+This will gives us 
+\begin{align*}
+    \int Mdx + g(y)
+\end{align*}
+and
+\begin{align*}
+    \int Ndy + h(x).
+\end{align*}
+where $g(y)$ and $h(x)$ are functions of $y$ and $x$ respectively.
+This is because the derivative of a function of $x$ with respect to $y$ is $0$ and vice versa.
+We can put together the two resulting functions to find $f(x,y)$.
+\newline
+\example{\[\frac{dy}{dx} = - \frac{2x+y}{x+2y}\]}
+\noindent We can rewrite this as,
+\begin{align*}
+    (x+2y)dy + (2x+y)dx = 0.
+\end{align*}
+We will apply the screening test to see if this is an exact equation.
+\begin{align*}
+    \frac{\partial M}{\partial y} = 1 \quad \text{and} \quad \frac{\partial N}{\partial x} = 1.
+\end{align*}
+Therefore, this is an exact equation.
+We can integrate to find $f(x,y)$.
+\begin{align*}
+    \int (x+2y)dy = xy + y^2 + g(x)
+\end{align*}
+and
+\begin{align*}
+    \int (2x+y)dx = x^2 + xy + h(y).
+\end{align*}
+We can put these together to find $f(x,y)$.
+\begin{align*}
+    f(x,y) = xy + y^2 + x^2 + xy = x^2 + 2xy + y^2.
+\end{align*}
+\section{Integration Factors}
+\noindent The above formulation gives a useful technique for solving exact differential equations, however we must now consider the case where the equation is not exact.
+The technique we will use if called the method of integrating factors.
+The idea is to multiply the equation by some function $\mu(x,y)$ such that the resulting equation is exact.
+That is, we want to find $\mu(x,y)$ such that,
+\begin{align*}
+    \mu(x,y)Mdx + \mu(x,y)Ndy = 0
+\end{align*}
+with
+\begin{align*}
+    \frac{\partial}{\partial y}(\mu M) = \frac{\partial}{\partial x}(\mu N).
+\end{align*}
+Using chain rule we can rewrite this as,
+\begin{align*}
+    \mu \frac{\partial M}{\partial y} + M \frac{\partial \mu}{\partial y} &= \mu \frac{\partial N}{\partial x} + N \frac{\partial \mu}{\partial x}. \\
+    \mu[\frac{\partial M}{\partial y} - \frac{\partial N}{\partial x}] &= N \frac{\partial \mu}{\partial x} - M \frac{\partial \mu}{\partial y}.
+\end{align*}
+Unfortunately, this is a partial differential equation and is not easy to solve.
+However, we can make use of the fact that $\mu$ is a function of $x$ and $y$.
+We can rewrite the above equation as,
+\begin{align*}
+    \frac{\partial \mu}{\partial x} &= \frac{1}{N}[\frac{\partial M}{\partial y} - \frac{\partial N}{\partial x}]\mu \\
+    \frac{\partial \mu}{\partial y} &= -\frac{1}{M}[\frac{\partial M}{\partial y} - \frac{\partial N}{\partial x}]\mu.
+\end{align*}
+We can treat these as two separable first order differential equations.
+\begin{align*}
+    \frac{\partial \mu}{\mu} &= \int \
+\end{align*}
+
+
+
+
+
+
+\section{Variation of Parameters}
+Following our discussion of first order homogeneous differential equations, we now move on to discussing methods of findings solutions to inhomogeneous first order differential equations.
+\[\frac{dy}{dx} + a(x)y = b(x)\]
+We propose a solution $y(x) = u(x)h(x)$ where $h(x)$ is the solution to the corresponding homogeneous equation.
+\[\frac{dy}{dx} +a(x)y = 0\]
+The solution to this equation is
+\[h(x) = e^{-\int a(x)dx}.\]
+Going back to our solution form $y(x) = u(x)h(x)$ and substituting into our inhomogeneous equation
+\[\frac{du}{dx}h + u\frac{dh}{dx} + a(x)uh = b(x)\]
+\[\frac{du}{dx}h + u\left( \frac{dh}{dx} + a(x)h \right) = b(x)\]
+Since $h(x)$ is a solution to the homogeneous equation, the term in the parenthesis vanish. Therefore our differential equation becomes
+\[\frac{du}{dx} = \frac{b}{h}\]
+Solving for $u$ we get
+\[u = \int \frac{b(x)}{h(x)}dx\]
+Lastly, multiplying by $h(x)$ to get our full solution $y(x)$
+\[y(x) = h(x)\left(\int \frac{b(x)}{h(x)}dx + C\right)\]
+Notice here that I have already included the constant of integration here. 
+This is because the method of solving inhomogeneous differential equations often settles down to combining a general and particular solution. 
+We see that the constant multiplied by $h(x)$ will give us a general solution to the homogeneous equation while the product of the term in the integral and $h(x)$ will give a particular solution. 
+\section{Existence and Uniqueness of Solutions for First-Order ODEs}
+\noindent The study of first-order ordinary differential equations often revolves around understanding whether a solution exists for a given equation and, if so, whether that solution is unique. 
+This section presents the fundamental results regarding existence and uniqueness, along with illustrative examples.
+A first-order ODE is typically written as:
+\begin{equation}
+    \frac{dy}{dx} = f(x, y), \quad y(x_0) = y_0,
+    \label{eq:general_ode}
+\end{equation}
+where $f(x, y)$ is a given function, and $y(x_0) = y_0$ specifies an initial condition at $x = x_0$. 
+The goal is to determine whether there exists a function $y(x)$ satisfying Equation~\eqref{eq:general_ode} and whether this solution is unique in a neighborhood of $x_0$.
+The classical result addressing this problem is the Existence and Uniqueness Theorem, often attributed to Picard-Lindelöf. The theorem is stated as follows:
+\theorem{Existence and Uniqueness}{
+Let $f(x, y)$ be a continuous function defined on a rectangle $R = \{(x, y) : a \leq x \leq b, c \leq y \leq d\}$ in the $xy$-plane. Suppose further that $f(x, y)$ satisfies a Lipschitz condition in $y$; that is, there exists a constant $L > 0$ such that
+\begin{equation}
+    |f(x, y_1) - f(x, y_2)| \leq L |y_1 - y_2|
+    \label{eq:lipschitz_condition}
+\end{equation}
+for all $(x, y_1), (x, y_2) \in R$. Then, for any point $(x_0, y_0) \in R$, there exists a unique solution $y(x)$ to the initial value problem \eqref{eq:general_ode} defined on some interval $x_0 - \delta < x < x_0 + \delta$, where $\delta > 0$.}
+\proof{Consider the function $y(x)$ defined and continuous on the interval $x_0 - \delta < x < x_0 + \delta$ for some $\delta > 0$ with the initial condition $y(x_0) = y_0$.
+Hence, the function $f(x, y(x))$ is well-defined and continuous on this interval. 
+Suppose $f(x, y(x)) = y'(x)$. 
+We can integrate both sides of the differential equation to obtain
+\begin{align}
+    y(x) &= y(x_0) + \int_{x_0}^{x} f(t, y(x)) dt.
+\end{align}
+Any solution $y(x)$ to 2.4 satisfies the original differential equation. 
+We can differentiate both sides with respect to $x$ to recover the original differential equation.
+Now we move on to proving uniqueness.
+For any two numbers $a_1$ and $a_2$ in the interval $x_0 - \delta < x < x_0 + \delta$, it follows from the Mean Value Theorem that
+\begin{align}
+    \frac{f(s, a_1) - f(s, a_2)}{a_1 - a_2} = \frac{\partial f}{\partial y}(s, z),
+\end{align}
+for some $z$ between $a_1$ and $a_2$.
+Equation 2.5 can be rewritten as
+\begin{align}
+    |f(s, a_1) - f(s, a_2)| \leq L |a_1 - a_2|,
+\end{align}
+for all $a_1, a_2$ and $x_1, x_2$ in the interval $x_0 - \delta < x < x_0 + \delta$.
+}
+
+
+
+\noindent In other words, the conditions of the theorem states, \\
+1. The continuity of $f(x, y)$ ensures the existence of solutions. 
+Intuitively, if $f$ is not continuous, the differential equation may exhibit abrupt changes that preclude the formation of a well-defined solution.\\
+2. The Lipschitz condition guarantees uniqueness. 
+This condition implies that $f(x, y)$ does not change too rapidly with respect to $y$, preventing the trajectories of different solutions from crossing.
+
+\example{Consider the initial value problem
+\begin{align*}
+    \frac{dy}{dx} = 2x + 3y, \quad y(0) = 1.
+\end{align*}}
+\noindent Here, $f(x, y) = 2x + 3y$. 
+Since $f(x, y)$ is a linear function of $y$, it satisfies the Lipschitz condition with $L = 3$. 
+Furthermore, $f(x, y)$ is continuous everywhere. 
+Hence, by the Existence and Uniqueness Theorem, there exists a unique solution.
+
+\example{Consider the initial value problem
+\begin{align*}
+    \frac{dy}{dx} = y^{1/3}, \quad y(0) = 0.
+\end{align*}}
+\noindent Here, $f(x, y) = y^{1/3}$ is continuous but does not satisfy the Lipschitz condition at $y = 0$. 
+Multiple solutions exist, such as $y(x) = 0$ and $y(x) = \left(\frac{2}{3}x\right)^{3/2}$. 
+This example highlights the necessity of the Lipschitz condition for uniqueness.

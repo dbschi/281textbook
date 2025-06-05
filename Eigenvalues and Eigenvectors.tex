@@ -1,0 +1,333 @@
+\chapter{Eigenvalues and Eigenvectors}
+\section{Definition of Eigenvectors and Eigenvalues}
+We look to examine the behavior of linear transformations in which a vector space maps to itself. We denote $T \in \mathcal{L}(V)$ as the linear transformation $T: V \rightarrow V$ where $\mathcal{L}(V)$ is the set of all operators $\mathcal{L}(V,V)$. In order to perform operations on a subspace $U$ of $V$, we look to define a special class of operators that maps $U$ to itself. 
+\definition{Invariant Subspaces}{Suppose $U$ is a subspace of $V$. $U$ is \textit{invariant} for a given transformation $T: V \rightarrow V$, if $Tu \in U $ for any $u \in U$. }
+
+Vectors that constitute invariant subspaces and their change under $T $ are specially defined. 
+\definition{Eigenvalues and Eigenvectors}{Suppose $U \in V$ is invariant under $T$ and $u$ is a nonzero vector in  $U$. Then,
+\[Tu = \lambda u\]
+
+where $\lambda \in \mathbb{F}$ is the \textit{eigenvalue} of $T$ and $u$ is it's corresponding \textit{eigenvector}.}
+It is important to note that for a given eigenvalue there may be multiple eigenvectors. The dimension of the subspace the eigenvectors for a given eigenvalue span (called the \textit{eigenspace}) corresponds to the number of eigenvectors for the given eigenvalue. \\
+Rewriting the () gives,
+\[(T-\lambda I)u = 0.\]
+By construction it is apparent that the set of eigenvectors of $T$ is equal to $null(T-\lambda I)$.
+Since we have a nonzero vector mapping to zero, one can see that $\lambda$ is an eigenvalue of $T$ if and only if $T-\lambda I$ is not injective. And, since this gives a noninvertible square matrix by SOME THEOREM $\lambda$ is an eigenvalue of $T$ if and only if $T-\lambda I$ is not surjective as well.\\
+By SOME THEOREM, the determinant of a noninvertible matrix is zero. This property allows us to solve for the value of $\lambda$.
+
+\theorem{}{Suppose $\lambda_1, \lambda_2,...,\lambda_m$ are distinct eigenvalues of $T: V \rightarrow V$ corresponding to distinct eigenvectors $u_1, u_2,...,u_m$. Then the eigenvectors $u_1, u_2,...,u_k$ are linearly independent. }
+\proof{We proceed by contradiction. Suppose $u_1, u_2,...,u_m$ are linearly dependent. Choose $k$ to be the smallest integer such that,
+\[u_k \in span\{u_1, u_2,...,u_{k-1}\}. \]
+Therefore $u_k$ can be written as,
+\[u_k = a_1u_1 + a_2u_2 + ... + a_{k-1}u_{k-1}.\]
+Take the transformation $T$ of both sides of the equation,
+\[Tu_k = T(a_1u_1 + a_2u_2 + ... + a_{k-1}u_{k-1}) \]
+\[\lambda_ku_k = a_1\lambda_1u_1 + a_2\lambda_2u_2 + ... + a_{k-1}\lambda_{k-1}u_{k-1}.\]
+Multiply both sides of $()$ by $\lambda_k$ and subtract $()$ to obtain,
+\[0 = a_1(\lambda_k-\lambda_1)u_1 + ...+ a_{k-1}(\lambda_k-\lambda{k-1})u_{k-1}.\]
+By construction, this implies that $a_i = 0$ for $i \in (1, k-1)$ since the eigenvectors are linearly independent and the eigenvalues are distinct. However, this implies $u_k=0$, a contradiction since we don't consider $\vec{0}$ and eigenvector. }
+\corollary{There are at most $n$ distinct eigenvalues for each operator on an $n$-dimensional vector space.}
+Therefore, suppose we have $T \in \mathcal{L}(V)$ with $n$ distinct eigenvalues, then it follows that $T$ has $n$ distinct eigenvectors. From the previous theorem the set of eigenvectors to $T$ must be linearly independent therefore $n \leq dim(V)$. 
+
+\section{Computing Eigenvalues and Eigenvectors}
+We look to develop a method to solve for the eigenvalues and eigenvectors of some transformation $T \in \mathcal{L}(V,V)$. Suppose $T(x) = Ax$ and $n = dim(V)$, this implies that $A$ is $n \times n$. We look for $\lambda \in \mathbf{F}$ that satisfies
+\[Ax = \lambda x.\]
+Right multiplying each side by the identity matrix $n \times n$ identity matrix $I_n$ gives
+\[Ax = \lambda Ix.\]
+Solving to isolate $x$ produces the homogeneous equation
+\[(A - \lambda I)x = 0.\]
+From the previous section we know the eigenvectors of $A$ span $null(A)$. Therefore, we look for non-trivial vectors $x$ that solve $(A-\lambda I)$. This implies that $(A-\lambda I)$ must be non-invertible. We use the property that for non-invertible matrices the determinant is zero to solve for $\lambda$. 
+\[det(A-\lambda I) = 0\]
+Computing the determinant of $(A-\lambda I)$ produces a polynomial $P_k(\lambda)$ where $k \leq n$.
+\[P_k(\lambda) = 0\]
+Solving for the roots of $P_k(\lambda)$ finds the desired eigenvalues for $A$. For a polynomial of degree $k \leq n$, there will be at most $k$ eigenvalues. We substitute each computed eigenvalue into $(A-\lambda I)x = 0$ to solve for vectors $x$ that span $null(A)$. Each $x$ is an eigenvector of $A$. The space spanned by each eigenvalue $\lambda$ is called the \textit{eigenspace} of $\lambda$.
+\example{Find the eigenvalues and eigenvectors of \\ $A = \begin{bmatrix} 1 & 4 & 3 \\ 4 & 1 & 0 \\ 3 & 0 & 1 \\ \end{bmatrix}$. }
+We wish to find $\lambda$ that satisfy, 
+\[\begin{bmatrix} 1 & 4 & 3 \\ 4 & 1 & 0 \\ 3 & 0 & 1 \\ \end{bmatrix}x = \lambda x\].
+Algebraically rearranging, 
+\[(\begin{bmatrix} 1 & 4 & 3 \\ 4 & 1 & 0 \\ 3 & 0 & 1 \\ \end{bmatrix} - \lambda I) x = 0\] 
+\[\begin{bmatrix} 1 - \lambda & 4 & 3 \\ 4 & 1 -\lambda & 0 \\ 3 & 0 & 1 -\lambda \\ \end{bmatrix}x = 0\]
+Solving $det(A-\lambda I) = 0$,
+\[\begin{vmatrix} 1 - \lambda & 4 & 3 \\ 4 & 1 -\lambda & 0 \\ 3 & 0 & 1 -\lambda \\ \end{vmatrix} = (1 - \lambda)((1-\lambda)^2-0)-4(4(1-\lambda)-0)+3(0-3(1-\lambda))\]
+\[ = (1-\lambda)^3 - 25(1-\lambda) = (1-\lambda)((1-\lambda)^2 - 25) \]
+\[= (1-\lambda)(\lambda^2-2\lambda -24) = (1 - \lambda)(6-\lambda)(4+\lambda) = 0 \]
+Therefore our eigenvalues are $\lambda = 1, 6$ and $-4$.
+We substitute each eigenvalue into $(A-\lambda I)x = 0$ to find the eigenvectors of $A$.
+For $\lambda = 1$,
+\[(A-1(I))x = \begin{bmatrix} 0 & 4 & 3 \\ 4 & 0 & 3 \\ 0 & 0 & 0 \\ \end{bmatrix}x = 0 \]
+By Gaussian-Jordan Reduction we get, 
+\[\begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 3/4 \\ 0 & 0 & 0 \\ \end{bmatrix} \]
+This means our eigenvector $\vec{x}$ is, 
+\[\vec{x} = x_3\begin{bmatrix} 0 \\ -3/4 \\ 1 \end{bmatrix}\]
+
+
+Repeating the same process for $\lambda = 6$,
+\[(A-6I) = \begin{bmatrix} -5 & 4 & 3 \\ 4 & -5 & 0 \\ 3 & 0 & -5 \\ \end{bmatrix}.\]
+By Gauss-Jordan Reduction we get, 
+\[\begin{bmatrix} 1 & 0 & -5/3 \\ 0 & 1 & -4/3 \\ 0 & 0 & 0 \\ \end{bmatrix}.\]
+Therefore our eigenvector is, 
+\[\vec{x} = x_3\begin{bmatrix} 5/3 \\ 4/3 \\ 1 \\ \end{bmatrix} \]
+Lastly for $\lambda = 4$,
+\[(A + 4I) = \begin{bmatrix} 5 & 4 & 3 \\ 4 & 5 & 0 \\
+3 & 0 & 5 \\ \end{bmatrix} \].
+Gauss-Jordan Reduction gives us, 
+\[\begin{bmatrix} 1 & 0 & 5/3 \\ 0 & 1 & -4/3 \\ 0 & 0 & 0 \\ \end{bmatrix}. \]
+Thus our eigenvector is, 
+\[\vec{x} = x_3 \begin{bmatrix} -5/3 \\ 4/3 \\ 1 \\ \end{bmatrix}.\]
+So our set of eigenvectors for $A$ is, 
+\[\biggl\{\begin{bmatrix} 0 \\ -3/4 \\ 1 \\ \end{bmatrix}, \begin{bmatrix} 5/3 \\ 4/3 \\ 1 \\ \end{bmatrix}, \begin{bmatrix} -5/3 \\ 4/3 \\ 1 \\ \end{bmatrix}\biggr \}. \]
+
+\theorem{}{Suppose $A$ is an upper triangular matrix. Then the eigenvalues of $A$ are the the entries along the diagonal. Similarly, if $A$ were lower triangular the same result holds. }
+This theorem follows from the determinant of a triangular matrix being the product of the diagonal entries. Therefore, if we can subtract some $\lambda$ such that one of the entries becomes zero, then the matrix determinant is zero and the value of that $\lambda$ satisfies $Ax = \lambda x$.
+
+\begin{flushleft}
+\LARGE \textbf{Exercises} \\
+\normalsize
+\end{flushleft}
+
+\section{Diagonalization}
+\noindent A diagonal matrix is a matrix consisting of only diagonal entries. 
+The diagonal matrix for an operator $T \in \mathcal{L}(V)$ is
+\[\begin{bmatrix}
+    \lambda_1 & 0 & \cdots & 0 \\
+    0 & \lambda_2 & \cdots & 0 \\
+    \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & \cdots & \lambda_n \\
+\end{bmatrix}
+\] 
+if,
+\begin{align*}
+    Tv_1 &= \lambda_1v_1 \\
+    Tv_2 &= \lambda_2v_2 \\
+    &\vdots \\
+    Tv_n &= \lambda_nv_n. \\
+\end{align*}
+This suggests $\lambda_i$ are the eigenvalues of $T$ and $v_i$ are the corresponding eigenvectors.
+What this tells us is that an arbitary operator has some diagonal matrix consisting of eigenvalues with respect to some basis of eigenvectors.
+Our goal is to find the basis of eigenvectors for some operator $T$ such that $T$ is diagonal.
+\theorem{The Diagonalization Theorem}{An operator $T \in \mathcal{L}(V)$ is diagonalizable if there exists a basis of $V$ consisting of eigenvectors of $T$. In matrix form, suppose $T(x) = Ax$ for some $n \times n$ matrix $A$. Then $A$ is diagonalizable if there exists an invertible matrix $P$ with the eigenvectors of $A$ as columns such that 
+\[D = P^{-1}AP\]
+is a diagonal matrix.}
+\noindent This theorem tells us that a $n \times n$ matrix $A$ is diagonalizable if the eigenvectors of $A$ form a basis for $\mathbf{R}^n$.
+\proof{Let $A$ be a $n \times n$ matrix. Suppose $P$ is a $n \times n$ matrix with column vectors $v_i$ and $D$ be a $n \times n$ diagonal matrix with diagonal entries $\lambda_i$.
+Then, 
+\[AP = A\begin{bmatrix}
+    v_1 & v_2 & \cdots & v_n \\
+\end{bmatrix}
+\]
+and,
+\[PD = 
+    \begin{bmatrix}
+        v_1 & v_2 & \cdots & v_n 
+    \end{bmatrix}
+    \begin{bmatrix}
+        \lambda_1 & 0 & \cdots & 0 \\
+        0 & \lambda_2 & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & \lambda_n 
+    \end{bmatrix} = 
+    \begin{bmatrix}
+        \lambda_1v_1 & \lambda_2v_2 & \cdots & \lambda_nv_n
+    \end{bmatrix}.
+\]
+Suppose $\lambda_i$ are the eigenvalues of $A$ and $v_i$ are the corresponding eigenvectors. 
+Then we obtain the following result,
+\[AP = PD. \]
+Since $P$ is invertible, we can multiply each side by $P^{-1}$ to obtain,
+\[A = PDP^{-1}.\]
+Therefore $A$ is diagonalizable.}
+We have shown that a matrix $A$ is diagonalizable if there exists an invertible matrix $P$ such that $D = P^{-1}AP$ is a diagonal matrix.
+We will now develop the methodological steps to diagonalize a matrix $A$.
+\begin{enumerate}
+\item Find the eigenvalues of $A$ by solving $det(A-\lambda I) = 0$.
+\item Find the corresponding eigenvectors of $A$ by solving $(A-\lambda I)v = 0$.
+\item Form the matrix $P$ with the eigenvectors of $A$ as columns.
+\item Form the matrix $D$ with the eigenvalues of $A$ as diagonal entries.    
+\end{enumerate}
+This will give us the diagonalization of $A$ as $A = PDP^{-1}$.
+\begin{example}{Diagonalize the matrix $A = \begin{bmatrix} 1 & 4 & 3 \\ 4 & 1 & 0 \\ 3 & 0 & 1 \\ \end{bmatrix}$.} \end{example}
+\noindent We have already found the eigenvalues and eigenvectors of $A$ in the previous section. The eigenvalues of $A$ are $\lambda = 1, 6, -4$ with corresponding eigenvectors 
+\[\begin{bmatrix} 0 \\ -3/4 \\ 1 \\ \end{bmatrix}, \begin{bmatrix} 5/3 \\ 4/3 \\ 1 \\ \end{bmatrix}, \begin{bmatrix} -5/3 \\ 4/3 \\ 1 \\ \end{bmatrix}.\]
+Therefore the matrix $P$ is, 
+\[P = \begin{bmatrix} 0 & 5/3 & -5/3 \\ -3/4 & 4/3 & 4/3 \\ 1 & 1 & 1 \\ \end{bmatrix}.\]
+The matrix $D$ is,
+\[D = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 6 & 0 \\ 0 & 0 & -4 \\ \end{bmatrix}.\]
+Therefore the diagonalization of $A$ is,
+\[\begin{bmatrix} 1 & 4 & 3 \\ 4 & 1 & 0 \\ 3 & 0 & 1 \\ \end{bmatrix}
+=  \begin{bmatrix} 0 & 5/3 & -5/3 \\ -3/4 & 4/3 & 4/3 \\ 1 & 1 & 1 \\ \end{bmatrix} \begin{bmatrix} 1 & 0 & 0 \\ 0 & 6 & 0 \\ 0 & 0 & -4 \\ \end{bmatrix} \begin{bmatrix} \frac{4}{125} & -\frac{3}{100} & \frac{3}{100} \\ \frac{3}{100} & \frac{2}{25} & \frac{2}{25} \\ -\frac{3}{100} & \frac{3}{100} & \frac{3}{100} \end{bmatrix}
+\]
+Here I have skipped the calculation of $P^{-1}$ as it is quite tedious and one can use methods from section () to compute it.
+
+
+
+
+\section{Spectral Theorem}
+\definition{Self Adjoint Operators}
+{An operator $T \in \mathcal{L}(V)$ is \textit{self-adjoint} if $T = T^*$.}
+\definition{Hermitian Matrices}
+{A matrix $A$ is \textit{Hermitian} if $A = A^*$. 
+If $A$ is real, then $A = A^T$. 
+In this case, $A$ is symmetric.}
+
+
+\section{Generalized Eigenvectors}
+From section () we know that an $n \times n$ matrix $A$ with $n$ distinct eigenvalues $\lambda_i$ has $n$ corresponding eigenvectors $\vec{v}_i$ which form a basis for $\mathbf{R}^n$ . In this case each $\lambda_i$ has algebraic and geometric multiplicities both equal to $1$. However consider the matrix 
+\[A = \begin{bmatrix}
+1 & 1 \\
+0 & 1 \\
+\end{bmatrix} \]
+It has one eigenvalue $\lambda = 1$ which has one corresponding eigenvector
+\[\vec{x} = \begin{bmatrix}
+    0 \\
+    1 \\
+\end{bmatrix}\]
+We can see the eigenvectors of $A$ do not form a basis for $\mathbf{R}^2$. The algebraic multiplicity of $\lambda = 1$ is $2$, however its geometric multiplicity is only $1$. Therefore we see that matrices with a set of eigenvectors which do not form a basis for the column space of $A$ display an inequality between the geometric and algebraic multiplicities. We can generalize the above example to the following definition. 
+\definition{Defective Matrices}{A $n \times n $ matrix is defective if the sum of its eigenvalues' algebraic multiplicities $\mu_a$ and the sum of geometric multiplicities $\mu_g$ has the property
+\[\mu_a > \mu_g\]}
+The eigenvectors of defective matrices do not form a linearly independent basis for $\mathbf{R}^n$. This implies that such matrices are \textit{non-diagonalizable}.
+However in cases for which we wish to diagonalize a matrix, compute a matrix exponential or find a basis consisting of eigenvectors, we seek a method to resolve this issue. 
+\definition{Generalized Eigenvectors}{For a matrix $A$, some $\lambda \in \mathbf{F}$ is a \textit{level j generalized eigenvector} if it satisfies
+\[(A-\lambda I)^j x = 0 \] }
+\theorem{}{Suppose $\lambda$ is an eigenvalue of $A$ with multiplicity $m$. Then 
+\[(A-\lambda I)^j = 0\] with $j>m$ has the same solution space as \[(A-\lambda I)^m = 0\]}
+
+
+
+
+
+\section{Matrix Exponentials}
+\noindent Suppose we have the linear system of differential equations 
+\[\frac{dx}{dt} = Ax.\]
+Our study of differential equations suggests a solution of the form 
+\[x = Ce^{At}.\]
+Now we are presented with the problem of computing the exponential of a matrix. 
+Let's take the series expansion of $e^x$.
+\[e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + ... + \sum_{n=0}^{\infty}\frac{x^n}{n!}\]  
+Choosing instead to expand the matrix $A$ we get,
+\[e^A = 1 + A + \frac{A^2}{2!} + \frac{A^3}{3!} + ... + \sum_{n=0}^{\infty}\frac{A^n}{n!}.\] 
+We know how to compute powers of matrices however doing it in practice and taking high enough powers in the series to get a sufficient solution is quite futile (and an approximation on top of that). 
+There are two methods building on concepts introduced earlier this chapter which allows us to exactly compute the matrix exponential, diagonalization and generalized eigenvectors. 
+We will begin with the former which is the preferrable route. \\
+\newline
+Suppose there exists a matrix $P$ and a diagonal matrix $D$ such that,
+\[A = PDP^{-1}\]
+for some matrix $A$.
+We can substitute this into () to obtain,
+\[e^A = 1 + (PDP^{-1}) + \frac{(PDP^{-1})^2}{2!} + \frac{(PDP^{-1})^3}{3!} + ... + \sum_{n=0}^{\infty}\frac{(PDP^{-1})^n}{n!}.\]
+From section 4.3, we know,
+\[A^n = PD^nP^{-1}\].
+Therefore, our series expansion of $e^A$ becomes,
+\[e^A = 1 + PDP^{-1} + \frac{PD^2P^{-1}}{2!} + \frac{PD^3P^{-1}}{3!} + ... + \sum_{n=0}^{\infty}\frac{PD^nP^{-1}}{n!}.\]
+Factoring out $P$ and $P^{-1}$ we obtain,
+\[e^A = P(1 + D + \frac{D^2}{2!} + \frac{D^3}{3!} + ... + \sum_{n=0}^{\infty} \frac{D^n}{n!})P^{-1}. \]
+The expansion in the parenthesis is the matrix exponential of the diagonal matrix $D$, therefore,
+\[e^A = Pe^DP^{-1}.\] 
+Since the exponential of a diagonal matrix is the matrix consisting of the diagonal entries exponetiated, equation () allows us to easily compute $e^A$. \\
+\newline
+However, in cases for which $A$ is non-diagonalizable we must find an alternative method to solve $e^A$.
+We will use generalized eigenvectors to do this. \\
+Generalized Eigenvectors tell us that for some $\lambda_j$, the matrix $(A-\lambda_j I)^j$ is zero. 
+This implies that for all $m > j$, $(A-\lambda_j I)^m = 0$. 
+Therefore, suppose $\lambda$ is a jth level eigenvector. If we write $e^{(A-\lambda I)t}$ as a series expansion,
+\[e^{(A-\lambda I)v} = 1 + (A-\lambda I)v + \frac{(A-\lambda I)^2v^2}{2!} + \frac{(A-\lambda I)^3v^3}{3!} + ... + \sum_{n=0}^{j-1}\frac{(A-\lambda I)^nv^n}{n!},\]
+this series terminates at $A^{j-1}$.
+This is exactly what we are looking for in order to compute $e^A$.
+
+
+
+
+
+\section{The Fundamental Solution of a Matrix}
+Suppose we have a system of coupled differential equations described by:
+\begin{align*}
+    x'_1 = a_{11}x_1 &+ \cdots + a_{1n}x_n \\
+    x'_2 = a_{21}x_1 &+ \cdots + a_{2n}x_n \\
+    &\vdots \\
+    x'_n = a_{n1}x_1 &+ \cdots + a_{nn}x_n \\
+\end{align*}
+Where $x_1,...,x_n$ are functions of $t$ with derivatives $x'_1,...,x'_n$ and $a_{ij}$ are constants. 
+\begin{align*}
+    A &= \begin{bmatrix} 
+        a_{11} & \hdots & a_{1n} \\ 
+        \vdots & & \vdots \\ 
+        a_{n1} & \hdots & a_{nn} 
+    \end{bmatrix} \\
+    \vec{x}(t) &= \begin{bmatrix} 
+        x_1(t) \\ 
+        \vdots \\ 
+        x_n(t) 
+    \end{bmatrix} \\
+    \vec{x'}(t) &= \begin{bmatrix} 
+        x'_1(t) \\ 
+        \vdots \\ 
+        x'_n(t) 
+    \end{bmatrix} \\
+    A\vec{x}(t) &= \vec{x'}(t) \\
+\end{align*}
+We solve this equation by finding an $\vec{x}(t)$ that satisfies it on some interval of $t$.
+\definition{Fundamental Solution of a Matrix}{For an $n \times n$ matrix $A$, there exists a set of $n$ linearly independent functions $\vec{x_1}(t),...,\vec{x_n}(t)$  which constitute an $n$-dimensional basis for the vector space of all solutions of $A$. We call this set of functions the \textbf{fundamental solution of the matrix $A$}.}
+\noindent Suppose we have the system of uncoupled differential equations
+\[x'_1(t) = ax_1(t)\]
+\[x'_2(t) = bx_2(t)\]
+for some constants $a$ and $b$. 
+This can be written in matrix form as
+\[\begin{bmatrix}
+    a & 0 \\
+    0 & b \\
+\end{bmatrix}
+\begin{bmatrix}
+    x_1(t) \\
+    x_2(t)
+\end{bmatrix} = \begin{bmatrix} 
+x'_1(t) \\
+x'_2(t) 
+\end{bmatrix}\]
+These equations suggest the solutions to this system of differential equations are 
+\[x_1(t) = c_1e^{at}\]
+\[x_2(t) = c_2e^{bt}\]
+From this we suggest the solution to any linear system of differential equations $A\vec{x} = \vec{x'}$ is of the form 
+\[\vec{x}(t) = \vec{v}e^{\lambda t}.\]
+Taking the derivative $\vec{x'}(t)$
+\[\vec{x'}(t) = \lambda \vec{v}e^{\lambda t}\]
+Taking equation () once more and multiplying each side by $A$
+\[A \vec{x}(t) = A \vec{v}e^{\lambda t}\]
+The left sides of equations () and () are our differential equation thus our right sides must equal.
+\[A\vec{v}e^{\lambda t} = \lambda \vec{v}e^{\lambda t}\]
+This suggests that vectors $v$ and scalars $\lambda$ which satisfy this system of differential equations are eigenvectors and eigenvalues of the matrix $A$.
+\example{
+\[\frac{dx}{dt} = \begin{bmatrix}
+    2 & 1 \\
+    1 & 2 \\
+\end{bmatrix} x\]
+}
+\noindent This matrix gives the eigenvalues $\lambda = 3, -1$ corresponding to the eigenvectors
+\[\{\begin{bmatrix}
+    1 \\
+    1 \\
+\end{bmatrix}
+\begin{bmatrix}
+    -1 \\
+    1 \\
+\end{bmatrix}\}\]
+Therefore our solutions to the systems of differential equations are
+\[\{c_1\vec{x_1}(t) = e^{3t} \begin{bmatrix}
+    1 \\
+    1 \\
+\end{bmatrix},
+c_2\vec{v_2}(t) = e^{-t}\begin{bmatrix}
+    -1 \\
+    1 \\
+\end{bmatrix}\}\]
+If we have vector solutions $\vec{x_1}(t), \vec{x_2}(t) \hdots \vec{x_n}(t)$ to the system of differential equations $A\vec{x} = \vec{x'}$ then the matrix $\vec{X}(t)$ with columns $\vec{x_1}(t), \vec{x_2}(t) \hdots \vec{x_n}(t)$ is the fundamental solution of the matrix $A$.
+This matrix $\vec{X}(t)$ is the linear combination of vector solutions to the system of differential equations. 
+\begin{align*}
+\vec{X}(t) &= \vec{x_1}(t) + \vec{x_2}(t) + \hdots + \vec{x_n}(t) \\
+\vec{X}(t) &= \begin{bmatrix} \vec{x_1}(t) & \vec{x_2}(t) & \hdots & \vec{x_n}(t) \end{bmatrix} \\
+\end{align*}
+Therefore our fundamental solution $\vec{X}(t)$ to example 4.14 is,
+\begin{align*}
+\vec{X}(t) &= \begin{bmatrix} e^{3t} \begin{bmatrix} 1 \\ 1 \end{bmatrix} & e^{-t} \begin{bmatrix} -1 \\ 1 \end{bmatrix} \end{bmatrix}. \\
+\end{align*}
+
+
+

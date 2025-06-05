@@ -1,0 +1,299 @@
+	\chapter{Taylor's Theorem}
+    \setcounter{exercisecounter}{0}
+
+\setcounter{thmcounter}{1}
+ \section{Analytic Functions and Taylor Series}
+In this section we look to develop a method to represent functions as series. An important application of such is the use of series as solutions to differential equations. 
+
+\definition{Power Series}{
+    Let $x_0\in \reals$. A \textbf{power series} cenetered at $x_0$ is in the form \[
+        f(x)=\sum_{n=0}^{\infty} a_n(x-x_0)^n.
+    \]
+}
+\begin{remark}
+    The convention used for $0^0$ when $x=x_0$ here is $0^0=1$. You can imagine that it is the limit of $(x-x_0)^0$ as $x\to x_0$.
+\end{remark}
+\begin{remark}
+    The series might not converge. In fact, the root test for convergence gives an exact criteria for convergence.
+\end{remark}
+\definition{Radius of Convergence}{
+    Let $f(x)$ be a power series centered at $x_0$. The \textbf{radius of convergence} is the value $R$ such that \[
+    \begin{cases}
+        f(x) \textrm{ converges, } & \textrm{ if $|x-x_0|<R$},\\
+        f(x) \textrm{ diverges, } & \textrm{ if $|x-x_0|>R$}.
+    \end{cases}
+    \]
+}
+\definition{Analytic Functions}{
+Let $\Omega \subseteq \reals$ be open, and $f:\Omega\to\reals$. We say that $f$ is \textbf{analytic} at $x_0$ if there exists $\epsilon>0$, and a power series representation $p_{x_0}(x) = \sum_n a_n(x-x_0)^n$ such that $p_{x_0}(x)$ converges to $f(x)$ in $B(x_0,\epsilon)$. We say that $f$ is analytic on (a,b) if $f$ is analytic at every point in $(a,b)$.
+}
+\proposition{
+    The set of points on which $f$ is analytic form an open set.
+}
+Being analytic is one of the strictest properties for a function. Analytic functions are infinitely differentiable (smooth).
+
+\theorem{Analytic Functions are Smooth}{Suppose $\sum a_nx^n$ is a power series representation for some function $f$ with a radius of convergence $R > 0$. Then $f$ is infinitely differentiable on $(-R, R)$. }
+The proof requires some analysis knowledge out of scope of the course. The hardest part is to show that you can differentiate under the summation, i.e. \[
+\frac{d}{dx}\sum_n {f_n(x)} = \sum_n \frac{d}{dx} f_n(x).
+\]
+Assuming this, we can get power series representations for $f'(x)$ and so on.
+\begin{align*}
+    \begin{array}{ccccccc}
+    f(x) =&  a_0 &+ a_1(x-x_0) &+ a_2(x-x_0)^2 &+a_3(x-x_0)^3&+a_4(x-x_0)^4& +\ldots \\
+    f'(x)=&   &a_1 &+ 2a_2(x-x_0) &+ 3a_3(x-x_0)^2 &+4a_4(x-x_0)^3 &+\ldots \\
+    f''(x)=& &   &2a_2 &+ 6a_3(x-x_0) &+ 12a_4(x-x_0)^2&+\ldots
+    \end{array}
+\end{align*}
+Importantly, these have the same radius of convergence as the original function (a root test can confirm this), so we get a closed form for the $k$-th derivative of $f$:
+\[f^{(k)}(x) = \sum_{n=k}^{\infty} \frac{n!}{(n-k)!}a_n(x-x_0)^{n-k} \] 
+
+\theorem{Uniqueness of Power Series}{
+    Let $f$ be analytic at $x_0$. Then its power series representation $\sum_n a_n (x-x_0)^n$ is unique with coefficients
+    \[a_k = \frac{f^{(k)}(x_0)}{k!}.\]}
+
+\begin{proof}
+    We take the general form of the $k$-th derivative, and evaluate it at $x=x_0$.
+    This gives us \[
+    f^{(k)}(x_0)=\sum_{n=k}^{\infty} \frac{n!}{(n-k)!}a_n(x_0-x_0)^{n-k}.
+    \]
+    On the right hand side, all the terms with $n>k$ will evaluate to $0$. The term with $n=k$ evaluates to $k!a_k$. This means \[
+    f^{(k)}(x_0) = k! a_k \implies a_k = \frac{f^{(k)}(x_0)}{k!}.
+    \]
+    Therefore, if a power series exists, it must be in the form \[
+    \sum_n \frac{f^{(n)}(x_0)}{n!} (x-x_0).
+    \]
+\end{proof}
+\definition{Taylor Series}{The \textbf{Taylor expansion} of $f$ centered at $x_o$ is given by
+\[f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(x_o)}{n!}(x-x_o)^n.\]}
+
+A function locally equals to its Taylor series (about some point) if and only if it is analytic. We will see that if a function is analytic, it is equal to the Taylor series about a point everywhere the series converges.
+\theorem{Uniqueness of Analytic Functions}{
+    Let $f,g:(a,b)\to\reals$ be analytic. Suppose $f(x)=g(x)$ on some small ball $B(x_0,\epsilon)$. Then $f=g$ everywhere on $(a,b)$.
+}
+
+    Let's consider the function $h(x)=f(x)-g(x)$. This is analytic, as we can just take the difference of the respective coefficients in the power series for $f$ and $g$. We have $h(x)=0$ on $B(x_0,\epsilon)$. Our task now is to show that $h(x)=0$ everywhere, so $f=g$ everywhere.
+
+    The idea now is to start with the power series about $x=x_0$ \[
+    \sum_{n} 0 (x-x_0)^n.
+    \]
+    We can `slide' this $x_0$ across a little bit to $x_1\in B(x_0,\epsilon)$ to get \[
+        \sum_{n} 0 (x+x_1-x_0-x_1)^n =\sum_{n} 0 (x-x_1)^n 
+    \]
+    after binomial expansion of the terms $((x-x_1)+(x_1-x_0))^n$. Since $f$ is analytic at $x_1$, there is another ball centered at $x_1$ where $h=0$. Therefore, we can `slide' our center of the power series from $x_1$ to another $x_2$. If we can slide this to everywhere in $(a,b)$ we will get that the power series representation at every point is $0$. 
+
+    \textit{optional material:} How do we guarantee that we can slide everywhere? This requires another idea from analysis called compactness. In short, the compactness of the interval $[x_0,\tilde{x}]$ or $[\tilde{x},x_0]$ guarantees that we can slide our center of the power series across from $x_0$ to any $\tilde{x}\in (a,b)$ in a finite amount of steps. 
+
+    We will give another way to prove this, as we have introduced Zorn's lemma. Without loss of generality, let $x_0<\tilde{x}\in (a,b)$ Consider $S$, the set of points $x\leq \tilde{x}$ that you can `slide to' from $x_0$ in a finite amount of steps. I claim that every increasing sequence in $S$ is bounded above by some element in $S$.
+    Let $x_1\leq x_2\leq x_3 \leq \ldots$ be an increasing sequence in $S$. We take $y=\lim_{n\to\infty} x_n$, then the series is bounded above by $y$. To construct the finite sequence going from $x_0$ to $y$, we see that $f$ is analytic at $y$ thus it has a power series representation centered at $y$ that converges to $f$ for some $B(y,\delta)$. We take $m$ large such that $x_m>y-\delta/4$. If we slide the power series centered at $y$ to be centered at $x_m$, the power series converges to $f$ at least in $B(x_m,3\delta/4)\ni y$. That is, you can recenter the power series from $x_m$ to $y$. Therefore, we take the finite sequence that recenters the power series at $x_0$ to $x_m$, then recenter that sequence at $y$. Therefore $S$ contains a maximal element by Zorn's lemma. Finally, to find out what this maximal element is, we make use of the fact that the points where $f$ is analytic is open. Therefore, the only point that can be the maximal element of $S$ is $\tilde{x}$, which is used as the upper limit of all elements in $S$. Therefore $\tilde{x}$ is the maximal element in $S$, thus $f=0$ in some ball centered at $\tilde{x}$. We picked $\tilde{x}$ to be arbitrary, so $f=0$ everywhere in $(a,b)$.
+
+\corollary{
+    Let $x_0\in (a,b)$, and $f$ is analytic on $(a,b)$, $f$ equals the power series centered at $x_0$ where the power series converges.
+}
+\begin{proof}
+    The power series is analytic, and equals $f$ on some small open ball in $(a,b)$.
+\end{proof}
+\exercises
+\begin{exerciselist}
+    \item Find the Taylor Series for the given functions at the indicated points. \begin{enumerate}[label=(\alph*)]
+        \item $f(x) = e^{-x}, x_0 = 0.$
+        \item $f(x) = e^x, x_0 = 1.$ 
+        \item $f(x)=1/x, x_0 = 1.$
+        \item $f(x) = \cos(x), x_0 = \pi/2.$ 
+        \item $f(x) = \ln(x), x_0 = 1.$
+    \end{enumerate}
+    \item Determine the radius of convergence of the given function about $x=0$. \begin{enumerate}[label=(\alph*)]
+        \item $f(x) = (1+x)/(x-2).$
+        \item $f(x) = 2x/(1+2x^2).$
+        \item $f(x) = 1/(1-t^3).$
+        \item $f(x) = ((t-4)(t^2+3))^{-1}.$
+    \end{enumerate} 
+\end{exerciselist}
+
+\section{Taylor's Theorem with Remainder}
+Sometimes we don't want to take the whole power series representation, but truncate the series to get an approximation for the functions.
+
+\todo show that the n-th order taylor series is the best n-th order approximation for a function.
+As Taylor Series are used to approximate functions, it is of relevance to determine the accuracy of a series in representing its desired function. 
+\definition{Taylor's Formula with Remainder}{The remainder of order n of the Taylor expansion of $f(x_o)$ is represented by the function,
+\[R_n(x) = f(x) - \sum_{k=0}^{n-1} \frac{f^{(k)}(x_o)}{k!}(x-x_o)^k.\]
+}
+The remainder of a Taylor expansion is the difference between the value of a function $f$ at $x$ and the partial sum of the $n^{th}$ term Taylor series. The series converges if $\lim_{n \rightarrow \infty} R_n = 0$. 
+
+\theorem{}{Let $f(x)$ be a function on the interval $(a,b)$. $f$ is analytic on $(a,b)$ if there exists and $M>0$ such that 
+\[|f^{(n)}(x) \leq M^n\]
+for all $x \in (a,b)$ and $n \in \mathbb{N}$. 
+}
+As a result of this theorem, the Taylor series expansion holds for all $x \in (a,b)$.
+\proof{Let $f(x)$ be a function on the interval $(a,b)$ and $x_o \in (a,b)$. For some $M \in \reals$ set $C = max{M|a-x_o, M|b-x_o|}$. Then the $n^{th}$ term remainder of the Taylor expansion of $f(x)$ at $x_o$ is given by
+\[R_n = f(x) - \sum_{k=0}^{n-1}\frac{f^{(k)}(x_o)}{k!}(x-x_o)^k = \sum_{k=n}^{\infty} \frac{f^{(k)}(x_o)}{k!}(x-x_o)^k \]
+Each term in this infinite series for $R_n$ is given by
+\[R_k = \frac{f^{(k)}(x_o)}{k!}(x-x_o)^k \leq \frac{M^k}{k!}\]}
+\section{The Binomial Theorem}
+\noindent The Binomial Theorem describes the expansion of powers of a binomial expression. 
+A binomial is an algebraic expression consisting of two terms, such as \( (a + b) \). 
+The Binomial Theorem provides a way to expand expressions of the form \( (a + b)^n \), where \( n \) is a non-negative integer. 
+The theorem can be stated as follows:
+\theorem{Binomial Theorem}{For any integer \( n \geq 0 \), the expansion of \( (a + b)^n \) is given by:
+\[(a + b)^n = \sum_{k=0}^{n} \binom{n}{k} a^{n-k} b^k\]
+where \( \binom{n}{k} \) is the binomial coefficient, defined as:
+\[\binom{n}{k} = \frac{n!}{k!(n-k)!}\]
+for \( k = 0, 1, 2, \dots, n \).}
+In the expansion \( (a + b)^n \), the sum consists of \( n + 1 \) terms, where each term has the form \( \binom{n}{k} a^{n-k} b^k \). 
+The key components of the expansion are:
+\begin{itemize}
+    \item The \textit{binomial coefficient} \( \binom{n}{k} \), also called a combination, represents the number of ways to choose \( k \) items from \( n \) items, and is calculated using the formula:
+    \[\binom{n}{k} = \frac{n!}{k!(n-k)!}\]
+    \item The powers of \( a \) and \( b \) decrease and increase respectively in each term, starting from \( a^n \) for \( k = 0 \) to \( b^n \) for \( k = n \).
+    \item The sum runs over all integer values of \( k \) from 0 to \( n \).
+\end{itemize}
+\example{Find the binomial expansion for $(a + b)^2$ where $a,b \in \reals$.}
+\noindent Using the Binomial Theorem, we can expand \( (a + b)^2 \) as follows:
+\[(a + b)^2 = \sum_{k=0}^{2} \binom{2}{k} a^{2-k} b^k\]
+This gives the following terms:
+\[= \binom{2}{0} a^2 b^0 + \binom{2}{1} a^1 b^1 + \binom{2}{2} a^0 b^2\]
+Using the binomial coefficients:
+\[= 1 \cdot a^2 + 2 \cdot ab + 1 \cdot b^2\]
+Thus, the expanded form is:
+\[(a + b)^2 = a^2 + 2ab + b^2\]
+\example{Find the binomial expansion of $(x + y)^3$.}
+\noindent For \( (x + y)^3 \), we apply the Binomial Theorem:
+\[(x + y)^3 = \sum_{k=0}^{3} \binom{3}{k} x^{3-k} y^k\]
+This expands to:
+\[= \binom{3}{0} x^3 y^0 + \binom{3}{1} x^2 y^1 + \binom{3}{2} x^1 y^2 + \binom{3}{3} x^0 y^3\]
+Substituting the binomial coefficients:
+\[= 1 \cdot x^3 + 3 \cdot x^2 y + 3 \cdot x y^2 + 1 \cdot y^3\]
+Thus, the expanded form is:
+\[(x + y)^3 = x^3 + 3x^2 y + 3x y^2 + y^3\]
+\example{Find the binomial expansion of $(1+\epsilon)^n$ for small $\epsilon$ and $n \in \mathbb{N}$.}
+\noindent For $(1+\epsilon)^n$, we apply the Binomial Theorem with $a = 1$ and $b = \epsilon$:
+\[(1 + \epsilon)^n = \sum_{k=0}^{n} \binom{n}{k} 1^{n-k} \epsilon^k\]
+This simplifies to:
+\[= \binom{n}{0} + \binom{n}{1} \epsilon + \binom{n}{2} \epsilon^2 + \cdots + \binom{n}{n} \epsilon^n\]
+The expansion provides the terms of $(1+\epsilon)^n$ for small values of $\epsilon$.
+Taking an approximation for small $\epsilon$, we can truncate the series to obtain an approximation.
+\[(1+\epsilon)^n \approx 1 + n\epsilon.\]
+This result is useful for many physical applications where small perturbations are considered.
+\subsection{Properties of Binomial Coefficients}
+\noindent The binomial coefficients \( \binom{n}{k} \) have several important properties:
+\begin{itemize}
+    \item \( \binom{n}{0} = \binom{n}{n} = 1 \)
+    \item \( \binom{n}{k} = \binom{n}{n-k} \) (Symmetry property)
+    \item The sum of the binomial coefficients for a given \( n \) is:
+    \[\sum_{k=0}^{n} \binom{n}{k} = 2^n\]
+    This is known as the binomial identity.
+    \item Pascal's identity:
+    \[\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}\]
+\end{itemize}
+\subsection{Negative and Non-Integer Exponents}
+\noindent The Binomial Theorem can also be extended to cases where the exponent \( n \) is not a non-negative integer, although the series then becomes infinite. 
+For example, if \( n \) is a positive integer, the expansion of \( (1 + x)^n \) converges to a finite sum, but if \( n \) is a negative integer or a fraction, the series may converge to an infinite sum.
+For \( |x| < 1 \), the Binomial Theorem for any real number \( n \) can be written as:
+\[(1 + x)^n = \sum_{k=0}^{\infty} \binom{n}{k} x^k\]
+where \( \binom{n}{k} \) is generalized as:
+\[\binom{n}{k} = \frac{n(n-1)(n-2)\cdots (n-k+1)}{k!}\]
+\section{Multidimensional Taylor Series}
+\noindent The Taylor series is a powerful tool for approximating functions using polynomials. 
+While the standard Taylor series applies to functions of a single variable, the \textit{multidimensional Taylor series} extends this concept to functions of multiple variables. 
+In this section, we will derive and explain the multidimensional Taylor series for a function of several variables.
+Let \( f \colon \mathbb{R}^n \to \mathbb{R} \) be a function that is sufficiently smooth (i.e., has continuous partial derivatives) in a neighborhood of a point \( \mathbf{a} = (a_1, a_2, \dots, a_n) \in \mathbb{R}^n \). 
+The goal is to approximate \( f \) near the point \( \mathbf{a} \) using a polynomial expansion.
+Suppose we have a function $ f(x_1, x_2, \dots, x_n) $ of $n$ variables, the Multidimensional Taylor series expansion around a point $\mathbf{a} = (a_1, a_2, \dots, a_n)$ is given by
+\begin{equation*}
+f(x_1, x_2, \dots, x_n) = f(a_1, a_2, \dots, a_n) + \sum_{i=1}^{n} \frac{\partial f}{\partial x_i} (a_1, a_2, \dots, a_n) (x_i - a_i) + \cdots
+\end{equation*}
+\[+ \frac{1}{k!} \sum_{i_1, i_2, \dots, i_k = 1}^{n} \frac{\partial^k f}{\partial x_{i_1} \partial x_{i_2} \dots \partial x_{i_k}} (a_1, a_2, \dots, a_n) (x_{i_1} - a_{i_1})(x_{i_2} - a_{i_2}) \cdots (x_{i_k} - a_{i_k}) + \cdots\]
+where the sums are taken over all possible combinations of partial derivatives of \( f \).
+\definition{Multidimensional Taylor Series}{The general form of the Taylor series for a function \( f \colon \mathbb{R}^n \to \mathbb{R} \) about a point \( \mathbf{a} \) is
+\[f(\mathbf{x}) = \sum_{k=0}^{\infty} \frac{1}{k!} \sum_{i_1, i_2, \dots, i_k = 1}^{n} \frac{\partial^k f}{\partial x_{i_1} \partial x_{i_2} \dots \partial x_{i_k}} (\mathbf{a}) \prod_{j=1}^{k} (x_{i_j} - a_{i_j})\]}
+\noindent We will now examine the first and second-order approximations of the function using the Taylor series.
+The first-order approximation, also known as the linearization of the function \( f \) around the point \( \mathbf{a} \), is obtained by truncating the series after the first derivative term:
+\[f(\mathbf{x}) \approx f(\mathbf{a}) + \sum_{i=1}^{n} \frac{\partial f}{\partial x_i}(\mathbf{a}) (x_i - a_i)\]
+This approximation gives a linear model of the function near the point \( \mathbf{a} \).
+The second-order approximation includes the terms up to the second derivative. It is given by:
+\[f(\mathbf{x}) \approx f(\mathbf{a}) + \sum_{i=1}^{n} \frac{\partial f}{\partial x_i}(\mathbf{a}) (x_i - a_i) + \frac{1}{2} \sum_{i,j=1}^{n} \frac{\partial^2 f}{\partial x_i \partial x_j} (\mathbf{a}) (x_i - a_i)(x_j - a_j)\]
+This provides a quadratic approximation to the function near \( \mathbf{a} \), and is useful for understanding the curvature of the function around the point.
+Quadratic approximations are especially useful in physical applications as it indicates the stability of equilibria of dynamical systems.
+\example{Compute the second-order Taylor approximation of $f(x, y) = e^{x^2 + y^2}$ around the point $(0,0)$.}
+\noindent First, compute the necessary partial derivatives:
+\[f(x, y) = e^{x^2 + y^2}\]
+\[\frac{\partial f}{\partial x} = 2x e^{x^2 + y^2}, \quad \frac{\partial f}{\partial y} = 2y e^{x^2 + y^2}\]
+\[\frac{\partial^2 f}{\partial x^2} = 2 e^{x^2 + y^2} + 4x^2 e^{x^2 + y^2}, \quad \frac{\partial^2 f}{\partial y^2} = 2 e^{x^2 + y^2} + 4y^2 e^{x^2 + y^2}\]
+\[\frac{\partial^2 f}{\partial x \partial y} = 4xy e^{x^2 + y^2}\]
+Evaluating these derivatives at \( (0, 0) \):
+\[f(0, 0) = e^{0} = 1\]
+\[\frac{\partial f}{\partial x}(0, 0) = 0, \quad \frac{\partial f}{\partial y}(0, 0) = 0\]
+\[\frac{\partial^2 f}{\partial x^2}(0, 0) = 2, \quad \frac{\partial^2 f}{\partial y^2}(0, 0) = 2, \quad \frac{\partial^2 f}{\partial x \partial y}(0, 0) = 0\]
+Now, the second-order Taylor expansion around \( (0, 0) \) is:
+\[f(x, y) \approx 1 + 0 \cdot (x - 0) + 0 \cdot (y - 0) + \frac{1}{2} \left[ 2(x - 0)^2 + 2(y - 0)^2 \right]\]
+\[f(x, y) \approx 1 + (x^2 + y^2)\]
+Thus, the second-order approximation for \( f(x, y) = e^{x^2 + y^2} \) around \( (0, 0) \) is:
+\[f(x, y) \approx 1 + x^2 + y^2\]
+\subsection{Error in the Taylor Expansion}
+\noindent The error in the Taylor series approximation is related to the remainder term \( R_n(\mathbf{x}) \), which represents the difference between the exact value of the function and its approximation up to the \( n \)-th degree. 
+For a multivariable Taylor series, the remainder term can be written as:
+\[R_n(\mathbf{x}) = \frac{1}{(n+1)!} \sum_{i_1, i_2, \dots, i_{n+1}} \frac{\partial^{n+1} f}{\partial x_{i_1} \partial x_{i_2} \dots \partial x_{i_{n+1}}} (\mathbf{a}) \prod_{j=1}^{n+1} (x_{i_j} - a_{i_j})\]
+This error term quantifies the difference between the approximation and the exact value of the function.
+\section{Extrema of Multivariate Functions}
+Just as we are interested in finding the extreme points of functions of a single variable, we likewise wish to solve for stationary points of multivariate functions.
+Analysis of functions of multiple variables have analogous first and second derivative tests to those learned in single variable calculus. 
+I used the term 'stationary point' as in three dimensions in addition to maxima or minima there exist so called saddle points. 
+A 3D representation of a saddle point is presented in figure 
+\definition{Multivariable First Derivative Test} {A point $(x_o, y_o) \in \mathbb{R^2}$ is a \textit{stationary point} of some function $f(x,y)$ if
+\[\nabla f \rvert_{(x, y) = (x_o, y_o)} = 0\]}
+Also similarly to the second derivative test in single variable calculus, we also have an analogous second derivative test in multivariable calculus to determine the classification of critical points. For this we use the discussion of multivariable Taylor series discussed in section . To second order, the Taylor expansion of some function $f(x,y)$ around $(x_o, y_o)$ is
+\[f(x,y) \approx f(x_o, y_o) + \nabla f(x_o, y_o)^T d + \frac{1}{2!}d^THf(x_o,y_o)d + R_2(x,y)\]
+From the first derivative test $\nabla f(x_o, y_o) = 0$ thereby eliminating that term. Also, we know $R_2 \rightarrow 0, (x,y) \rightarrow (x_o, y_o)$. Thus we have
+\[f(x,y) \approx f(x_o, y_o) + \frac{1}{2!}d^THf(x_o,y_o)d \]
+Rearranging we have 
+\[f(x,y) - f(x_o, y_o) = \frac{1}{2!}d^THf(x_o,y_o)d \]
+The left side appears as the numerator of the definition of the derivative. The sign of our derivative is dependent on the Hessian matrix $H$ which holds for all points $(x,y)$ near $(x_o, y_o)$. 
+\section{Lagrange Multipliers}
+\noindent Lagrange multipliers are a method to find the extrema of a function subject to a constraint. 
+Suppose we have a function $f(x,y)$ and a constraint $g(x,y) = c$. 
+The method of Lagrange multipliers states that the extrema of $f(x,y)$ subject to the constraint $g(x,y) = c$ are found at points $(x,y)$ where the gradient of $f$ is parallel to the gradient of $g$.
+This implies
+\begin{align}
+    \nabla f(x,y) &= \lambda \nabla g(x,y) \\
+    \begin{bmatrix}
+        \frac{\partial f}{\partial x} \\
+        \frac{\partial f}{\partial y}
+    \end{bmatrix} &= \lambda \begin{bmatrix}
+        \frac{\partial g}{\partial x} \\
+        \frac{\partial g}{\partial y}.
+    \end{bmatrix}
+\end{align}
+The theory behind Lagrange multipliers is that we wish to find the points where $\nabla f \cdot g = 0$.
+This implies that the gradient of $f$ is at some maximum or minimum (or stationary point) when subject to $g$.
+We can use the system of equations (1.2) and our constraint equation to solve for our three unknowns: $\lambda$, $x$, and $y$.
+This result will gives us the extrema we are looking for. 
+This method can be generalized to any $n$-dimensional function $f(\mathbf{x})$ subject to a constraint $g(\mathbf{x}) = c$.
+In this case we will have a system with $n+1$ equations and $n+1$ unknowns to solve for the extrema.
+\example{Find the dimensions of the box with the largest volume such that its surface area is $100$ square units.}
+\noindent Let $x$, $y$, and $z$ be the dimensions of the box.
+The volume of the box is $V(x,y,z) = xyz$ and the surface area is $S(x,y,z) = 2xy + 2yz + 2xz = 100$.
+We now apply our method of Lagrange Multipliers to maximize $V$ subject to $S$. 
+We have the system of equations
+\begin{align*}
+    \begin{bmatrix}
+        yz \\
+        xz \\
+        xy
+    \end{bmatrix} &= \lambda \begin{bmatrix}
+        2y + 2z \\
+        2x + 2z \\
+        2x + 2y
+    \end{bmatrix} \\
+    2xy + 2yz + 2xz &= 100.
+\end{align*}
+Solving this system of equations we find
+\begin{align*}
+    x &= y = z = 5
+\end{align*}
+\begin{align*}
+    \lambda &= \frac{1}{5}.
+\end{align*}
+Therefore, the dimensions of the box with the largest volume are $5$ units by $5$ units by $5$ units.
+The corresponding maximum volume is $125$ cubic units.
+
+
+
